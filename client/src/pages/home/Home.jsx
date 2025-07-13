@@ -8,7 +8,7 @@ const Home = () => {
     <div>
       <Search />
       <Tools />
-      {/* <RecentPasswords /> */}
+      <RecentPasswords />
     </div>
   );
 };
