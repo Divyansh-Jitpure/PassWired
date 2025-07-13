@@ -3,13 +3,15 @@ import { FiSearch } from "react-icons/fi";
 
 const Search = () => {
   return (
-    <div className="mt-6 flex items-center justify-center gap-2">
+    <div className="mt-6 flex w-[85%] items-center justify-center gap-3">
       <input
         type="text"
-        className="h-10 w-[75%] rounded border p-2 text-xl"
+        className="h-10 w-full rounded border p-2 text-xl shadow-md"
         placeholder="Search"
       />
-      <FiSearch className="text-2xl" />
+      <button className="cursor-pointer">
+        <FiSearch className="text-4xl" />
+      </button>
     </div>
   );
 };

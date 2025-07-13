@@ -14,14 +14,14 @@ const Navbar = () => {
   const path = useLocation().pathname;
 
   return (
-    <nav className="fixed bottom-0 grid h-16 w-full grid-cols-3 items-center justify-items-center bg-[#F05454] *:flex *:h-full *:w-full *:cursor-pointer *:flex-col *:items-center *:justify-center *:hover:bg-[#ef3c3c] *:active:bg-[#ef3c3c]">
+    <nav className="fixed bottom-0 grid h-16 w-full grid-cols-3 items-center justify-items-center bg-[#F05454] text-shadow-sm *:flex *:h-full *:w-full *:cursor-pointer *:flex-col *:items-center *:justify-center *:hover:bg-[#ef3c3c] *:active:bg-[#ef3c3c]">
       <section onClick={() => navigate("/vault")}>
         {path === "/vault" ? (
           <HiLockClosed className="text-3xl" />
         ) : (
           <HiOutlineLockClosed className="text-3xl" />
         )}
-        <span className="font-semibold">Vault</span>
+        <span className="font-semibold select-none">Vault</span>
       </section>
       <section onClick={() => navigate("/")}>
         {path === "/" ? (
@@ -29,7 +29,7 @@ const Navbar = () => {
         ) : (
           <HiOutlineHome className="text-3xl" />
         )}
-        <span className="font-semibold">Home</span>
+        <span className="font-semibold select-none">Home</span>
       </section>
       <section onClick={() => navigate("/more")}>
         {path === "/more" ? (
@@ -37,7 +37,7 @@ const Navbar = () => {
         ) : (
           <HiOutlineSquares2X2 className="text-3xl" />
         )}
-        <span className="font-semibold">More</span>
+        <span className="font-semibold select-none">More</span>
       </section>
     </nav>
   );
