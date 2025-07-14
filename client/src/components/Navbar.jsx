@@ -14,7 +14,7 @@ const Navbar = () => {
   const path = useLocation().pathname;
 
   return (
-    <nav className="fixed bottom-0 grid h-16 w-full grid-cols-3 items-center justify-items-center bg-[#F05454] text-shadow-sm *:flex *:h-full *:w-full *:cursor-pointer *:flex-col *:items-center *:justify-center *:hover:bg-[#ef3c3c] *:active:bg-[#ef3c3c]">
+    <nav className="fixed bottom-0 grid h-16 w-full grid-cols-3 items-center justify-items-center bg-[#F05454] text-shadow-sm *:flex *:h-full *:w-full *:cursor-pointer *:flex-col *:items-center *:justify-center *:hover:bg-[#ef3c3c] *:active:bg-[#ef3c3c] sm:hidden">
       <section onClick={() => navigate("/vault")}>
         {path === "/vault" ? (
           <HiLockClosed className="text-3xl" />

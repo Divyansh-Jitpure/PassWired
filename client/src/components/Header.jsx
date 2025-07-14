@@ -5,7 +5,7 @@ import { useNavigate } from "react-router";
 const Header = () => {
   const navigate = useNavigate();
   return (
-    <div className="my-3 flex cursor-pointer justify-center select-none text-shadow-md">
+    <div className="my-3 flex cursor-pointer justify-center transition-all select-none text-shadow-md hover:text-shadow-lg">
       <h1
         onClick={() => navigate("/")}
         className="flex items-center font-[Ubuntu] text-3xl font-semibold"

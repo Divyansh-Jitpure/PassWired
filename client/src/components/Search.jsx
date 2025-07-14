@@ -3,14 +3,14 @@ import { FiSearch } from "react-icons/fi";
 
 const Search = () => {
   return (
-    <div className="mt-6 flex w-[85%] items-center justify-center gap-3">
+    <div className="relative mt-6 flex w-[80%] items-center justify-center gap-3 sm:w-[25%]">
       <input
         type="text"
-        className="h-10 w-full rounded border p-2 text-xl shadow-md"
+        className="h-10 w-full rounded-lg border p-2 text-xl shadow-md"
         placeholder="Search"
       />
-      <button className="cursor-pointer">
-        <FiSearch className="text-4xl" />
+      <button className="absolute right-2 cursor-pointer">
+        <FiSearch className="text-3xl text-[#30475E]" />
       </button>
     </div>
   );

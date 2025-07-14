@@ -1,7 +1,12 @@
 import React from "react";
+import UserInfo from "./UserInfo";
 
 const More = () => {
-  return <div>More</div>;
+  return (
+    <div>
+      <UserInfo />
+    </div>
+  );
 };
 
 export default More;
