@@ -4,14 +4,11 @@ import Title from "../../../components/Title";
 
 const Tools = () => {
   const tools = [
-    "Tool",
-    "Tool",
-    "Tool",
-    "Tool",
-    "Tool",
-    "Tool",
-    "Tool",
-    "Tool",
+    "Change Password",
+    "Export Vault",
+    "Password Strength",
+    "Feedback",
+    "Delete Account",
   ];
   return (
     <div className="flex w-[80%] flex-col items-center gap-4">
