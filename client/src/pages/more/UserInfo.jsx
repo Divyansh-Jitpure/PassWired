@@ -1,5 +1,5 @@
 import React from "react";
-import pic from "/public/pic2.png";
+import pic from "/pic2.png";
 import { useNavigate } from "react-router";
 
 const UserInfo = () => {
