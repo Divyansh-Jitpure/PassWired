@@ -16,11 +16,11 @@ const UserInfo = () => {
       <section className="flex flex-col">
         <span
           onClick={() => navigate("/profile")}
-          className="cursor-pointer text-xl font-semibold"
+          className="cursor-pointer text-xl font-semibold text-[#30475E]"
         >
           {username}
         </span>
-        <span className="text-gray-700">{email}</span>
+        <span className="text-[#30475eb7]">{email}</span>
       </section>
     </div>
   );

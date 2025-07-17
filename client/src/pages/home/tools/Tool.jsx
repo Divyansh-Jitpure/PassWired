@@ -2,10 +2,8 @@ import React from "react";
 
 const Tool = ({ toolName }) => {
   return (
-    <div className="h-18 w-18 bg-[#F05454] shadow-md">
-      <span className="flex h-full items-center justify-center">
-        {toolName}
-      </span>
+    <div className="flex min-h-16 w-20 cursor-pointer items-center justify-center rounded bg-[#F05454] px-1 py-2 shadow-md hover:bg-[#ef3c3c] active:bg-[#ef3c3c]">
+      <span className="text-center text-sm font-semibold">{toolName}</span>
     </div>
   );
 };

@@ -4,14 +4,15 @@ import Title from "../../../components/Title";
 
 const Tools = () => {
   const tools = [
-    "Change Password",
+    "View Profile",
+    "Password Generator",
+    "Password Strength Checker",
     "Export Vault",
-    "Password Strength",
-    "Feedback",
-    "Delete Account",
+    "Theme",
+    "Contacts",
   ];
   return (
-    <div className="flex w-[80%] flex-col items-center gap-4">
+    <div className="flex w-[90%] flex-col items-center gap-4">
       <Title text="Tools" />
 
       <section className="grid grid-cols-4 gap-3 sm:grid-cols-8">
