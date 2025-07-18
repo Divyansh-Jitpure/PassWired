@@ -18,7 +18,10 @@ const Login = () => {
         <p>We are happy to have you back!</p>
       </div>
 
-      <form onSubmit={handleSubmit} className="flex w-[80%] flex-col gap-4">
+      <form
+        onSubmit={handleSubmit}
+        className="flex w-[75%] flex-col gap-4 sm:w-[25%]"
+      >
         {/* Email */}
         <div className="relative w-full">
           <input
@@ -28,7 +31,7 @@ const Login = () => {
             // autoComplete="off"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            className="peer h-12 w-full rounded-lg border p-4 focus:border-[#F05454] focus:outline-none"
+            className="peer h-12 w-full rounded-lg border p-4 shadow-md focus:border-[#F05454] focus:outline-none"
           />
           <label
             htmlFor="email"
@@ -51,7 +54,7 @@ const Login = () => {
             // autoComplete="off"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            className="peer h-12 w-full rounded-lg border p-4 focus:border-[#F05454] focus:outline-none"
+            className="peer h-12 w-full rounded-lg border p-4 shadow-md focus:border-[#F05454] focus:outline-none"
           />
           <label
             htmlFor="password"
