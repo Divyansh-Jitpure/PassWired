@@ -6,6 +6,7 @@ import Navbar from "./components/Navbar";
 import More from "./pages/more/More";
 import Header from "./components/Header";
 import Profile from "./pages/profile/Profile";
+import Login from "./pages/login/Login";
 
 const App = () => {
   return (
@@ -17,6 +18,7 @@ const App = () => {
           <Route path="/vault" element={<Vault />} />
           <Route path="/more" element={<More />} />
           <Route path="/profile" element={<Profile />} />
+          <Route path="/login" element={<Login />} />
         </Routes>
         <Navbar />
       </Router>
