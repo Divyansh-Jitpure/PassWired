@@ -16,8 +16,8 @@ const Tools = () => {
       <Title text="Tools" />
 
       <section className="grid grid-cols-4 gap-3 sm:grid-cols-8">
-        {tools.map((tool) => (
-          <Tool toolName={tool} />
+        {tools.map((tool, index) => (
+          <Tool key={index} toolName={tool} />
         ))}
       </section>
     </div>

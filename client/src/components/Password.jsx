@@ -3,10 +3,16 @@ import { FaCopy } from "react-icons/fa6";
 import { MdDelete } from "react-icons/md";
 
 const Password = ({ platform, id }) => {
+  const viewPassword = () => {};
   return (
-    <div className="grid w-full grid-cols-2 rounded border p-2 shadow-md">
+    <div className="grid w-full grid-cols-2 rounded border bg-white p-2 shadow-md">
       <section className="flex flex-col">
-        <span className="text-xl font-semibold text-shadow-sm">{platform}</span>
+        <span
+          onClick={viewPassword}
+          className="w-fit cursor-pointer text-xl font-semibold text-shadow-sm"
+        >
+          {platform}
+        </span>
         <span>{id}</span>
       </section>
       <section className="flex items-center justify-end gap-3">

@@ -9,6 +9,7 @@ const UserInfo = () => {
   return (
     <div className="mt-5 flex items-center justify-center gap-3">
       <img
+        onClick={() => navigate("/profile")}
         className="aspect-square w-16 cursor-pointer rounded-full object-cover"
         src={pic}
         alt="profilePicture"
@@ -16,7 +17,7 @@ const UserInfo = () => {
       <section className="flex flex-col">
         <span
           onClick={() => navigate("/profile")}
-          className="cursor-pointer text-xl font-semibold text-[#30475E]"
+          className="w-fit cursor-pointer text-xl font-semibold text-[#30475E]"
         >
           {username}
         </span>

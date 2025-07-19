@@ -4,7 +4,7 @@ const Feature = ({ title, action }) => {
   return (
     <div
       onClick={() => action()}
-      className="cursor-pointer rounded-lg bg-amber-50 px-3 py-2 hover:bg-amber-50/60 active:bg-amber-50/60"
+      className="cursor-pointer rounded-lg bg-white px-3 py-2 hover:bg-white/60 active:bg-white/60"
     >
       <span className="text-xl">{title}</span>
     </div>
