@@ -1,13 +1,13 @@
 import React, { useState } from "react";
-import Title from "../../components/Title";
 import Button from "../../components/Button";
 import { FcGoogle } from "react-icons/fc";
 import { Link } from "react-router";
+import FormInput from "../../components/FormInput";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const handleSubmit = (e) => {
+  const handleLogin = (e) => {
     e.preventDefault();
     // handle login
   };
@@ -23,54 +23,24 @@ const Login = () => {
       </div>
 
       <form
-        onSubmit={handleSubmit}
+        onSubmit={handleLogin}
         className="flex w-[75%] flex-col gap-4 sm:w-[25%]"
       >
         {/* Email */}
-        <div className="relative w-full">
-          <input
-            type="text"
-            id="email"
-            required
-            // autoComplete="off"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            className="peer h-12 w-full rounded-lg border p-4 shadow-md focus:border-[#F05454] focus:outline-none"
-          />
-          <label
-            htmlFor="email"
-            className={
-              email !== ""
-                ? "absolute top-[-11px] left-3 bg-[#DDDDDD] px-1 text-[#F05454]"
-                : "absolute top-3 left-4 bg-[#DDDDDD] px-1 text-gray-500 transition-all peer-placeholder-shown:top-3 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-500 peer-focus:top-[-11px] peer-focus:left-3 peer-focus:text-[#F05454]"
-            }
-          >
-            Email
-          </label>
-        </div>
+        <FormInput
+          value={email}
+          setValue={setEmail}
+          lable="Email"
+          type="email"
+        />
 
         {/* Password */}
-        <div className="relative w-full">
-          <input
-            type="password"
-            id="password"
-            required
-            // autoComplete="off"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            className="peer h-12 w-full rounded-lg border p-4 shadow-md focus:border-[#F05454] focus:outline-none"
-          />
-          <label
-            htmlFor="password"
-            className={
-              password !== ""
-                ? "absolute top-[-11px] left-3 bg-[#DDDDDD] px-1 text-[#F05454]"
-                : "absolute top-3 left-4 bg-[#DDDDDD] px-1 text-gray-500 transition-all peer-placeholder-shown:top-3 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-500 peer-focus:top-[-11px] peer-focus:left-3 peer-focus:text-[#F05454]"
-            }
-          >
-            Password
-          </label>
-        </div>
+        <FormInput
+          value={password}
+          setValue={setPassword}
+          lable="Password"
+          type="password"
+        />
 
         {/* Submit */}
         <div className="mx-auto mt-2">
@@ -87,12 +57,13 @@ const Login = () => {
         <FcGoogle className="text-3xl" />
         <span className="text-xl">Sign In with Google</span>
       </div>
-      <span className="">
+
+      <div className="">
         Don't have an account{" "}
         <Link to={"/signup"} className="font-semibold text-[#F05454]">
           Sign Up
         </Link>
-      </span>
+      </div>
     </div>
   );
 };
