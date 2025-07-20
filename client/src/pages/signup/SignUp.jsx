@@ -1,17 +1,43 @@
 import React, { useState } from "react";
 import Button from "../../components/Button";
 import { FcGoogle } from "react-icons/fc";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
 import FormInput from "../../components/FormInput";
+import axios from "axios";
+import API from "../../utils/api";
 
 const SignUp = () => {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  const handleSignUp = (e) => {
+
+  const navigate = useNavigate();
+
+  const handleSignUp = async (e) => {
     e.preventDefault();
-    // handle sign up
+
+    if (!username || !email || !password || !confirmPassword) {
+      alert("Please fill all fields.");
+      return;
+    }
+
+    if (password !== confirmPassword) {
+      alert("Passwords do not match!");
+      return;
+    }
+
+    try {
+      const res = await API.post("/auth/signup", {
+        username,
+        email,
+        password,
+      });
+      // console.log("Signup successful:", res.data);
+      navigate("/login"); // Redirect to login page on success
+    } catch (err) {
+      console.error(err.response?.data?.error || "Signup Failed!!");
+    }
   };
 
   return (
@@ -62,7 +88,12 @@ const SignUp = () => {
 
         {/* Submit */}
         <div className="mx-auto mt-2">
-          <Button type="submit" text="Sign Up" />
+          <button
+            type="submit"
+            className="cursor-pointer rounded bg-[#F05454] px-3 py-1 text-xl text-[#DDDDDD] shadow-md transition-all select-none hover:bg-[#ef3c3c] active:bg-[#ef3c3c]"
+          >
+            Sign Up
+          </button>
         </div>
       </form>
       <div className="flex w-[75%] items-center justify-center gap-2">
