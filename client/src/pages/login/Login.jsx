@@ -1,15 +1,29 @@
 import React, { useState } from "react";
 import Button from "../../components/Button";
 import { FcGoogle } from "react-icons/fc";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
 import FormInput from "../../components/FormInput";
+import API from "../../utils/api";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const handleLogin = (e) => {
+
+  const navigate = useNavigate();
+
+  const handleLogin = async (e) => {
     e.preventDefault();
-    // handle login
+
+    try {
+      await API.post("/auth/login", {
+        email,
+        password,
+      });
+      // console.log("Login successful:", res.data);
+      navigate("/"); // Redirect to home after successful login
+    } catch (err) {
+      console.error(err.response?.data?.error || "Login Failed!!");
+    }
   };
 
   return (
@@ -44,7 +58,12 @@ const Login = () => {
 
         {/* Submit */}
         <div className="mx-auto mt-2">
-          <Button type="submit" text="Sign In" />
+          <button
+            type="submit"
+            className="cursor-pointer rounded bg-[#F05454] px-3 py-1 text-xl text-[#DDDDDD] shadow-md transition-all select-none hover:bg-[#ef3c3c] active:bg-[#ef3c3c]"
+          >
+            Sign In
+          </button>
         </div>
       </form>
       <div className="flex w-[75%] items-center justify-center gap-2">

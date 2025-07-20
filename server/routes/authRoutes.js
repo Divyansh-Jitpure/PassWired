@@ -1,6 +1,7 @@
 import express from "express";
 import User from "../model/User.js";
 import bcrypt from "bcrypt";
+import jwt from "jsonwebtoken";
 // import authController from "../controllers/authController.js";
 
 const router = express.Router();
@@ -13,7 +14,7 @@ router.post("/signup", async (req, res) => {
 
     // Validate input
     if (!username || !email || !password) {
-      return res.status(400).json({ message: "All fields are required" });
+      return res.status(400).json({ error: "All fields are required" });
     }
 
     // Check if user already exists
@@ -48,7 +49,64 @@ router.post("/signup", async (req, res) => {
   }
 });
 
-// router.get("/refresh");
+router.post("/login", async (req, res) => {
+  try {
+    const { email, password } = req.body;
+
+    // Validate input
+    if (!email || !password) {
+      return res.status(400).json({ error: "All fields are required" });
+    }
+
+    // Check if user exists and make a user object
+    const user = await User.findOne({ email });
+    if (!user) return res.status(400).json({ error: "User not found!!" });
+
+    // Comparing input password and stored hashed password
+    const isMatch = await bcrypt.compare(password, user.password);
+    if (!isMatch)
+      return res.status(400).json({ error: "Invalid Email or password!!" });
+
+    // Generate access token
+    const accessToken = jwt.sign(
+      { id: user._id, email: user.email },
+      process.env.ACCESS_JWT_SECRET,
+      {
+        expiresIn: "1h",
+      }
+    );
+
+    // Generate refresh token
+    const refreshToken = jwt.sign(
+      { id: user._id, email: user.email },
+      process.env.REFRESH_JWT_SECRET,
+      {
+        expiresIn: "7d",
+      }
+    );
+
+    res.cookie("refreshToken", refreshToken, {
+      httpOnly: true,
+      secure: true,
+      sameSite: "strict",
+      maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
+    });
+
+    res.status(200).json({
+      message: "Login successful",
+      accessToken,
+      user: {
+        id: user._id,
+        username: user.username,
+        email: user.email,
+      },
+    });
+  } catch (err) {
+    res.status(500).json({ error: "Internal server error" });
+  }
+});
+
+router.get("/refresh", (req, res) => {});
 
 // router.post("/logout");
 
