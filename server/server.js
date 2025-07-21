@@ -1,11 +1,12 @@
+import dotenv from "dotenv";
+dotenv.config();
 import express from "express";
 import cors from "cors";
-import dotenv from "dotenv";
+
 import authRoutes from "./routes/authRoutes.js";
+import passwordRoutes from "./routes/passwordRoutes.js";
 import mongoose from "mongoose";
 import cookieParser from "cookie-parser";
-
-dotenv.config();
 
 const PORT = 5000;
 const app = express();
@@ -19,6 +20,7 @@ app.use(
 app.use(cookieParser());
 
 app.use("/api/auth", authRoutes);
+app.use("/api/passwords", passwordRoutes);
 
 app.get("/", (req, res) => {
   res.send("Welcome to the server!");

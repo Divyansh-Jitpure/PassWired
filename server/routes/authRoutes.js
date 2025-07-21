@@ -6,7 +6,6 @@ import jwt from "jsonwebtoken";
 
 const router = express.Router();
 
-// router.post("/");
 
 router.post("/signup", async (req, res) => {
   try {
@@ -87,8 +86,9 @@ router.post("/login", async (req, res) => {
 
     res.cookie("refreshToken", refreshToken, {
       httpOnly: true,
-      secure: true,
-      sameSite: "strict",
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "strict", //sameSite: "None" when frontend on Firebase, backend on Render)
+
       maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
     });
 
@@ -106,8 +106,42 @@ router.post("/login", async (req, res) => {
   }
 });
 
-router.get("/refresh", (req, res) => {});
+router.post("/refresh", (req, res) => {
+  const refreshToken = req.cookies.refreshToken;
 
-// router.post("/logout");
+  if (!refreshToken) {
+    return res
+      .status(401)
+      .json({ error: "Unauthorized access - Refresh token missing" });
+  }
+
+  try {
+    const payload = jwt.verify(refreshToken, process.env.REFRESH_JWT_SECRET);
+    // console.log("Payload:", payload);
+
+    // Generate new access token
+    const newAccessToken = jwt.sign(
+      { id: payload.id, email: payload.email },
+      process.env.ACCESS_JWT_SECRET,
+      {
+        expiresIn: "1h",
+      }
+    );
+
+    res.status(200).json({ accessToken: newAccessToken });
+  } catch (err) {
+    return res.status(403).json({ error: "Invalid or expired refresh token" });
+  }
+});
+
+router.post("/logout", (req, res) => {
+  res.clearCookie("refreshToken", {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === "production",
+    sameSite: "strict",
+  });
+
+  res.status(200).json({ message: "Logged out successfully" });
+});
 
 export default router;
