@@ -2,10 +2,19 @@ import express from "express";
 import User from "../model/User.js";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
+import verifyAccessToken from "../middleware/verifyAccessToken.js";
 // import authController from "../controllers/authController.js";
 
 const router = express.Router();
 
+router.get("/user", verifyAccessToken, async (req, res) => {
+  try {
+    const user = await User.findById(req.user.id).select("-password");
+    res.json({ user });
+  } catch (err) {
+    res.status(500).json({ error: "Failed to fetch user" });
+  }
+});
 
 router.post("/signup", async (req, res) => {
   try {

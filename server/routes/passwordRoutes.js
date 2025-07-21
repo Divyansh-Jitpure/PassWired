@@ -43,4 +43,29 @@ router.post("/add", verifyAccessToken, async (req, res) => {
   }
 });
 
+router.get("/allPwds", verifyAccessToken, async (req, res) => {
+  try {
+    const passwords = await Password.find({ user: req.user.id });
+    res.status(200).json(passwords);
+  } catch (err) {
+    res.status(500).json({ error: "Internal server error" });
+  }
+});
+
+router.delete("/delete/:id", verifyAccessToken, async (req, res) => {
+  const { id } = req.params;
+  try {
+    const deletedPassword = await Password.findOneAndDelete({
+      _id: id,
+      user: req.user.id,
+    });
+    if (!deletedPassword) {
+      return res.status(404).json({ error: "Password not found" });
+    }
+    res.status(200).json({ message: "Password deleted successfully!" });
+  } catch (err) {
+    res.status(500).json({ error: "Internal server error" });
+  }
+});
+
 export default router;

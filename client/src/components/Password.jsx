@@ -1,8 +1,23 @@
 import React from "react";
 import { FaCopy } from "react-icons/fa6";
 import { MdDelete } from "react-icons/md";
+import API from "../utils/api";
 
-const Password = ({ platform, id }) => {
+const Password = ({ platform, id, pwd }) => {
+  // console.log("Password Component Rendered:", pwd);
+
+  const handlleDelete = async () => {
+    try {
+      await API.delete(`/passwords/delete/${pwd._id}`);
+      console.log(pwd._id);
+    } catch (err) {
+      console.error(
+        "Error deleting password:",
+        err.response?.data?.error || err.message,
+      );
+    }
+  };
+
   const viewPassword = () => {};
   return (
     <div className="grid w-full grid-cols-2 rounded border bg-white p-2 shadow-md">
@@ -19,7 +34,7 @@ const Password = ({ platform, id }) => {
         <button className="cursor-pointer">
           <FaCopy className="text-2xl" />
         </button>
-        <button className="cursor-pointer">
+        <button onClick={handlleDelete} className="cursor-pointer">
           <MdDelete className="text-3xl" />
         </button>
       </section>

@@ -4,10 +4,14 @@ import { FcGoogle } from "react-icons/fc";
 import { Link, useNavigate } from "react-router";
 import FormInput from "../../components/FormInput";
 import API from "../../utils/api";
+import { useDispatch } from "react-redux";
+import { setCredentials } from "../../features/auth/authSlice";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
+  const dispatch = useDispatch();
 
   const navigate = useNavigate();
 
@@ -15,11 +19,22 @@ const Login = () => {
     e.preventDefault();
 
     try {
-      await API.post("/auth/login", {
+      const res = await API.post("/auth/login", {
         email,
         password,
       });
       // console.log("Login successful:", res.data);
+
+      const accessToken = res.data.accessToken;
+
+      API.defaults.headers.common["Authorization"] = `Bearer ${accessToken}`;
+
+      dispatch(
+        setCredentials({
+          accessToken,
+          user: res.data.user,
+        }),
+      );
       navigate("/"); // Redirect to home after successful login
     } catch (err) {
       console.error(err.response?.data?.error || "Login Failed!!");

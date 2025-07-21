@@ -13,6 +13,8 @@ const verifyAccessToken = (req, res, next) => {
     if (err) {
       return res.status(403).json({ error: "Invalid or expired token" });
     }
+    // console.log("User:", user);
+
     req.user = user;
     next();
   });
