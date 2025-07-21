@@ -21,6 +21,23 @@ const encrypt = (text) => {
   return iv.toString("hex") + ":" + encrypted.toString("hex");
 };
 
+const decrypt = (text) => {
+  const ENCRYPTION_KEY = process.env.ENCRYPTION_KEY;
+  const [ivHex, encryptedHex] = text.split(":");
+  const iv = Buffer.from(ivHex, "hex");
+  const encryptedText = Buffer.from(encryptedHex, "hex");
+
+  const decipher = crypto.createDecipheriv(
+    ALGORITHM,
+    Buffer.from(ENCRYPTION_KEY),
+    iv
+  );
+
+  let decrypted = decipher.update(encryptedText);
+  decrypted = Buffer.concat([decrypted, decipher.final()]);
+  return decrypted.toString();
+};
+
 router.post("/add", verifyAccessToken, async (req, res) => {
   const { password, username, service } = req.body;
   if (!password || !username || !service) {
@@ -46,7 +63,24 @@ router.post("/add", verifyAccessToken, async (req, res) => {
 router.get("/allPwds", verifyAccessToken, async (req, res) => {
   try {
     const passwords = await Password.find({ user: req.user.id });
+
     res.status(200).json(passwords);
+  } catch (err) {
+    res.status(500).json({ error: "Internal server error" });
+  }
+});
+
+router.get("/view/:id", verifyAccessToken, async (req, res) => {
+  const { id } = req.params;
+  try {
+    const password = await Password.findOne({ _id: id, user: req.user.id });
+    if (!password) {
+      return res.status(404).json({ error: "Password not found" });
+    }
+    const decryptedPassword = decrypt(password.password);
+    res.status(200).json({
+      password: decryptedPassword,
+    });
   } catch (err) {
     res.status(500).json({ error: "Internal server error" });
   }
