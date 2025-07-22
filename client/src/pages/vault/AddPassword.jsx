@@ -5,20 +5,19 @@ import { setSheetState } from "../../features/password/passwordSlice";
 
 const AddPassword = () => {
   const sheetState = useSelector((state) => state.password.sheetState);
-  // useEffect(() => {
-  //   console.log("SheetState:", sheetState);
-  // }, [sheetState]);
-
   const dispatch = useDispatch();
 
   return (
-    <div className="grid w-[80%] grid-cols-2 rounded border px-3 py-1">
-      <span className="my-auto mr-auto text-xl font-semibold text-shadow-sm">
+    <div className="flex w-[60%] items-center justify-around gap-20 rounded border bg-white px-3 py-1 shadow-md">
+      <span
+        onClick={() => dispatch(setSheetState())}
+        className="cursor-pointer text-xl font-semibold text-shadow-sm"
+      >
         Add Password
       </span>
       <button
         onClick={() => dispatch(setSheetState())}
-        className="ml-auto cursor-pointer rounded-full p-2 text-2xl hover:bg-white active:bg-white"
+        className="cursor-pointer rounded-full p-2 text-2xl hover:bg-gray-300/30 active:bg-gray-300/30"
       >
         <FaPlus />
       </button>

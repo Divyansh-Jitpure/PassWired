@@ -38,7 +38,7 @@ const PwdSheet = () => {
   return (
     <div
       ref={sheetRef}
-      className={`absolute bottom-16 h-70 w-full bg-white ${sheetState ? "block" : "hidden"} `}
+      className={`absolute bottom-16 h-70 w-full border-t-2 bg-white ${sheetState ? "block" : "hidden"} `}
     >
       <form
         className="flex h-full w-full flex-col items-center justify-center gap-4"
