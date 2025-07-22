@@ -1,5 +1,6 @@
 import React from "react";
 import { FaCopy } from "react-icons/fa6";
+import { FaEye } from "react-icons/fa";
 import { MdDelete } from "react-icons/md";
 import API from "../utils/api";
 
@@ -27,7 +28,10 @@ const Password = ({ pwd }) => {
         </span>
         <span>{pwd.username}</span>
       </section>
-      <section className="flex items-center justify-end gap-3">
+      <section className="flex items-center justify-end gap-4">
+        <button className="cursor-pointer">
+          <FaEye className="text-3xl" />
+        </button>
         <button className="cursor-pointer">
           <FaCopy className="text-2xl" />
         </button>

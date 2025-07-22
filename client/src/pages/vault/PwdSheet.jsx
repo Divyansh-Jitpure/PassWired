@@ -1,14 +1,19 @@
 import React, { useRef, useState } from "react";
 import PwdSheetFormInput from "./PwdSheetFormInput";
 import API from "../../utils/api";
+import { useDispatch, useSelector } from "react-redux";
+import { setSheetState } from "../../features/password/passwordSlice";
 
-const PwdSheet = ({ sheetOpen, setSheetOpen }) => {
+const PwdSheet = () => {
   const [formData, setFormData] = useState({
     service: "",
     username: "",
     password: "",
   });
   const sheetRef = useRef();
+
+  const sheetState = useSelector((state) => state.password.sheetState);
+  const dispatch = useDispatch();
 
   const handlePwdSubmit = async (e) => {
     e.preventDefault();
@@ -23,7 +28,7 @@ const PwdSheet = ({ sheetOpen, setSheetOpen }) => {
       );
     }
 
-    setSheetOpen(!sheetOpen);
+    dispatch(setSheetState());
     setFormData({
       service: "",
       username: "",
@@ -33,7 +38,7 @@ const PwdSheet = ({ sheetOpen, setSheetOpen }) => {
   return (
     <div
       ref={sheetRef}
-      className={`absolute bottom-16 h-70 w-full bg-white ${sheetOpen ? "block" : "hidden"} `}
+      className={`absolute bottom-16 h-70 w-full bg-white ${sheetState ? "block" : "hidden"} `}
     >
       <form
         className="flex h-full w-full flex-col items-center justify-center gap-4"
