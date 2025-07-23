@@ -1,7 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { logout } from "../../features/auth/authThunks";
 
 const initialState = {
-  accessToken: null,
+  accessToken: "",
   user: null,
 };
 
@@ -13,12 +14,18 @@ const authSlice = createSlice({
       state.accessToken = action.payload.accessToken;
       state.user = action.payload.user;
     },
-    logout: (state) => {
-      state.accessToken = null;
-      state.user = null;
-    },
+  },
+  extraReducers: (builder) => {
+    builder
+      .addCase(logout.fulfilled, (state) => {
+        state.accessToken = null;
+        state.user = null;
+      })
+      .addCase(logout.rejected, (state, action) => {
+        state.error = action.payload;
+      });
   },
 });
 
-export const { setCredentials, logout } = authSlice.actions;
+export const { setCredentials } = authSlice.actions;
 export default authSlice.reducer;

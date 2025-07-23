@@ -34,7 +34,7 @@ const SignUp = () => {
         password,
       });
       // console.log("Signup successful:", res.data);
-      navigate("/login"); // Redirect to login page on success
+      navigate("/appPin"); // Redirect to login page on success
     } catch (err) {
       console.error(err.response?.data?.error || "Signup Failed!!");
     }
@@ -50,6 +50,7 @@ const SignUp = () => {
         <p className="text-xl">We are happy to have you here!!</p>
       </div>
 
+      {/* SignUp Form */}
       <form
         onSubmit={handleSignUp}
         className="flex w-[75%] flex-col gap-4 sm:w-[25%]"

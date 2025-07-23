@@ -19,9 +19,9 @@ const UserInfo = () => {
           onClick={() => navigate("/profile")}
           className="w-fit cursor-pointer text-2xl font-semibold text-[#30475E] text-shadow-md"
         >
-          {user.username}
+          {user?.username}
         </span>
-        <span className="text-[#30475eb7]">{user.email}</span>
+        <span className="text-[#30475eb7]">{user?.email}</span>
       </section>
     </div>
   );

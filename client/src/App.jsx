@@ -11,6 +11,8 @@ import SignUp from "./pages/signup/SignUp";
 import { useDispatch, useSelector } from "react-redux";
 import API from "./utils/api";
 import { setCredentials } from "./features/auth/authSlice";
+import ProtectedRoutes from "./components/ProtectedRoutes";
+import AppPin from "./pages/signup/AppPin";
 
 const App = () => {
   const dispatch = useDispatch();
@@ -48,12 +50,15 @@ const App = () => {
       <Router>
         <Header />
         <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/vault" element={<Vault />} />
-          <Route path="/more" element={<More />} />
-          <Route path="/profile" element={<Profile />} />
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<SignUp />} />
+          <Route path="/appPin" element={<AppPin />} />
+          <Route element={<ProtectedRoutes />}>
+            <Route path="/" element={<Home />} />
+            <Route path="/vault" element={<Vault />} />
+            <Route path="/more" element={<More />} />
+            <Route path="/profile" element={<Profile />} />
+          </Route>
         </Routes>
         <Navbar />
       </Router>

@@ -6,6 +6,7 @@ import FormInput from "../../components/FormInput";
 import API from "../../utils/api";
 import { useDispatch } from "react-redux";
 import { setCredentials } from "../../features/auth/authSlice";
+import { login, logout } from "../../features/auth/authThunks";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -18,26 +19,12 @@ const Login = () => {
   const handleLogin = async (e) => {
     e.preventDefault();
 
-    try {
-      const res = await API.post("/auth/login", {
-        email,
-        password,
-      });
-      // console.log("Login successful:", res.data);
+    const result = await dispatch(login({ email, password }));
 
-      const accessToken = res.data.accessToken;
-
-      API.defaults.headers.common["Authorization"] = `Bearer ${accessToken}`;
-
-      dispatch(
-        setCredentials({
-          accessToken,
-          user: res.data.user,
-        }),
-      );
-      navigate("/"); // Redirect to home after successful login
-    } catch (err) {
-      console.error(err.response?.data?.error || "Login Failed!!");
+    if (login.fulfilled.match(result)) {
+      navigate("/");
+    } else {
+      console.error(result.payload); // handle error if needed
     }
   };
 

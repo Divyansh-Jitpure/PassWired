@@ -4,9 +4,24 @@ import UserInfo from "./UserInfo";
 import Category from "./Category";
 import Button from "../../components/Button";
 import { useNavigate } from "react-router";
+import { useDispatch } from "react-redux";
+import { logout } from "../../features/auth/authThunks";
 
 const More = () => {
   const navigate = useNavigate();
+
+  const dispatch = useDispatch();
+
+  const handleLogout = async () => {
+    const result = await dispatch(logout());
+
+    if (logout.fulfilled.match(result)) {
+      navigate("/login");
+    } else {
+      console.error(result.payload); // handle error if needed
+    }
+  };
+
   return (
     <div className="mx-auto mb-22 flex w-[90%] flex-col items-center gap-5 select-none">
       <UserInfo />
@@ -66,7 +81,12 @@ const More = () => {
           ]}
         />
       </section>
-      <Button text="Logout" />
+      <button
+        onClick={handleLogout}
+        className="cursor-pointer rounded bg-[#F05454] px-3 py-1 text-xl text-[#DDDDDD] shadow-md transition-all select-none hover:bg-[#ef3c3c] active:bg-[#ef3c3c]"
+      >
+        Logout
+      </button>
     </div>
   );
 };
