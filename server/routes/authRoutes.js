@@ -51,9 +51,36 @@ router.post("/signup", async (req, res) => {
 
     await newUser.save();
 
-    res.status(201).json({ message: "User Registered successfully!!" });
+    console.log(newUser);
+
+    res
+      .status(201)
+      .json({ message: "User Registered successfully!!", id: newUser._id });
   } catch (err) {
     res.status(500).json({ error: "Internal server error" });
+  }
+});
+
+router.post("/setpin", async (req, res) => {
+  try {
+    const { id, pin } = req.body;
+
+    // Validate input
+    if (!pin) {
+      return res.status(400).json({ error: "Pin is required" });
+    }
+
+    if (pin.length !== 4) {
+      return res.status(400).json({ error: "Pin must be 4 digits long" });
+    }
+
+    const user = await User.findById(id);
+    user.pin = pin;
+    await user.save();
+
+    res.status(200).json({ message: "Pin set successfully" });
+  } catch (err) {
+    res.status(500).json({ error: "Failed to set pin" });
   }
 });
 
