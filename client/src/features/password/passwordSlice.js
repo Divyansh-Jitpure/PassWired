@@ -4,6 +4,7 @@ import { fetchAllPasswords } from "./passwordThunks";
 
 const initialState = {
   sheetState: false,
+  appPinState: false,
   allPasswords: [],
   status: "idle",
   error: null,
@@ -15,6 +16,9 @@ const passwordSlice = createSlice({
   reducers: {
     setSheetState: (state) => {
       state.sheetState = !state.sheetState;
+    },
+    setAppPinState: (state) => {
+      state.appPinState = !state.appPinState;
     },
   },
   extraReducers: (builder) => {
@@ -32,5 +36,6 @@ const passwordSlice = createSlice({
   },
 });
 
-export const { setSheetState, setAllPasswords } = passwordSlice.actions;
+export const { setSheetState, setAllPasswords, setAppPinState } =
+  passwordSlice.actions;
 export default passwordSlice.reducer;

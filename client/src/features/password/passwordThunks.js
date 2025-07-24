@@ -6,6 +6,7 @@ export const fetchAllPasswords = createAsyncThunk(
   async (_, thunkAPI) => {
     try {
       const res = await API.get("/passwords/allPwds");
+
       return res.data;
     } catch (err) {
       return thunkAPI.rejectWithValue(

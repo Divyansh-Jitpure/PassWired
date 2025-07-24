@@ -1,7 +1,7 @@
 import React from "react";
 import UserInfo from "./UserInfo";
 
-import Category from "./Category"; 
+import Category from "./Category";
 import { useNavigate } from "react-router";
 import { useDispatch } from "react-redux";
 import { logout } from "../../features/auth/authThunks";
@@ -29,22 +29,23 @@ const More = () => {
           categoryName="👤 Account"
           features={[
             { name: "View Profile", action: () => navigate("/profile") },
-            { name: "Change Password", action: () => {} },
             { name: "Delete Account", action: () => {} },
           ]}
         />
         <Category
           categoryName="🔐 Security"
           features={[
+            { name: "Change Password", action: () => {} },
+            { name: "Change App Pin", action: () => {} },
             { name: "Enable 2FA", action: () => {} },
-            { name: "Manage Devices", action: () => {} },
-            { name: "Biometric Login", action: () => {} },
+            // { name: "Manage Devices", action: () => {} },
+            // { name: "Biometric Login", action: () => {} },
           ]}
         />
         <Category
           categoryName="✨ Features"
           features={[
-            { name: "Export Vault", action: () => {} },
+            // { name: "Export Vault", action: () => {} },
             { name: "Password Generator", action: () => {} },
             { name: "Password Strength Checker", action: () => {} },
           ]}
@@ -53,23 +54,27 @@ const More = () => {
           categoryName="⚙️ App Settings"
           features={[
             { name: "Theme", action: () => {} },
-            { name: "Language Selection", action: () => {} },
+            // { name: "Language Selection", action: () => {} },
           ]}
         />
-        <Category
+        {/* <Category
           categoryName="📦 App Info"
           features={[
             { name: "App Version", action: () => {} },
             { name: "What's New", action: () => {} },
             { name: "Credits & Licenses", action: () => {} },
           ]}
-        />
+        /> */}
         <Category
           categoryName="💬 Feedback & Support"
           features={[
-            { name: "Report a Bug", action: () => {} },
-            { name: "Share Feedback", action: () => {} },
-            { name: "Contact Developer", action: () => {} },
+            // { name: "Report a Bug", action: () => {} },
+            // { name: "Share Feedback", action: () => {} },
+            {
+              name: "Contact Developer",
+              action: () =>
+                window.open("https://divyansh-jitpure.web.app/", "_blank"),
+            },
           ]}
         />
         <Category

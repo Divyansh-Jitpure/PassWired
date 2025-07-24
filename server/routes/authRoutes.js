@@ -99,6 +99,17 @@ router.post("/setpin", async (req, res) => {
   }
 });
 
+router.get("/getPin", verifyAccessToken, async (req, res) => {
+  try {
+    const pin = await User.findById(req.user.id).select("pin");
+    console.log(pin);
+
+    res.json(pin);
+  } catch (err) {
+    res.status(500).json({ err: "Failed to fetch app pin" });
+  }
+});
+
 router.post("/login", async (req, res) => {
   try {
     const { email, password } = req.body;

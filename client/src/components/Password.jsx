@@ -3,14 +3,18 @@ import { FaCopy } from "react-icons/fa6";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { MdDelete } from "react-icons/md";
 import API from "../utils/api";
+import { useDispatch } from "react-redux";
+import { fetchAllPasswords } from "../features/password/passwordThunks";
 
 const Password = ({ pwd }) => {
   const [password, setPassword] = useState();
   const [showPwd, setShowPwd] = useState(false);
+  const dispatch = useDispatch();
 
   const handlleDelete = async () => {
     try {
       await API.delete(`/passwords/delete/${pwd._id}`);
+      dispatch(fetchAllPasswords());
     } catch (err) {
       console.error(
         "Error deleting password:",
@@ -22,6 +26,9 @@ const Password = ({ pwd }) => {
   const viewPassword = async (id) => {
     try {
       const res = await API.get(`/passwords/view/${id}`);
+      const pin = await API.get(`/auth/getPin`);
+      console.log(pin.data.pin);
+
       setShowPwd(!showPwd);
       setPassword((p) => (p = res.data));
     } catch (err) {

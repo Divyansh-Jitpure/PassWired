@@ -2,7 +2,11 @@ import React, { useRef, useState } from "react";
 import PwdSheetFormInput from "./PwdSheetFormInput";
 import API from "../../utils/api";
 import { useDispatch, useSelector } from "react-redux";
-import { setSheetState } from "../../features/password/passwordSlice";
+import {
+  setSheetState,
+  setAppPinState,
+} from "../../features/password/passwordSlice";
+import { fetchAllPasswords } from "../../features/password/passwordThunks";
 
 const PwdSheet = () => {
   const [formData, setFormData] = useState({
@@ -13,19 +17,21 @@ const PwdSheet = () => {
   const sheetRef = useRef();
 
   const sheetState = useSelector((state) => state.password.sheetState);
+  const appPinState = useSelector((state) => state.password.appPinState);
+  // console.log(appPinState);
+
   const dispatch = useDispatch();
 
   const handlePwdSubmit = async (e) => {
     e.preventDefault();
-    // console.log("Form Data Submitted:", formData);
 
     try {
+      dispatch(setAppPinState());
+
       await API.post("/passwords/add", formData);
+      dispatch(fetchAllPasswords());
     } catch (err) {
-      console.error(
-        "Error adding password:",
-        err.response?.data?.error || err.message,
-      );
+      console.error("Error adding password:", err.response?.data?.error || err);
     }
 
     dispatch(setSheetState());

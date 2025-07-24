@@ -10,7 +10,7 @@ const RecentPasswords = ({ pwdCount }) => {
 
   useEffect(() => {
     dispatch(fetchAllPasswords());
-  }, [allPasswords]);
+  }, []);
 
   return (
     <div className="flex w-[80%] flex-col gap-3">

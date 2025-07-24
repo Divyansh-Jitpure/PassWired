@@ -2,6 +2,7 @@ import React from "react";
 import pic from "/pic2.png";
 import { useNavigate } from "react-router";
 import { useSelector } from "react-redux";
+import Title from "../../components/Title";
 
 const UserInfo = () => {
   const user = useSelector((state) => state.auth.user);
@@ -14,12 +15,9 @@ const UserInfo = () => {
         src={pic}
         alt="profilePicture"
       /> */}
-      <section className="flex flex-col">
-        <span
-          onClick={() => navigate("/profile")}
-          className="w-fit cursor-pointer text-2xl font-semibold text-[#30475E] text-shadow-md"
-        >
-          {user?.username}
+      <section className="flex flex-col items-center">
+        <span onClick={() => navigate("/profile")} className="cursor-pointer">
+          <Title text={user?.username} />
         </span>
         <span className="text-[#30475eb7]">{user?.email}</span>
       </section>
