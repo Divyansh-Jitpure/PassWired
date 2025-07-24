@@ -21,7 +21,9 @@ export const login = createAsyncThunk(
 
       return res.data;
     } catch (err) {
-      return thunkAPI.rejectWithValue(err || "Login Failed!!");
+      return thunkAPI.rejectWithValue(
+        err.response?.data?.error || "Login Failed!!",
+      );
     }
   },
 );
@@ -32,6 +34,23 @@ export const logout = createAsyncThunk("auth/logout", async (_, thunkAPI) => {
 
     return res.data;
   } catch (err) {
-    return thunkAPI.rejectWithValue(err || "Logout Failed!!");
+    return thunkAPI.rejectWithValue(
+      err.response?.data?.error || "Logout Failed!!",
+    );
   }
 });
+
+export const setAppPin = createAsyncThunk(
+  "auth/setPin",
+  async (payload, thunkAPI) => {
+    try {
+      const res = await API.post("/auth/setpin", payload);
+
+      return res.data;
+    } catch (err) {
+      return thunkAPI.rejectWithValue(
+        err.response?.data?.error || "Failed to set pin!!",
+      );
+    }
+  },
+);

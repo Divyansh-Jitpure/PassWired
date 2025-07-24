@@ -43,15 +43,15 @@ router.post("/signup", async (req, res) => {
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(password, salt);
 
+    // Create a new user
     const newUser = new User({
       username,
       email,
       password: hashedPassword,
     });
 
+    // Save the user to the database
     await newUser.save();
-
-    console.log(newUser);
 
     res
       .status(201)
@@ -70,15 +70,30 @@ router.post("/setpin", async (req, res) => {
       return res.status(400).json({ error: "Pin is required" });
     }
 
+    // Check if user ID is provided
+    if (!id) {
+      return res.status(400).json({ error: "User ID is required" });
+    }
+
+    // Check if pin is exactly 4 digits
     if (pin.length !== 4) {
       return res.status(400).json({ error: "Pin must be 4 digits long" });
     }
 
+    // Check if user exists
     const user = await User.findById(id);
-    user.pin = pin;
+    if (!user) {
+      return res.status(404).json({ error: "User not found" });
+    }
+
+    // Hash the password
+    const salt = await bcrypt.genSalt(10);
+    const hashedPin = await bcrypt.hash(pin, salt);
+
+    user.pin = hashedPin;
     await user.save();
 
-    res.status(200).json({ message: "Pin set successfully" });
+    res.status(201).json({ message: "Pin set successfully" });
   } catch (err) {
     res.status(500).json({ error: "Failed to set pin" });
   }

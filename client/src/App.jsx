@@ -34,7 +34,7 @@ const App = () => {
 
         dispatch(setCredentials({ accessToken, user }));
       } catch (err) {
-        console.error("Auto login failed:", err.response?.data || err.message);
+        console.error("Auto login failed:", err.response?.data?.error || err.message);
       } finally {
         setLoading(false);
       }

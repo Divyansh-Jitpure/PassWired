@@ -4,6 +4,8 @@ import { useState } from "react";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { useLocation, useNavigate } from "react-router";
 import API from "../../utils/api";
+import { useDispatch } from "react-redux";
+import { setAppPin } from "../../features/auth/authThunks";
 
 const AppPin = () => {
   const [pin, setPin] = useState("");
@@ -13,9 +15,11 @@ const AppPin = () => {
 
   const navigate = useNavigate();
 
+  const dispatch = useDispatch();
+
   const location = useLocation();
   const id = location.state;
-  console.log("id from location state:", id);
+  // console.log("id from location state:", id);
 
   const handleSetPin = async (e) => {
     e.preventDefault();
@@ -30,12 +34,12 @@ const AppPin = () => {
       return;
     }
 
-    try {
-      const res = await API.post("/auth/setpin", { id, pin });
+    const result = await dispatch(setAppPin({ id, pin }));
 
+    if (setAppPin.fulfilled.match(result)) {
       navigate("/login");
-    } catch (err) {
-      console.error(err.response?.data?.error || "Failed to set pin!!");
+    } else {
+      console.error(result.payload); // handle error if needed
     }
   };
 

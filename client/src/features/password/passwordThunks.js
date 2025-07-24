@@ -8,7 +8,9 @@ export const fetchAllPasswords = createAsyncThunk(
       const res = await API.get("/passwords/allPwds");
       return res.data;
     } catch (err) {
-      return thunkAPI.rejectWithValue(err.response.data);
+      return thunkAPI.rejectWithValue(
+        err.response.data?.error || "Failed to fetch passwords!",
+      );
     }
   },
 );

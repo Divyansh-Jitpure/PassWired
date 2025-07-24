@@ -1,10 +1,9 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { FaPlus } from "react-icons/fa6";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { setSheetState } from "../../features/password/passwordSlice";
 
 const AddPassword = () => {
-  const sheetState = useSelector((state) => state.password.sheetState);
   const dispatch = useDispatch();
 
   return (

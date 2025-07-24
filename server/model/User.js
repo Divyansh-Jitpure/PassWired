@@ -22,9 +22,6 @@ const UserSchema = new mongoose.Schema(
     },
     pin: {
       type: String,
-      required: false,
-      minlength: 4,
-      maxlength: 4,
     },
   },
   { timestamps: true } // Adds createdAt and updatedAt
