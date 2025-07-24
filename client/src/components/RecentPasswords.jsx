@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
-import Password from "../../components/Password";
+import Password from "./Password";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchAllPasswords } from "../../features/password/passwordThunks";
+import { fetchAllPasswords } from "../features/password/passwordThunks";
 
 const RecentPasswords = ({ pwdCount }) => {
   const allPasswords = useSelector((state) => state.password.allPasswords);

@@ -1,12 +1,9 @@
 import React, { useState } from "react";
-import Button from "../../components/Button";
 import { FcGoogle } from "react-icons/fc";
 import { Link, useNavigate } from "react-router";
 import FormInput from "../../components/FormInput";
-import API from "../../utils/api";
 import { useDispatch } from "react-redux";
-import { setCredentials } from "../../features/auth/authSlice";
-import { login, logout } from "../../features/auth/authThunks";
+import { login } from "../../features/auth/authThunks";
 
 const Login = () => {
   const [email, setEmail] = useState("");

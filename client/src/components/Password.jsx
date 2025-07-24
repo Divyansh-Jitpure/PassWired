@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { FaCopy } from "react-icons/fa6";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { MdDelete } from "react-icons/md";

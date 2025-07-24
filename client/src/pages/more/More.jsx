@@ -1,8 +1,7 @@
 import React from "react";
 import UserInfo from "./UserInfo";
 
-import Category from "./Category";
-import Button from "../../components/Button";
+import Category from "./Category"; 
 import { useNavigate } from "react-router";
 import { useDispatch } from "react-redux";
 import { logout } from "../../features/auth/authThunks";

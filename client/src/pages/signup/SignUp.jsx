@@ -1,9 +1,7 @@
 import React, { useState } from "react";
-import Button from "../../components/Button";
 import { FcGoogle } from "react-icons/fc";
 import { Link, useNavigate } from "react-router";
 import FormInput from "../../components/FormInput";
-import axios from "axios";
 import API from "../../utils/api";
 
 const SignUp = () => {

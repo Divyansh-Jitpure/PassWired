@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import RecentPasswords from "../home/RecentPasswords";
+import RecentPasswords from "../../components/RecentPasswords";
 import Title from "../../components/Title";
 import AddPassword from "./AddPassword";
 import PwdSheet from "./PwdSheet";

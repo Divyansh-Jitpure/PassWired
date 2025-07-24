@@ -8,7 +8,7 @@ import Header from "./components/Header";
 import Profile from "./pages/profile/Profile";
 import Login from "./pages/login/Login";
 import SignUp from "./pages/signup/SignUp";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import API from "./utils/api";
 import { setCredentials } from "./features/auth/authSlice";
 import ProtectedRoutes from "./components/ProtectedRoutes";
@@ -34,7 +34,10 @@ const App = () => {
 
         dispatch(setCredentials({ accessToken, user }));
       } catch (err) {
-        console.error("Auto login failed:", err.response?.data?.error || err.message);
+        console.error(
+          "Auto login failed:",
+          err.response?.data?.error || err.message,
+        );
       } finally {
         setLoading(false);
       }

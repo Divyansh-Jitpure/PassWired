@@ -3,7 +3,6 @@ import FormInput from "../../components/FormInput";
 import { useState } from "react";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { useLocation, useNavigate } from "react-router";
-import API from "../../utils/api";
 import { useDispatch } from "react-redux";
 import { setAppPin } from "../../features/auth/authThunks";
 
