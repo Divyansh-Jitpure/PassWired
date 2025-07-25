@@ -8,15 +8,18 @@ import Header from "./components/Header";
 import Profile from "./pages/profile/Profile";
 import Login from "./pages/login/Login";
 import SignUp from "./pages/signup/SignUp";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import API from "./utils/api";
 import { setCredentials } from "./features/auth/authSlice";
 import ProtectedRoutes from "./components/ProtectedRoutes";
 import AppPin from "./pages/login/AppPin";
+import PinModal from "./components/PinModal";
 
 const App = () => {
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(true);
+
+  const showPinModal = useSelector((state) => state.auth.showPinModal);
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -52,6 +55,7 @@ const App = () => {
     <main className="grid min-h-[100dvh] grid-rows-[auto_1fr_auto] bg-[#DDDDDD]">
       <Router>
         <Header />
+        {showPinModal && <PinModal />}
         <Routes>
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<SignUp />} />

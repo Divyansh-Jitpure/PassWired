@@ -4,6 +4,7 @@ import { logout } from "../../features/auth/authThunks";
 const initialState = {
   accessToken: "",
   user: null,
+  showPinModal: false,
 };
 
 const authSlice = createSlice({
@@ -13,6 +14,9 @@ const authSlice = createSlice({
     setCredentials: (state, action) => {
       state.accessToken = action.payload.accessToken;
       state.user = action.payload.user;
+    },
+    setShowPinModal: (state, action) => {
+      state.showPinModal = action.payload.pinModalState;
     },
   },
   extraReducers: (builder) => {
