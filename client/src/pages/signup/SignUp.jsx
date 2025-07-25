@@ -32,7 +32,8 @@ const SignUp = () => {
         password,
       });
       // console.log("Signup successful:", res.data);
-      navigate("/appPin", { state: res.data.id }); // Redirect to login page on success
+      // navigate("/appPin", { state: res.data.id }); // Redirect to login page on success
+      navigate("/login"); // Redirect to login page on success
     } catch (err) {
       console.error(err.response?.data?.error || "Signup Failed!!");
     }

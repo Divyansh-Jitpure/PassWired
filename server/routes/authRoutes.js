@@ -102,7 +102,7 @@ router.post("/setpin", async (req, res) => {
 router.get("/getPin", verifyAccessToken, async (req, res) => {
   try {
     const pin = await User.findById(req.user.id).select("pin");
-    console.log(pin);
+    // console.log(pin);
 
     res.json(pin);
   } catch (err) {
@@ -161,6 +161,7 @@ router.post("/login", async (req, res) => {
         id: user._id,
         username: user.username,
         email: user.email,
+        pin: user.pin,
       },
     });
   } catch (err) {

@@ -17,9 +17,14 @@ const Login = () => {
     e.preventDefault();
 
     const result = await dispatch(login({ email, password }));
+    // console.log(result.payload.user);
 
     if (login.fulfilled.match(result)) {
-      navigate("/");
+      if (!result.payload.user.pin) {
+        navigate("/appPin");
+      } else {
+        navigate("/");
+      }
     } else {
       console.error(result.payload); // handle error if needed
     }

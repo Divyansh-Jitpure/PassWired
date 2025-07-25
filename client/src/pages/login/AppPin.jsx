@@ -1,9 +1,9 @@
-import React from "react";
+import React, { useEffect } from "react";
 import FormInput from "../../components/FormInput";
 import { useState } from "react";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
-import { useLocation, useNavigate } from "react-router";
-import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router";
+import { useDispatch, useSelector } from "react-redux";
 import { setAppPin } from "../../features/auth/authThunks";
 
 const AppPin = () => {
@@ -14,11 +14,9 @@ const AppPin = () => {
 
   const navigate = useNavigate();
 
-  const dispatch = useDispatch();
+  const user = useSelector((state) => state.auth.user);
 
-  const location = useLocation();
-  const id = location.state;
-  // console.log("id from location state:", id);
+  const dispatch = useDispatch();
 
   const handleSetPin = async (e) => {
     e.preventDefault();
@@ -33,12 +31,12 @@ const AppPin = () => {
       return;
     }
 
-    const result = await dispatch(setAppPin({ id, pin }));
+    const result = await dispatch(setAppPin({ id: user.id, pin }));
 
     if (setAppPin.fulfilled.match(result)) {
-      navigate("/login");
+      navigate("/");
     } else {
-      console.error(result.payload); // handle error if needed
+      console.error(result.payload);
     }
   };
 
