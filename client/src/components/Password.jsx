@@ -3,12 +3,16 @@ import { FaCopy } from "react-icons/fa6";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { MdDelete } from "react-icons/md";
 import API from "../utils/api";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { fetchAllPasswords } from "../features/password/passwordThunks";
+import { setShowPinModal } from "../features/auth/authSlice";
 
 const Password = ({ pwd }) => {
   const [password, setPassword] = useState();
   const [showPwd, setShowPwd] = useState(false);
+  const showPinModal = useSelector((state) => state.auth.showPinModal);
+  // console.log("run", runFunction);
+
   const dispatch = useDispatch();
 
   const handlleDelete = async () => {
@@ -26,8 +30,9 @@ const Password = ({ pwd }) => {
   const viewPassword = async (id) => {
     try {
       const res = await API.get(`/passwords/view/${id}`);
-      const pin = await API.get(`/auth/getPin`);
-      console.log(pin.data.pin);
+      // const pin = await API.get(`/auth/getPin`);
+
+      dispatch(setShowPinModal({ pinModalState: true }));
 
       setShowPwd(!showPwd);
       setPassword((p) => (p = res.data));
@@ -48,6 +53,7 @@ const Password = ({ pwd }) => {
     try {
       const res = await API.get(`/passwords/view/${id}`);
       await navigator.clipboard.writeText(res.data.password);
+      alert("Copied");
     } catch (err) {
       console.error(
         "Error copying password:",
@@ -55,10 +61,6 @@ const Password = ({ pwd }) => {
       );
     }
   };
-
-  // useEffect(() => {
-  //   console.log(password);
-  // }, [password]);
 
   return (
     <div className="grid w-full grid-cols-2 rounded border bg-white p-2 shadow-md">

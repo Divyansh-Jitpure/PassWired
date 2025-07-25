@@ -5,6 +5,7 @@ const initialState = {
   accessToken: "",
   user: null,
   showPinModal: false,
+  runFunction: false,
 };
 
 const authSlice = createSlice({
@@ -17,6 +18,9 @@ const authSlice = createSlice({
     },
     setShowPinModal: (state, action) => {
       state.showPinModal = action.payload.pinModalState;
+    },
+    setRunFunction: (state, action) => {
+      state.runFunction = action.payload.runFunctionState;
     },
   },
   extraReducers: (builder) => {
@@ -31,5 +35,6 @@ const authSlice = createSlice({
   },
 });
 
-export const { setCredentials } = authSlice.actions;
+export const { setCredentials, setShowPinModal, setRunFunction } =
+  authSlice.actions;
 export default authSlice.reducer;

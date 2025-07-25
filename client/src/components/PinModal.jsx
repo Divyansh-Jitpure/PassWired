@@ -1,13 +1,31 @@
 import React, { useState } from "react";
 import FormInput from "./FormInput";
 import Title from "./Title";
-import Button from "./Button";
+import { setShowPinModal } from "../features/auth/authSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { setRunFunction } from "../features/auth/authSlice";
+import API from "../utils/api";
 
 const PinModal = () => {
   const [pin, setPin] = useState("");
 
-  const handleSubmit = (e) => {
+  const user = useSelector((state) => state.auth.user);
+  //   console.log(user);
+
+  const dispatch = useDispatch();
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    try {
+      const res = await API.get(`/auth/getPin/${pin}`);
+      console.log(res);
+      dispatch(setShowPinModal({ pinModalState: false }));
+    } catch (err) {
+      console.error(
+        "Error verifying pin:",
+        err.response?.data?.error || err.message,
+      );
+    }
   };
   return (
     <div className="fixed inset-0 z-1000 flex items-center justify-center bg-black/30 backdrop-blur-sm">
