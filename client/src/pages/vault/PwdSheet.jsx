@@ -8,6 +8,7 @@ import {
 } from "../../features/password/passwordSlice";
 import { fetchAllPasswords } from "../../features/password/passwordThunks";
 import { toast } from "sonner";
+import { IoClose } from "react-icons/io5";
 
 // Password Sheet component for adding new password entries
 const PwdSheet = () => {
@@ -20,9 +21,6 @@ const PwdSheet = () => {
 
   // Ref for the sheet container
   const sheetRef = useRef();
-
-  // Redux state for sheet visibility
-  const sheetState = useSelector((state) => state.password.sheetState);
 
   // Redux dispatch function
   const dispatch = useDispatch();
@@ -67,17 +65,29 @@ const PwdSheet = () => {
     return savePasswordPromise;
   };
 
+  const closeModal = (e) => {
+    if (sheetRef.current === e.target) {
+      dispatch(setSheetState());
+    }
+  };
+
   return (
     // Sheet container for password form
     <div
       ref={sheetRef}
-      className={`absolute bottom-16 h-70 w-full border-t-2 bg-white ${sheetState ? "block" : "hidden"} `}
+      onClick={closeModal}
+      className={`fixed inset-0 z-1000 flex items-center justify-center bg-black/30 backdrop-blur-sm`}
     >
       {/* Password entry form */}
       <form
-        className="flex h-full w-full flex-col items-center justify-center gap-4"
+        className="relative flex w-[80%] flex-col items-center justify-center gap-4 rounded-xl bg-white p-12"
         onSubmit={handlePwdSubmit}
       >
+        {/* Close button */}
+        <IoClose
+          onClick={() => dispatch(setSheetState())}
+          className="absolute top-2 right-2 cursor-pointer rounded-full text-4xl hover:bg-gray-400/30 active:bg-gray-400/30"
+        />
         {/* Service input field */}
         <PwdSheetFormInput
           label="Service"

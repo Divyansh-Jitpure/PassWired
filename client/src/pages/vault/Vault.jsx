@@ -11,13 +11,17 @@ const Vault = () => {
 
   const dispatch = useDispatch();
 
+  // Redux state for sheet visibility
+  const sheetState = useSelector((state) => state.password.sheetState);
+
   useEffect(() => {
     dispatch(fetchAllPasswords());
   }, []);
 
-
   return (
     <div className="relative mt-4 flex flex-col items-center gap-4 select-none">
+      {sheetState && <PwdSheet />}
+
       <Title text="Saved Passwords" />
       <AddPassword />
 
@@ -26,7 +30,6 @@ const Vault = () => {
       ) : (
         <RecentPasswords pwdCount={Number.MAX_VALUE} />
       )}
-      <PwdSheet />
     </div>
   );
 };

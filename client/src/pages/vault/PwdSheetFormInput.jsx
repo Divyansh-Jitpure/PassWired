@@ -2,7 +2,7 @@ import React from "react";
 
 const PwdSheetFormInput = ({ value, setValue, label, type }) => {
   return (
-    <div className="relative flex w-[75%] flex-col">
+    <div className="relative flex w-[90%] flex-col">
       <input
         type={type}
         id={label.toLowerCase()}

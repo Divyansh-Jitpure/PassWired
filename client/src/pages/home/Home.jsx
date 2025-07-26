@@ -8,10 +8,13 @@ import RecentPasswords from "../../components/RecentPasswords";
 import { useDispatch, useSelector } from "react-redux";
 import AddPassword from "../vault/AddPassword";
 import { fetchAllPasswords } from "../../features/password/passwordThunks";
+import PwdSheet from "../vault/PwdSheet";
 
 const Home = () => {
   const navigate = useNavigate();
   const allPasswords = useSelector((state) => state.password.allPasswords);
+  // Redux state for sheet visibility
+  const sheetState = useSelector((state) => state.password.sheetState);
 
   const dispatch = useDispatch();
 
@@ -21,6 +24,7 @@ const Home = () => {
 
   return (
     <div className="mb-22 flex flex-col items-center gap-6 select-none">
+      {sheetState && <PwdSheet />}
       <Search />
       <Tools />
       <Button text="All Features" action={() => navigate("/more")} />
