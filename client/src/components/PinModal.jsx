@@ -1,42 +1,80 @@
-import React, { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import FormInput from "./FormInput";
 import Title from "./Title";
 import { setShowPinModal } from "../features/auth/authSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { setRunFunction } from "../features/auth/authSlice";
 import API from "../utils/api";
+import { IoClose } from "react-icons/io5";
 
 const PinModal = () => {
+  // Local state for storing the entered PIN
   const [pin, setPin] = useState("");
 
-  const user = useSelector((state) => state.auth.user);
-  //   console.log(user);
+  const modalRef = useRef();
 
   const dispatch = useDispatch();
 
+  // Get modal visibility state from Redux store
+  const showPinModal = useSelector((state) => state.auth.showPinModal);
+
+  // Reset PIN input when modal is closed
+  useEffect(() => {
+    if (!showPinModal) {
+      setPin("");
+    }
+  }, [showPinModal]);
+
+  // Handle PIN form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await API.get(`/auth/getPin/${pin}`);
-      console.log(res);
-      dispatch(setShowPinModal({ pinModalState: false }));
+      // Verify PIN via API call
+      const res = await API.get(`/auth/verifyPin/${pin}`);
+      if (res.data.verified) {
+        // If verified, trigger pending function and close modal
+        dispatch(setRunFunction(true));
+        dispatch(setShowPinModal({ pinModalState: false }));
+      }
     } catch (err) {
+      // Log error if verification fails
       console.error(
         "Error verifying pin:",
         err.response?.data?.error || err.message,
       );
     }
   };
+
+  const closeModal = (e) => {
+    if (modalRef.current === e.target) {
+      dispatch(setShowPinModal({ pinModalState: false }));
+    }
+  };
+
   return (
-    <div className="fixed inset-0 z-1000 flex items-center justify-center bg-black/30 backdrop-blur-sm">
+    // Modal overlay
+    <div
+      ref={modalRef}
+      onClick={closeModal}
+      className="fixed inset-0 z-1000 flex items-center justify-center bg-black/30 backdrop-blur-sm"
+    >
       <form
         onSubmit={handleSubmit}
-        className="flex flex-col items-center justify-center gap-6 rounded-xl bg-[#DDDDDD] p-10"
+        className="relative flex flex-col items-center justify-center gap-6 rounded-xl bg-[#DDDDDD] p-12"
       >
+        {/* Close button */}
+        <IoClose
+          onClick={() => dispatch(setShowPinModal({ pinModalState: false }))}
+          className="absolute top-2 right-2 cursor-pointer rounded-full text-4xl hover:bg-gray-400/30 active:bg-gray-400/30"
+        />
+        {/* Modal title */}
         <Title text="Enter Pin" />
-        <FormInput value={pin} setValue={setPin} lable="Pin" type="password" />
+        {/* PIN input field */}
+        <FormInput value={pin} setValue={setPin} label="Pin" type="password" />
+        {/* Submit button */}
         <button
           type="submit"
+          disabled={!pin}
           className="cursor-pointer rounded bg-[#F05454] px-3 py-1 text-xl text-[#DDDDDD] shadow-md transition-all select-none hover:bg-[#ef3c3c] active:bg-[#ef3c3c]"
         >
           Continue

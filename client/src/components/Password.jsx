@@ -1,20 +1,38 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { FaCopy } from "react-icons/fa6";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { MdDelete } from "react-icons/md";
 import API from "../utils/api";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchAllPasswords } from "../features/password/passwordThunks";
-import { setShowPinModal } from "../features/auth/authSlice";
+import {
+  setShowPinModal,
+  setPendingAction,
+  clearPendingAction,
+  setRunFunction,
+} from "../features/auth/authSlice";
+import { useEffect } from "react";
 
+// Password component displays a single password entry and handles actions (view, copy, delete)
 const Password = ({ pwd }) => {
+  // Local state for password value and visibility
   const [password, setPassword] = useState();
   const [showPwd, setShowPwd] = useState(false);
-  const showPinModal = useSelector((state) => state.auth.showPinModal);
-  // console.log("run", runFunction);
+
+  // Redux state selectors
+  const runFunction = useSelector((state) => state.auth.runFunction);
+  const pendingAction = useSelector((state) => state.auth.pendingAction);
+  const targetPasswordId = useSelector((state) => state.auth.targetPasswordId);
 
   const dispatch = useDispatch();
 
+  // Triggers PIN modal and sets pending action in Redux
+  const handleActionWithPin = (action) => {
+    dispatch(setPendingAction({ action, id: pwd._id }));
+    dispatch(setShowPinModal({ pinModalState: true }));
+  };
+
+  // Deletes the password entry
   const handlleDelete = async () => {
     try {
       await API.delete(`/passwords/delete/${pwd._id}`);
@@ -27,15 +45,12 @@ const Password = ({ pwd }) => {
     }
   };
 
+  // Fetches and displays the password
   const viewPassword = async (id) => {
     try {
       const res = await API.get(`/passwords/view/${id}`);
-      // const pin = await API.get(`/auth/getPin`);
-
-      dispatch(setShowPinModal({ pinModalState: true }));
-
       setShowPwd(!showPwd);
-      setPassword((p) => (p = res.data));
+      setPassword(res.data);
     } catch (err) {
       console.error(
         "Error fetching password:",
@@ -44,11 +59,13 @@ const Password = ({ pwd }) => {
     }
   };
 
+  // Hides the password
   const hidePassword = () => {
-    setPassword((p) => (p = null));
+    setPassword(null);
     setShowPwd(!showPwd);
   };
 
+  // Copies the password to clipboard
   const copyPassword = async (id) => {
     try {
       const res = await API.get(`/passwords/view/${id}`);
@@ -62,11 +79,33 @@ const Password = ({ pwd }) => {
     }
   };
 
+  // Executes pending action after PIN verification
+  useEffect(() => {
+    if (runFunction && pendingAction && pwd._id === targetPasswordId) {
+      const executeAction = async () => {
+        if (pendingAction === "view") {
+          await viewPassword(pwd._id);
+        } else if (pendingAction === "copy") {
+          await copyPassword(pwd._id);
+        } else if (pendingAction === "delete") {
+          await handlleDelete();
+        }
+
+        dispatch(clearPendingAction());
+        dispatch(setRunFunction(false));
+      };
+
+      executeAction();
+    }
+  }, [runFunction, pendingAction, targetPasswordId, pwd._id, dispatch]);
+
   return (
     <div className="grid w-full grid-cols-2 rounded border bg-white p-2 shadow-md">
+      {/* Left section: Service name, username, and password */}
       <section className="flex flex-col">
         <span
-          onClick={() => viewPassword(pwd._id)}
+          // onClick={() => viewPassword(pwd._id)}
+          onClick={() => handleActionWithPin("view")}
           className="w-fit cursor-pointer text-xl font-semibold text-shadow-sm"
         >
           {pwd.service}
@@ -76,7 +115,7 @@ const Password = ({ pwd }) => {
           <span>
             Password:{" "}
             <span
-              onClick={() => copyPassword(pwd._id)}
+              onClick={() => handleActionWithPin("copy")}
               className="cursor-pointer rounded-xs bg-gray-300/50 px-1"
             >
               {password.password}
@@ -84,6 +123,7 @@ const Password = ({ pwd }) => {
           </span>
         )}
       </section>
+      {/* Right section: Action buttons */}
       <section className="flex items-center justify-end gap-4">
         {showPwd ? (
           <button onClick={hidePassword} className="cursor-pointer">
@@ -91,7 +131,8 @@ const Password = ({ pwd }) => {
           </button>
         ) : (
           <button
-            onClick={() => viewPassword(pwd._id)}
+            // onClick={() => viewPassword(pwd._id)}
+            onClick={() => handleActionWithPin("view")}
             className="cursor-pointer"
           >
             <FaEye className="text-3xl" />
@@ -99,12 +140,15 @@ const Password = ({ pwd }) => {
         )}
 
         <button
-          onClick={() => copyPassword(pwd._id)}
+          onClick={() => handleActionWithPin("copy")}
           className="cursor-pointer"
         >
           <FaCopy className="text-2xl" />
         </button>
-        <button onClick={handlleDelete} className="cursor-pointer">
+        <button
+          onClick={() => handleActionWithPin("delete")}
+          className="cursor-pointer"
+        >
           <MdDelete className="text-3xl" />
         </button>
       </section>

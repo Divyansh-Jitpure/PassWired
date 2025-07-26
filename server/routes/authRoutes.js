@@ -99,13 +99,11 @@ router.post("/setpin", async (req, res) => {
   }
 });
 
-router.get("/getPin/:pin", verifyAccessToken, async (req, res) => {
+router.get("/verifyPin/:pin", verifyAccessToken, async (req, res) => {
   try {
     const { pin } = req.params;
-    console.log(pin);
 
     const user = await User.findById(req.user.id);
-    // console.log(user);
 
     if (!user || !user.pin) {
       return res.status(404).json({ error: "User or pin not found" });
@@ -114,9 +112,9 @@ router.get("/getPin/:pin", verifyAccessToken, async (req, res) => {
     const isMatch = await bcrypt.compare(pin, user.pin);
     if (!isMatch) return res.status(400).json({ error: "Invalid Pin!!" });
 
-    res.status(200).json({ message: "Pin verified" });
+    res.status(200).json({ message: "Pin verified", verified: true });
   } catch (err) {
-    res.status(500).json({ error: "Failed to fetch app pin" });
+    res.status(500).json({ error: "Failed to verify app pin" });
   }
 });
 

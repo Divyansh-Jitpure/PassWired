@@ -1,0 +1,1 @@
+- If password is already shown after pin verification dont ask for it again when copying
