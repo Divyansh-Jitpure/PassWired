@@ -7,8 +7,10 @@ import verifyAccessToken from "../middleware/verifyAccessToken.js";
 
 const router = express.Router();
 
+// Get user details (protected route)
 router.get("/user", verifyAccessToken, async (req, res) => {
   try {
+    // Find user by ID, exclude password field
     const user = await User.findById(req.user.id).select("-password");
     res.json({ user });
   } catch (err) {
@@ -16,6 +18,7 @@ router.get("/user", verifyAccessToken, async (req, res) => {
   }
 });
 
+// User signup route
 router.post("/signup", async (req, res) => {
   try {
     const { username, email, password } = req.body;
@@ -25,12 +28,12 @@ router.post("/signup", async (req, res) => {
       return res.status(400).json({ error: "All fields are required" });
     }
 
-    // Check if user already exists
+    // Check if user already exists by email
     const existingUser = await User.findOne({ email });
     if (existingUser) {
       return res
         .status(400)
-        .json({ error: "User already exists with this email!!" }); //try message later
+        .json({ error: "User already exists with this email!!" });
     }
 
     // Check if username already exists
@@ -61,6 +64,7 @@ router.post("/signup", async (req, res) => {
   }
 });
 
+// Set user PIN route
 router.post("/setpin", async (req, res) => {
   try {
     const { id, pin } = req.body;
@@ -86,7 +90,7 @@ router.post("/setpin", async (req, res) => {
       return res.status(404).json({ error: "User not found" });
     }
 
-    // Hash the password
+    // Hash the pin
     const salt = await bcrypt.genSalt(10);
     const hashedPin = await bcrypt.hash(pin, salt);
 
@@ -99,25 +103,29 @@ router.post("/setpin", async (req, res) => {
   }
 });
 
+// Verify user PIN route (protected)
 router.get("/verifyPin/:pin", verifyAccessToken, async (req, res) => {
   try {
     const { pin } = req.params;
 
+    // Find user by ID
     const user = await User.findById(req.user.id);
 
     if (!user || !user.pin) {
       return res.status(404).json({ error: "User or pin not found" });
     }
 
+    // Compare input pin with stored hashed pin
     const isMatch = await bcrypt.compare(pin, user.pin);
-    if (!isMatch) return res.status(400).json({ error: "Invalid Pin!!" });
+    if (!isMatch) return res.status(400).json({ error: "Invalid Pin!" });
 
-    res.status(200).json({ message: "Pin verified", verified: true });
+    res.status(200).json({ message: "Pin verified" });
   } catch (err) {
     res.status(500).json({ error: "Failed to verify app pin" });
   }
 });
 
+// User login route
 router.post("/login", async (req, res) => {
   try {
     const { email, password } = req.body;
@@ -127,11 +135,11 @@ router.post("/login", async (req, res) => {
       return res.status(400).json({ error: "All fields are required" });
     }
 
-    // Check if user exists and make a user object
+    // Check if user exists
     const user = await User.findOne({ email });
     if (!user) return res.status(400).json({ error: "User not found!!" });
 
-    // Comparing input password and stored hashed password
+    // Compare input password and stored hashed password
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch)
       return res.status(400).json({ error: "Invalid Email or password!!" });
@@ -154,11 +162,11 @@ router.post("/login", async (req, res) => {
       }
     );
 
+    // Set refresh token as HTTP-only cookie
     res.cookie("refreshToken", refreshToken, {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
       sameSite: "strict", //sameSite: "None" when frontend on Firebase, backend on Render)
-
       maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
     });
 
@@ -177,9 +185,11 @@ router.post("/login", async (req, res) => {
   }
 });
 
+// Refresh access token route
 router.post("/refresh", (req, res) => {
   const refreshToken = req.cookies.refreshToken;
 
+  // Check if refresh token exists
   if (!refreshToken) {
     return res
       .status(401)
@@ -187,8 +197,8 @@ router.post("/refresh", (req, res) => {
   }
 
   try {
+    // Verify refresh token
     const payload = jwt.verify(refreshToken, process.env.REFRESH_JWT_SECRET);
-    // console.log("Payload:", payload);
 
     // Generate new access token
     const newAccessToken = jwt.sign(
@@ -205,7 +215,9 @@ router.post("/refresh", (req, res) => {
   }
 });
 
+// User logout route
 router.post("/logout", (req, res) => {
+  // Clear refresh token cookie
   res.clearCookie("refreshToken", {
     httpOnly: true,
     secure: process.env.NODE_ENV === "production",

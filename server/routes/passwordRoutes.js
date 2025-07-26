@@ -5,12 +5,14 @@ import crypto from "crypto";
 
 const router = express.Router();
 
+// Encryption algorithm and IV length constants
 const ALGORITHM = "aes-256-cbc";
 const IV_LENGTH = 16; // For AES, this is always 16
 
+// Function to encrypt a text using AES-256-CBC
 const encrypt = (text) => {
   const ENCRYPTION_KEY = process.env.ENCRYPTION_KEY;
-  const iv = crypto.randomBytes(IV_LENGTH);
+  const iv = crypto.randomBytes(IV_LENGTH); // Generate random IV
   const cipher = crypto.createCipheriv(
     ALGORITHM,
     Buffer.from(ENCRYPTION_KEY),
@@ -18,9 +20,11 @@ const encrypt = (text) => {
   );
   let encrypted = cipher.update(text);
   encrypted = Buffer.concat([encrypted, cipher.final()]);
+  // Return IV and encrypted text as hex, separated by ':'
   return iv.toString("hex") + ":" + encrypted.toString("hex");
 };
 
+// Function to decrypt an encrypted text using AES-256-CBC
 const decrypt = (text) => {
   const ENCRYPTION_KEY = process.env.ENCRYPTION_KEY;
   const [ivHex, encryptedHex] = text.split(":");
@@ -38,6 +42,7 @@ const decrypt = (text) => {
   return decrypted.toString();
 };
 
+// Route to add a new password entry
 router.post("/add", verifyAccessToken, async (req, res) => {
   const { password, username, service } = req.body;
   if (!password || !username || !service) {
@@ -60,6 +65,7 @@ router.post("/add", verifyAccessToken, async (req, res) => {
   }
 });
 
+// Route to get all passwords for the authenticated user
 router.get("/allPwds", verifyAccessToken, async (req, res) => {
   try {
     const passwords = await Password.find({ user: req.user.id });
@@ -70,6 +76,7 @@ router.get("/allPwds", verifyAccessToken, async (req, res) => {
   }
 });
 
+// Route to view (decrypt) a specific password by ID
 router.get("/view/:id", verifyAccessToken, async (req, res) => {
   const { id } = req.params;
   try {
@@ -86,6 +93,7 @@ router.get("/view/:id", verifyAccessToken, async (req, res) => {
   }
 });
 
+// Route to delete a password entry by ID
 router.delete("/delete/:id", verifyAccessToken, async (req, res) => {
   const { id } = req.params;
   try {

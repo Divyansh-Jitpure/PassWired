@@ -5,39 +5,55 @@ import FormInput from "../../components/FormInput";
 import { useDispatch } from "react-redux";
 import { login } from "../../features/auth/authThunks";
 import { toast } from "sonner";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 
+// Login component for user authentication
 const Login = () => {
+  // State for email, password, and password visibility
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
 
   const dispatch = useDispatch();
-
   const navigate = useNavigate();
 
+  // Handles login form submission
   const handleLogin = async (e) => {
     e.preventDefault();
-    try {
-      const loginPromise = dispatch(login({ email, password }));
 
-      toast.promise(loginPromise, {
-        loading: "Logging in...",
-        success: "Login Successful!",
-        error: (errMsg) => errMsg,
-      });
+    // Promise for login process to show toast notifications
+    const loginPromise = new Promise(async (resolve, reject) => {
+      try {
+        // Dispatch login thunk with email and password
+        const result = await dispatch(login({ email, password }));
 
-      const result = await loginPromise;
-      if (login.fulfilled.match(result)) {
-        if (!result.payload.user.pin) {
-          navigate("/appPin");
+        // Check if login was successful
+        if (login.fulfilled.match(result)) {
+          // Redirect based on whether user has set a PIN
+          if (!result.payload.user.pin) {
+            navigate("/appPin");
+          } else {
+            navigate("/");
+          }
+          resolve();
         } else {
-          navigate("/");
+          // Login failed
+          reject(result.payload || "Login failed!");
         }
-      } else {
-        throw new Error(result.payload || "Login failed!");
+      } catch (err) {
+        // Handle errors
+        reject(err.response?.data?.error || "Login failed!");
       }
-    } catch (err) {
-      throw err?.message || err?.response?.data?.error || "Login failed!";
-    }
+    });
+
+    // Show toast notifications for login process
+    toast.promise(loginPromise, {
+      loading: "Logging in...",
+      success: "Login Successful!",
+      error: (errMsg) => errMsg,
+    });
+
+    return loginPromise;
   };
 
   return (
@@ -50,11 +66,12 @@ const Login = () => {
         <p className="text-xl">We are happy to have you back!!</p>
       </div>
 
+      {/* Login Form */}
       <form
         onSubmit={handleLogin}
         className="flex w-[75%] flex-col gap-4 sm:w-[25%]"
       >
-        {/* Email */}
+        {/* Email Input */}
         <FormInput
           value={email}
           setValue={setEmail}
@@ -62,15 +79,29 @@ const Login = () => {
           type="email"
         />
 
-        {/* Password */}
-        <FormInput
-          value={password}
-          setValue={setPassword}
-          label="Password"
-          type="password"
-        />
+        {/* Password Input with show/hide toggle */}
+        <div className="relative">
+          <FormInput
+            value={password}
+            setValue={setPassword}
+            label="Password"
+            type={showPassword ? "text" : "password"}
+          />
+          {/* Toggle password visibility */}
+          {showPassword ? (
+            <FaEyeSlash
+              onClick={() => setShowPassword(!showPassword)}
+              className="absolute top-1/2 right-3 -translate-y-1/2 cursor-pointer text-2xl"
+            />
+          ) : (
+            <FaEye
+              onClick={() => setShowPassword(!showPassword)}
+              className="absolute top-1/2 right-3 -translate-y-1/2 cursor-pointer text-2xl"
+            />
+          )}
+        </div>
 
-        {/* Submit */}
+        {/* Submit Button */}
         <div className="mx-auto mt-2">
           <button
             type="submit"
@@ -80,17 +111,21 @@ const Login = () => {
           </button>
         </div>
       </form>
+
+      {/* Divider */}
       <div className="flex w-[75%] items-center justify-center gap-2">
         <hr className="w-[50%] text-gray-400" />
         <span className="font-[Ubuntu] text-xl"> Or </span>
         <hr className="w-[50%] text-gray-400" />
       </div>
 
+      {/* Google Sign In Button */}
       <div className="flex h-12 w-[75%] cursor-pointer items-center justify-center gap-4 rounded-lg border bg-white/40 hover:bg-white/70 active:bg-white/70">
         <FcGoogle className="text-3xl" />
         <span className="text-xl">Sign In with Google</span>
       </div>
 
+      {/* Link to Signup Page */}
       <div className="">
         Don't have an account{" "}
         <Link to={"/signup"} className="font-semibold text-[#F05454]">

@@ -7,6 +7,7 @@ import {
   setAppPinState,
 } from "../../features/password/passwordSlice";
 import { fetchAllPasswords } from "../../features/password/passwordThunks";
+import { toast } from "sonner";
 
 // Password Sheet component for adding new password entries
 const PwdSheet = () => {
@@ -30,34 +31,49 @@ const PwdSheet = () => {
   const handlePwdSubmit = async (e) => {
     e.preventDefault();
 
-    try {
-      // Set app pin state before submitting
-      dispatch(setAppPinState());
+    // Create a promise for toast notifications
+    const savePasswordPromise = new Promise(async (resolve, reject) => {
+      try {
+        // Set app pin state before submitting
+        dispatch(setAppPinState());
 
-      // Send POST request to add password
-      await API.post("/passwords/add", formData);
+        // Send POST request to add password
+        await API.post("/passwords/add", formData);
 
-      // Refresh password list after adding
-      dispatch(fetchAllPasswords());
-    } catch (err) {
-      // Log error if request fails
-      console.error("Error adding password:", err.response?.data?.error || err);
-    }
+        // Refresh password list after adding
+        dispatch(fetchAllPasswords());
 
-    // Hide sheet and reset form after submission
-    dispatch(setSheetState());
-    setFormData({
-      service: "",
-      username: "",
-      password: "",
+        // Hide sheet and reset form after submission
+        dispatch(setSheetState());
+        setFormData({
+          service: "",
+          username: "",
+          password: "",
+        });
+        resolve();
+      } catch (err) {
+        // Log error if request fails
+        reject("Error adding password" || err.response?.data?.error || err);
+      }
     });
+
+    // Show toast notifications for promise states
+    toast.promise(savePasswordPromise, {
+      loading: "Adding Password...",
+      success: "Password Added Successfully!",
+      error: (errMsg) => errMsg,
+    });
+
+    return savePasswordPromise;
   };
 
   return (
+    // Sheet container for password form
     <div
       ref={sheetRef}
       className={`absolute bottom-16 h-70 w-full border-t-2 bg-white ${sheetState ? "block" : "hidden"} `}
     >
+      {/* Password entry form */}
       <form
         className="flex h-full w-full flex-col items-center justify-center gap-4"
         onSubmit={handlePwdSubmit}

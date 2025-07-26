@@ -6,6 +6,7 @@ import { useNavigate } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
 import { setAppPin } from "../../features/auth/authThunks";
 
+// AppPin component for setting a 4-digit application PIN
 const AppPin = () => {
   const [pin, setPin] = useState("");
   const [showPin, setShowPin] = useState(false);
@@ -14,23 +15,28 @@ const AppPin = () => {
 
   const navigate = useNavigate();
 
+  // Get current user from Redux store
   const user = useSelector((state) => state.auth.user);
 
   const dispatch = useDispatch();
 
+  // Handle form submission for setting PIN
   const handleSetPin = async (e) => {
     e.preventDefault();
 
+    // Validate inputs
     if (!pin || !confirmPin) {
       alert("Please fill all fields.");
       return;
     }
 
+    // Check if PINs match
     if (pin !== confirmPin) {
       alert("Pins do not match!");
       return;
     }
 
+    // Dispatch setAppPin thunk
     const result = await dispatch(setAppPin({ id: user.id, pin }));
 
     if (setAppPin.fulfilled.match(result)) {
@@ -53,7 +59,7 @@ const AppPin = () => {
         onSubmit={handleSetPin}
         className="flex w-[75%] flex-col gap-4 sm:w-[25%]"
       >
-        {/* pin */}
+        {/* PIN input field */}
         <div className="relative">
           <FormInput
             value={pin}
@@ -61,6 +67,7 @@ const AppPin = () => {
             label="Pin"
             type={showPin ? "text" : "password"}
           />
+          {/* Toggle PIN visibility */}
           {showPin ? (
             <FaEyeSlash
               onClick={() => setShowPin(!showPin)}
@@ -74,7 +81,7 @@ const AppPin = () => {
           )}
         </div>
 
-        {/* Confirm pin */}
+        {/* Confirm PIN input field */}
         <div className="relative">
           <FormInput
             value={confirmPin}
@@ -82,6 +89,7 @@ const AppPin = () => {
             label="Confirm Pin"
             type={showConfirmPin ? "text" : "password"}
           />
+          {/* Toggle confirm PIN visibility */}
           {showConfirmPin ? (
             <FaEyeSlash
               onClick={() => setShowConfirmPin(!showConfirmPin)}
@@ -94,7 +102,7 @@ const AppPin = () => {
             />
           )}
         </div>
-        {/* Submit */}
+        {/* Submit button */}
         <div className="mx-auto mt-2">
           <button
             type="submit"

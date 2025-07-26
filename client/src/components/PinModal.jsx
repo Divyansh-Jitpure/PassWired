@@ -7,6 +7,7 @@ import { setRunFunction } from "../features/auth/authSlice";
 import API from "../utils/api";
 import { IoClose } from "react-icons/io5";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
+import { toast } from "sonner";
 
 const PinModal = () => {
   // Local state for storing the entered PIN
@@ -30,21 +31,30 @@ const PinModal = () => {
   // Handle PIN form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
-    try {
-      // Verify PIN via API call
-      const res = await API.get(`/auth/verifyPin/${pin}`);
-      if (res.data.verified) {
-        // If verified, trigger pending function and close modal
+
+    const verifyPinPromise = new Promise(async (resolve, reject) => {
+      try {
+        // Verify PIN via API call
+        const res = await API.get(`/auth/verifyPin/${pin}`);
+
         dispatch(setRunFunction(true));
         dispatch(setShowPinModal({ pinModalState: false }));
+
+        resolve();
+      } catch (err) {
+        // Log error if verification fails
+
+        reject(err.response?.data?.error || "Error verifying pin");
       }
-    } catch (err) {
-      // Log error if verification fails
-      console.error(
-        "Error verifying pin:",
-        err.response?.data?.error || err.message,
-      );
-    }
+    });
+
+    toast.promise(verifyPinPromise, {
+      loading: "Verifying Pin...",
+      success: "Pin Verified Successfully!",
+      error: (errMsg) => errMsg,
+    });
+
+    return verifyPinPromise;
   };
 
   const closeModal = (e) => {
