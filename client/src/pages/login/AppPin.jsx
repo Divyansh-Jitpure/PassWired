@@ -58,7 +58,7 @@ const AppPin = () => {
           <FormInput
             value={pin}
             setValue={setPin}
-            lable="Pin"
+            label="Pin"
             type={showPin ? "text" : "password"}
           />
           {showPin ? (
@@ -79,7 +79,7 @@ const AppPin = () => {
           <FormInput
             value={confirmPin}
             setValue={setConfirmPin}
-            lable="Confirm Pin"
+            label="Confirm Pin"
             type={showConfirmPin ? "text" : "password"}
           />
           {showConfirmPin ? (

@@ -6,10 +6,12 @@ import { useDispatch, useSelector } from "react-redux";
 import { setRunFunction } from "../features/auth/authSlice";
 import API from "../utils/api";
 import { IoClose } from "react-icons/io5";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 
 const PinModal = () => {
   // Local state for storing the entered PIN
   const [pin, setPin] = useState("");
+  const [showPin, setShowPin] = useState(false);
 
   const modalRef = useRef();
 
@@ -70,7 +72,26 @@ const PinModal = () => {
         {/* Modal title */}
         <Title text="Enter Pin" />
         {/* PIN input field */}
-        <FormInput value={pin} setValue={setPin} label="Pin" type="password" />
+        <div className="relative">
+          <FormInput
+            value={pin}
+            setValue={setPin}
+            label="Pin"
+            type={showPin ? "text" : "password"}
+          />
+          {showPin ? (
+            <FaEyeSlash
+              onClick={() => setShowPin(!showPin)}
+              className="absolute top-1/2 right-3 -translate-y-1/2 cursor-pointer text-2xl"
+            />
+          ) : (
+            <FaEye
+              onClick={() => setShowPin(!showPin)}
+              className="absolute top-1/2 right-3 -translate-y-1/2 cursor-pointer text-2xl"
+            />
+          )}
+        </div>
+
         {/* Submit button */}
         <button
           type="submit"

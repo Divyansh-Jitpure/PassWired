@@ -5,6 +5,7 @@ import Category from "./Category";
 import { useNavigate } from "react-router";
 import { useDispatch } from "react-redux";
 import { logout } from "../../features/auth/authThunks";
+import { toast } from "sonner";
 
 const More = () => {
   const navigate = useNavigate();
@@ -12,12 +13,21 @@ const More = () => {
   const dispatch = useDispatch();
 
   const handleLogout = async () => {
-    const result = await dispatch(logout());
-
-    if (logout.fulfilled.match(result)) {
-      navigate("/login");
-    } else {
-      console.error(result.payload); // handle error if needed
+    try {
+      const logoutPromise = dispatch(logout());
+      toast.promise(logoutPromise, {
+        loading: "Logging out...",
+        success: "Logout Successful!",
+        error: (errMsg) => errMsg,
+      });
+      const result = await logoutPromise;
+      if (logout.fulfilled.match(result)) {
+        navigate("/login");
+      } else {
+        throw new Error(result.payload || "Logout failed!");
+      }
+    } catch (err) {
+      throw err?.message || err?.response?.data?.error || "Logout failed!";
     }
   };
 

@@ -14,6 +14,7 @@ import { setCredentials } from "./features/auth/authSlice";
 import ProtectedRoutes from "./components/ProtectedRoutes";
 import AppPin from "./pages/login/AppPin";
 import PinModal from "./components/PinModal";
+import ToastManager from "./components/ToastManager";
 
 const App = () => {
   const dispatch = useDispatch();
@@ -54,6 +55,7 @@ const App = () => {
   return (
     <main className="grid min-h-[100dvh] grid-rows-[auto_1fr_auto] bg-[#DDDDDD]">
       <Router>
+        <ToastManager />
         <Header />
         {showPinModal && <PinModal />}
         <Routes>

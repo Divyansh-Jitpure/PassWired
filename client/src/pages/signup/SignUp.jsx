@@ -58,7 +58,7 @@ const SignUp = () => {
         <FormInput
           value={username}
           setValue={setUsername}
-          lable="Username"
+          label="Username"
           type="text"
         />
 
@@ -66,7 +66,7 @@ const SignUp = () => {
         <FormInput
           value={email}
           setValue={setEmail}
-          lable="Email"
+          label="Email"
           type="email"
         />
 
@@ -74,7 +74,7 @@ const SignUp = () => {
         <FormInput
           value={password}
           setValue={setPassword}
-          lable="Password"
+          label="Password"
           type="password"
         />
 
@@ -82,7 +82,7 @@ const SignUp = () => {
         <FormInput
           value={confirmPassword}
           setValue={setConfirmPassword}
-          lable="Confirm Password"
+          label="Confirm Password"
           type="password"
         />
 

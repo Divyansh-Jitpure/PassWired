@@ -4,6 +4,7 @@ import { Link, useNavigate } from "react-router";
 import FormInput from "../../components/FormInput";
 import { useDispatch } from "react-redux";
 import { login } from "../../features/auth/authThunks";
+import { toast } from "sonner";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -15,18 +16,27 @@ const Login = () => {
 
   const handleLogin = async (e) => {
     e.preventDefault();
+    try {
+      const loginPromise = dispatch(login({ email, password }));
 
-    const result = await dispatch(login({ email, password }));
-    // console.log(result.payload.user);
+      toast.promise(loginPromise, {
+        loading: "Logging in...",
+        success: "Login Successful!",
+        error: (errMsg) => errMsg,
+      });
 
-    if (login.fulfilled.match(result)) {
-      if (!result.payload.user.pin) {
-        navigate("/appPin");
+      const result = await loginPromise;
+      if (login.fulfilled.match(result)) {
+        if (!result.payload.user.pin) {
+          navigate("/appPin");
+        } else {
+          navigate("/");
+        }
       } else {
-        navigate("/");
+        throw new Error(result.payload || "Login failed!");
       }
-    } else {
-      console.error(result.payload); // handle error if needed
+    } catch (err) {
+      throw err?.message || err?.response?.data?.error || "Login failed!";
     }
   };
 
@@ -48,7 +58,7 @@ const Login = () => {
         <FormInput
           value={email}
           setValue={setEmail}
-          lable="Email"
+          label="Email"
           type="email"
         />
 
@@ -56,7 +66,7 @@ const Login = () => {
         <FormInput
           value={password}
           setValue={setPassword}
-          lable="Password"
+          label="Password"
           type="password"
         />
 
