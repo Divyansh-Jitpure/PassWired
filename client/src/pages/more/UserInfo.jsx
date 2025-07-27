@@ -6,9 +6,10 @@ import Title from "../../components/Title";
 
 const UserInfo = () => {
   const user = useSelector((state) => state.auth.user);
+
   const navigate = useNavigate();
   return (
-    <div className="mt-5 flex items-center justify-center gap-3">
+    <div className="flex items-center justify-center gap-3">
       {/* <img
         onClick={() => navigate("/profile")}
         className="aspect-square w-16 cursor-pointer rounded-full object-cover"

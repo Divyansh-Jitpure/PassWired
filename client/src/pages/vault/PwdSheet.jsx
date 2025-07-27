@@ -10,6 +10,7 @@ import { fetchAllPasswords } from "../../features/password/passwordThunks";
 import { toast } from "sonner";
 import { IoClose } from "react-icons/io5";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
+import Title from "../../components/Title";
 
 // Password Sheet component for adding new password entries
 const PwdSheet = () => {
@@ -82,9 +83,10 @@ const PwdSheet = () => {
     >
       {/* Password entry form */}
       <form
-        className="relative flex w-[75%] flex-col items-center gap-4 rounded-xl bg-white p-12 py-14 sm:w-[50%] md:w-[40%] xl:w-[30%] 2xl:w-[20%]"
+        className="relative flex w-[75%] flex-col items-center gap-4 rounded-xl bg-white p-12 sm:w-[50%] md:w-[40%] xl:w-[30%] 2xl:w-[20%]"
         onSubmit={handlePwdSubmit}
       >
+        <Title text="Add Password" />
         {/* Close button */}
         <IoClose
           onClick={() => dispatch(setSheetState())}

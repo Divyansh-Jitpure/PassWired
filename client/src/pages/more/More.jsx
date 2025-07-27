@@ -32,7 +32,7 @@ const More = () => {
   };
 
   return (
-    <div className="mx-auto mb-22 flex w-[90%] flex-col items-center gap-5 select-none">
+    <div className="mx-auto mt-5 mb-22 flex w-[90%] flex-col items-center gap-5 select-none">
       <UserInfo />
       <section className="flex w-full flex-col gap-3">
         <Category
@@ -121,7 +121,13 @@ const More = () => {
         />
       </section>
       <button
-        onClick={handleLogout}
+        onClick={() => {
+          const confirmLogout = window.confirm(
+            "Are you sure you want to logout?",
+          );
+          if (!confirmLogout) return;
+          handleLogout();
+        }}
         className="cursor-pointer rounded bg-[#F05454] px-3 py-1 text-xl text-[#DDDDDD] shadow-md transition-all select-none hover:bg-[#ef3c3c] active:bg-[#ef3c3c]"
       >
         Logout

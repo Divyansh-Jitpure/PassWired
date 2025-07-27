@@ -81,7 +81,10 @@ const PinModal = () => {
           className="absolute top-2 right-2 cursor-pointer rounded-full text-4xl hover:bg-gray-400/30 active:bg-gray-400/30"
         />
         {/* Modal title */}
-        <Title text="Enter Pin" />
+        <section className="text-center">
+          <Title text="Enter Pin" />
+          <p>Enter 4 digit App Pin to Proceed</p>
+        </section>
         {/* PIN input field */}
         <div className="relative">
           <PwdSheetFormInput
