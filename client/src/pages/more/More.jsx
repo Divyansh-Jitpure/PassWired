@@ -39,15 +39,27 @@ const More = () => {
           categoryName="👤 Account"
           features={[
             { name: "View Profile", action: () => navigate("/profile") },
-            { name: "Delete Account", action: () => {} },
+            {
+              name: "Delete Account",
+              action: () => toast.info("Delete Account is Coming Soon!!"),
+            },
           ]}
         />
         <Category
           categoryName="🔐 Security"
           features={[
-            { name: "Change Password", action: () => {} },
-            { name: "Change App Pin", action: () => {} },
-            { name: "Enable 2FA", action: () => {} },
+            {
+              name: "Change Password",
+              action: () => toast.info("Changing Password is Coming Soon!!"),
+            },
+            {
+              name: "Change App Pin",
+              action: () => toast.info("Changing App Pin is Coming Soon!!"),
+            },
+            {
+              name: "Enable 2FA",
+              action: () => toast.info("Enabling 2FA is Coming Soon!!"),
+            },
             // { name: "Manage Devices", action: () => {} },
             // { name: "Biometric Login", action: () => {} },
           ]}
@@ -56,14 +68,24 @@ const More = () => {
           categoryName="✨ Features"
           features={[
             // { name: "Export Vault", action: () => {} },
-            { name: "Password Generator", action: () => {} },
-            { name: "Password Strength Checker", action: () => {} },
+            {
+              name: "Password Generator",
+              action: () => toast.info("Password Generator is Coming Soon!!"),
+            },
+            {
+              name: "Password Strength Checker",
+              action: () =>
+                toast.info("Password Strength Checker is Coming Soon!!"),
+            },
           ]}
         />
         <Category
           categoryName="⚙️ App Settings"
           features={[
-            { name: "Theme", action: () => {} },
+            {
+              name: "Theme",
+              action: () => toast.info("Dark Theme is Coming Soon!!"),
+            },
             // { name: "Language Selection", action: () => {} },
           ]}
         />
@@ -90,8 +112,11 @@ const More = () => {
         <Category
           categoryName="📄 Legal"
           features={[
-            { name: "Privacy Policy", action: () => {} },
-            { name: "Terms & Conditions", action: () => {} },
+            {
+              name: "Privacy Policy",
+              action: () => navigate("/privacypolicy"),
+            },
+            { name: "Terms & Conditions", action: () => navigate("/t&c") },
           ]}
         />
       </section>

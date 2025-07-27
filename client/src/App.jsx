@@ -15,6 +15,8 @@ import ProtectedRoutes from "./components/ProtectedRoutes";
 import AppPin from "./pages/login/AppPin";
 import PinModal from "./components/PinModal";
 import ToastManager from "./components/ToastManager";
+import TermsConditions from "./pages/terms/TermsConditions";
+import PrivacyPolicy from "./pages/terms/PrivacyPolicy";
 
 const App = () => {
   const dispatch = useDispatch();
@@ -67,6 +69,8 @@ const App = () => {
             <Route path="/vault" element={<Vault />} />
             <Route path="/more" element={<More />} />
             <Route path="/profile" element={<Profile />} />
+            <Route path="/privacypolicy" element={<PrivacyPolicy />} />
+            <Route path="/t&c" element={<TermsConditions />} />
           </Route>
         </Routes>
         <Navbar />
