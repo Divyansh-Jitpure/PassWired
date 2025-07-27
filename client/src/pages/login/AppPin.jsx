@@ -5,6 +5,7 @@ import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { useNavigate } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
 import { setAppPin } from "../../features/auth/authThunks";
+import { toast } from "sonner";
 
 // AppPin component for setting a 4-digit application PIN
 const AppPin = () => {
@@ -24,26 +25,43 @@ const AppPin = () => {
   const handleSetPin = async (e) => {
     e.preventDefault();
 
-    // Validate inputs
-    if (!pin || !confirmPin) {
-      alert("Please fill all fields.");
-      return;
-    }
+    const setPinPromise = new Promise(async (resolve, reject) => {
+      try {
+        // Validate inputs
+        if (!pin || !confirmPin) {
+          reject("Please fill all fields.");
+          return;
+        }
 
-    // Check if PINs match
-    if (pin !== confirmPin) {
-      alert("Pins do not match!");
-      return;
-    }
+        // Check if PINs match
+        if (pin !== confirmPin) {
+          reject("Pins do not match!");
+          return;
+        }
 
-    // Dispatch setAppPin thunk
-    const result = await dispatch(setAppPin({ id: user.id, pin }));
+        // Dispatch setAppPin thunk
+        const result = await dispatch(setAppPin({ id: user.id, pin }));
 
-    if (setAppPin.fulfilled.match(result)) {
-      navigate("/");
-    } else {
-      console.error(result.payload);
-    }
+        if (setAppPin.fulfilled.match(result)) {
+          navigate("/");
+          resolve();
+        } else {
+          reject(result.payload || "Pin Setup Failed!!");
+        }
+      } catch (err) {
+        // Handle errors from API
+        reject(err.response?.data?.error || "Pin Setup Failed!!");
+      }
+    });
+
+    // Show toast notifications for sign up process
+    toast.promise(setPinPromise, {
+      loading: "Setting up the pin...",
+      success: "Pin Setup Successful!",
+      error: (errMsg) => errMsg,
+    });
+
+    return setPinPromise;
   };
 
   return (

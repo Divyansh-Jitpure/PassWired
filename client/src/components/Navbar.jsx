@@ -7,11 +7,15 @@ import {
   HiLockClosed,
   HiOutlineLockClosed,
 } from "react-icons/hi2";
+import { useSelector } from "react-redux";
 import { useLocation, useNavigate } from "react-router";
 
 const Navbar = () => {
   const navigate = useNavigate();
   const path = useLocation().pathname;
+  const { accessToken } = useSelector((state) => state.auth);
+
+  if (!accessToken) return;
 
   return (
     <nav className="fixed bottom-0 grid h-16 w-full grid-cols-3 items-center justify-items-center bg-[#F05454] transition-all text-shadow-sm *:flex *:h-full *:w-full *:cursor-pointer *:flex-col *:items-center *:justify-center *:hover:bg-[#ef3c3c] *:active:bg-[#ef3c3c] sm:hidden">

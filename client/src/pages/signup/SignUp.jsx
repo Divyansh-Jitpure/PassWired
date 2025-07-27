@@ -63,6 +63,10 @@ const SignUp = () => {
     return signUpPromise;
   };
 
+  const googleSignUp = () => {
+    toast.info("Coming Soon!!");
+  };
+
   return (
     <div className="mb-22 flex flex-col items-center justify-center gap-6 select-none">
       {/* Headers */}
@@ -76,7 +80,7 @@ const SignUp = () => {
       {/* SignUp Form */}
       <form
         onSubmit={handleSignUp}
-        className="flex w-[75%] flex-col gap-4 sm:w-[25%]"
+        className="flex w-[75%] flex-col gap-4 sm:w-[50%] md:w-[40%] xl:w-[30%] 2xl:w-[20%]"
       >
         {/* Username input */}
         <FormInput
@@ -148,14 +152,17 @@ const SignUp = () => {
       </form>
 
       {/* Divider for alternative sign up */}
-      <div className="flex w-[75%] items-center justify-center gap-2">
+      <div className="flex w-[75%] items-center justify-center gap-2 sm:w-[50%] md:w-[40%] xl:w-[30%] 2xl:w-[20%]">
         <hr className="w-[50%] text-gray-400" />
         <span className="font-[Ubuntu] text-xl"> Or </span>
         <hr className="w-[50%] text-gray-400" />
       </div>
 
       {/* Google sign up button */}
-      <div className="flex h-12 w-[75%] cursor-pointer items-center justify-center gap-4 rounded-lg border bg-white/40 hover:bg-white/70 active:bg-white/70">
+      <div
+        onClick={googleSignUp}
+        className="flex h-12 w-[75%] cursor-pointer items-center justify-center gap-4 rounded-lg border bg-white/40 hover:bg-white/70 active:bg-white/70 sm:w-[50%] md:w-[40%] xl:w-[30%] 2xl:w-[20%]"
+      >
         <FcGoogle className="text-3xl" />
         <span className="text-xl">Sign Up with Google</span>
       </div>
