@@ -124,7 +124,7 @@ const Password = ({ pwd }) => {
   }, [runFunction, pendingAction, targetPasswordId, pwd._id, dispatch]);
 
   return (
-    <div className="mx-auto grid w-[80%] grid-cols-2 rounded border bg-white p-2 shadow-md sm:w-[70%] md:w-[60%] xl:w-[40%] 2xl:w-[30%]">
+    <div className="mx-auto grid w-full grid-cols-2 rounded border bg-white p-2 shadow-md sm:w-[65%] md:w-[55%] xl:w-[40%] 2xl:w-[30%]">
       {/* Left section: Service name, username, and password */}
       <section className="flex flex-col">
         <span
@@ -137,12 +137,13 @@ const Password = ({ pwd }) => {
         <span>{pwd.username}</span>
         {/* Show password if visible */}
         {showPwd && (
-          <span>
-            Password:{" "}
+          <span className="flex flex-wrap items-center">
+            <span className="mr-2">Password:</span>
+
             <span
               // Clicking password triggers PIN modal for copying password
               onClick={() => handleActionWithPin("copy")}
-              className="cursor-pointer rounded-xs bg-gray-300/50 px-1"
+              className="flex max-w-fit cursor-pointer flex-wrap overflow-auto rounded bg-gray-300/50 px-2 py-[6px]"
             >
               {password.password}
             </span>

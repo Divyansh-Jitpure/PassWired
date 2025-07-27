@@ -13,7 +13,7 @@ const RecentPasswords = ({ pwdCount }) => {
   }, []);
 
   return (
-    <div className="flex w-[80%] flex-col gap-3">
+    <div className="flex w-[85%] flex-col gap-3">
       {allPasswords?.map((pwd, index) => {
         return index < pwdCount && <Password key={index} pwd={pwd} />;
       })}
