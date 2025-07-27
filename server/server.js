@@ -19,7 +19,7 @@ app.use(express.json());
 // Enable CORS for specified origin and allow credentials
 app.use(
   cors({
-    origin: ["http://localhost:5173"],
+    origin: ["http://localhost:5173", "https://pass-wired.web.app"],
     credentials: true, // Allow credentials (cookies, authorization headers, etc.)
   })
 );
@@ -35,6 +35,8 @@ app.use("/api/passwords", passwordRoutes);
 app.get("/", (req, res) => {
   res.send("Welcome to the server!");
 });
+
+app.get("/ping", (req, res) => res.send("pong"));
 
 // Connect to MongoDB using environment variable
 mongoose

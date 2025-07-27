@@ -165,8 +165,8 @@ router.post("/login", async (req, res) => {
     // Set refresh token as HTTP-only cookie
     res.cookie("refreshToken", refreshToken, {
       httpOnly: true,
-      secure: false,
-      sameSite: "Lax", //sameSite: "None" when frontend on Firebase, backend on Render)
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "None", //sameSite: "None" when frontend on Firebase, backend on Render)
       maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
       path: "/",
     });
@@ -223,7 +223,8 @@ router.post("/logout", (req, res) => {
   res.clearCookie("refreshToken", {
     httpOnly: true,
     secure: process.env.NODE_ENV === "production",
-    sameSite: "strict",
+    sameSite: "None",
+    path: "/",
   });
 
   res.status(200).json({ message: "Logged out successfully" });
