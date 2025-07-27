@@ -52,7 +52,18 @@ const App = () => {
     fetchUser();
   }, []);
 
-  if (loading) return <div>Loading...</div>;
+  if (loading)
+    return (
+      <div className="flex h-screen flex-col items-center justify-center bg-[#DDDDDD] pb-10">
+        <div className="mx-auto h-20 w-20 animate-spin rounded-full border-6 border-dashed border-[#F05454]"></div>
+        <section className="text-center">
+          <h2 className="mt-4 text-3xl font-semibold text-[#30475E]">
+            Hold on
+          </h2>
+          <p className="text-2xl text-zinc-500">PassWired is loading...</p>
+        </section>
+      </div>
+    );
 
   return (
     <main className="grid min-h-[100dvh] grid-rows-[auto_1fr_auto] bg-[#DDDDDD]">
