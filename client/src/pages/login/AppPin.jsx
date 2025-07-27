@@ -2,10 +2,11 @@ import React, { useEffect } from "react";
 import FormInput from "../../components/FormInput";
 import { useState } from "react";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
-import { useNavigate } from "react-router";
+import { useLocation, useNavigate } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
 import { setAppPin } from "../../features/auth/authThunks";
 import { toast } from "sonner";
+import API from "../../utils/api";
 
 // AppPin component for setting a 4-digit application PIN
 const AppPin = () => {
@@ -16,8 +17,9 @@ const AppPin = () => {
 
   const navigate = useNavigate();
 
-  // Get current user from Redux store
-  const user = useSelector((state) => state.auth.user);
+  // Get current user from location-state sent from login
+  const location = useLocation();
+  const { id } = location.state;
 
   const dispatch = useDispatch();
 
@@ -40,7 +42,7 @@ const AppPin = () => {
         }
 
         // Dispatch setAppPin thunk
-        const result = await dispatch(setAppPin({ id: user.id, pin }));
+        const result = await dispatch(setAppPin({ id, pin }));
 
         if (setAppPin.fulfilled.match(result)) {
           navigate("/");
@@ -86,17 +88,18 @@ const AppPin = () => {
             type={showPin ? "text" : "password"}
           />
           {/* Toggle PIN visibility */}
-          {showPin ? (
-            <FaEyeSlash
-              onClick={() => setShowPin(!showPin)}
-              className="absolute top-1/2 right-3 -translate-y-1/2 cursor-pointer text-2xl"
-            />
-          ) : (
-            <FaEye
-              onClick={() => setShowPin(!showPin)}
-              className="absolute top-1/2 right-3 -translate-y-1/2 cursor-pointer text-2xl"
-            />
-          )}
+          {pin &&
+            (showPin ? (
+              <FaEyeSlash
+                onClick={() => setShowPin(!showPin)}
+                className="absolute top-1/2 right-3 -translate-y-1/2 cursor-pointer text-2xl"
+              />
+            ) : (
+              <FaEye
+                onClick={() => setShowPin(!showPin)}
+                className="absolute top-1/2 right-3 -translate-y-1/2 cursor-pointer text-2xl"
+              />
+            ))}
         </div>
 
         {/* Confirm PIN input field */}
@@ -108,17 +111,18 @@ const AppPin = () => {
             type={showConfirmPin ? "text" : "password"}
           />
           {/* Toggle confirm PIN visibility */}
-          {showConfirmPin ? (
-            <FaEyeSlash
-              onClick={() => setShowConfirmPin(!showConfirmPin)}
-              className="absolute top-1/2 right-3 -translate-y-1/2 cursor-pointer text-2xl"
-            />
-          ) : (
-            <FaEye
-              onClick={() => setShowConfirmPin(!showConfirmPin)}
-              className="absolute top-1/2 right-3 -translate-y-1/2 cursor-pointer text-2xl"
-            />
-          )}
+          {confirmPin &&
+            (showConfirmPin ? (
+              <FaEyeSlash
+                onClick={() => setShowConfirmPin(!showConfirmPin)}
+                className="absolute top-1/2 right-3 -translate-y-1/2 cursor-pointer text-2xl"
+              />
+            ) : (
+              <FaEye
+                onClick={() => setShowConfirmPin(!showConfirmPin)}
+                className="absolute top-1/2 right-3 -translate-y-1/2 cursor-pointer text-2xl"
+              />
+            ))}
         </div>
         {/* Submit button */}
         <div className="mx-auto mt-2">

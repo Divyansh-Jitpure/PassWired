@@ -8,6 +8,7 @@ import API from "../utils/api";
 import { IoClose } from "react-icons/io5";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { toast } from "sonner";
+import PwdSheetFormInput from "../pages/vault/PwdSheetFormInput";
 
 const PinModal = () => {
   // Local state for storing the entered PIN
@@ -72,7 +73,7 @@ const PinModal = () => {
     >
       <form
         onSubmit={handleSubmit}
-        className="relative flex flex-col items-center justify-center gap-6 rounded-xl bg-[#DDDDDD] p-12"
+        className="relative flex flex-col items-center justify-center gap-6 rounded-xl bg-white p-12"
       >
         {/* Close button */}
         <IoClose
@@ -83,23 +84,24 @@ const PinModal = () => {
         <Title text="Enter Pin" />
         {/* PIN input field */}
         <div className="relative">
-          <FormInput
+          <PwdSheetFormInput
             value={pin}
-            setValue={setPin}
+            setValue={(e) => setPin(e.target.value)}
             label="Pin"
             type={showPin ? "text" : "password"}
           />
-          {showPin ? (
-            <FaEyeSlash
-              onClick={() => setShowPin(!showPin)}
-              className="absolute top-1/2 right-3 -translate-y-1/2 cursor-pointer text-2xl"
-            />
-          ) : (
-            <FaEye
-              onClick={() => setShowPin(!showPin)}
-              className="absolute top-1/2 right-3 -translate-y-1/2 cursor-pointer text-2xl"
-            />
-          )}
+          {pin &&
+            (showPin ? (
+              <FaEyeSlash
+                onClick={() => setShowPin(!showPin)}
+                className="absolute top-1/2 right-3 -translate-y-1/2 cursor-pointer text-2xl"
+              />
+            ) : (
+              <FaEye
+                onClick={() => setShowPin(!showPin)}
+                className="absolute top-1/2 right-3 -translate-y-1/2 cursor-pointer text-2xl"
+              />
+            ))}
         </div>
 
         {/* Submit button */}

@@ -9,6 +9,7 @@ import {
 import { fetchAllPasswords } from "../../features/password/passwordThunks";
 import { toast } from "sonner";
 import { IoClose } from "react-icons/io5";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 
 // Password Sheet component for adding new password entries
 const PwdSheet = () => {
@@ -18,6 +19,7 @@ const PwdSheet = () => {
     username: "",
     password: "",
   });
+  const [showPassword, setShowPassword] = useState(false);
 
   // Ref for the sheet container
   const sheetRef = useRef();
@@ -80,7 +82,7 @@ const PwdSheet = () => {
     >
       {/* Password entry form */}
       <form
-        className="relative flex w-[80%] flex-col items-center justify-center gap-4 rounded-xl bg-white p-12"
+        className="relative flex w-[75%] flex-col items-center gap-4 rounded-xl bg-white p-12 py-14 sm:w-[50%] md:w-[40%] xl:w-[30%] 2xl:w-[20%]"
         onSubmit={handlePwdSubmit}
       >
         {/* Close button */}
@@ -107,14 +109,28 @@ const PwdSheet = () => {
           }
         />
         {/* Password input field */}
-        <PwdSheetFormInput
-          label="Password"
-          type="password"
-          value={formData.password}
-          setValue={(e) =>
-            setFormData({ ...formData, password: e.target.value })
-          }
-        />
+        <div className="relative w-full">
+          <PwdSheetFormInput
+            label="Password"
+            type={showPassword ? "text" : "password"}
+            value={formData.password}
+            setValue={(e) =>
+              setFormData({ ...formData, password: e.target.value })
+            }
+          />
+          {formData.password &&
+            (showPassword ? (
+              <FaEyeSlash
+                onClick={() => setShowPassword(!showPassword)}
+                className="absolute top-1/2 right-3 -translate-y-1/2 cursor-pointer text-2xl"
+              />
+            ) : (
+              <FaEye
+                onClick={() => setShowPassword(!showPassword)}
+                className="absolute top-1/2 right-3 -translate-y-1/2 cursor-pointer text-2xl"
+              />
+            ))}
+        </div>
         {/* Submit button */}
         <button
           type="submit"

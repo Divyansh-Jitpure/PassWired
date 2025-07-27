@@ -106,17 +106,18 @@ const SignUp = () => {
             label="Password"
             type={showPassword ? "text" : "password"}
           />
-          {showPassword ? (
-            <FaEyeSlash
-              onClick={() => setShowPassword(!showPassword)}
-              className="absolute top-1/2 right-3 -translate-y-1/2 cursor-pointer text-2xl"
-            />
-          ) : (
-            <FaEye
-              onClick={() => setShowPassword(!showPassword)}
-              className="absolute top-1/2 right-3 -translate-y-1/2 cursor-pointer text-2xl"
-            />
-          )}
+          {password &&
+            (showPassword ? (
+              <FaEyeSlash
+                onClick={() => setShowPassword(!showPassword)}
+                className="absolute top-1/2 right-3 -translate-y-1/2 cursor-pointer text-2xl"
+              />
+            ) : (
+              <FaEye
+                onClick={() => setShowPassword(!showPassword)}
+                className="absolute top-1/2 right-3 -translate-y-1/2 cursor-pointer text-2xl"
+              />
+            ))}
         </div>
 
         {/* Confirm Password input with show/hide toggle */}
@@ -127,17 +128,18 @@ const SignUp = () => {
             label="Confirm Password"
             type={showConfirmPassword ? "text" : "password"}
           />
-          {showConfirmPassword ? (
-            <FaEyeSlash
-              onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-              className="absolute top-1/2 right-3 -translate-y-1/2 cursor-pointer text-2xl"
-            />
-          ) : (
-            <FaEye
-              onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-              className="absolute top-1/2 right-3 -translate-y-1/2 cursor-pointer text-2xl"
-            />
-          )}
+          {confirmPassword &&
+            (showConfirmPassword ? (
+              <FaEyeSlash
+                onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                className="absolute top-1/2 right-3 -translate-y-1/2 cursor-pointer text-2xl"
+              />
+            ) : (
+              <FaEye
+                onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                className="absolute top-1/2 right-3 -translate-y-1/2 cursor-pointer text-2xl"
+              />
+            ))}
         </div>
 
         {/* Submit button */}

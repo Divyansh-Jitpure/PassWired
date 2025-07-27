@@ -2,7 +2,7 @@ import React from "react";
 
 const PwdSheetFormInput = ({ value, setValue, label, type }) => {
   return (
-    <div className="relative flex w-[90%] flex-col">
+    <div className="relative w-full">
       <input
         type={type}
         id={label.toLowerCase()}
@@ -10,7 +10,7 @@ const PwdSheetFormInput = ({ value, setValue, label, type }) => {
         autoComplete="off"
         value={value}
         onChange={setValue}
-        className="peer h-12 rounded-lg border p-4 shadow-md focus:border-[#F05454] focus:outline-none"
+        className="peer h-12 w-full rounded-lg border p-4 shadow-md focus:border-[#F05454] focus:outline-none"
       />
       <label
         htmlFor={label.toLowerCase()}

@@ -31,7 +31,7 @@ const Login = () => {
         if (login.fulfilled.match(result)) {
           // Redirect based on whether user has set a PIN
           if (!result.payload.user.pin) {
-            navigate("/appPin");
+            navigate("/appPin", { state: { id: result.payload.user.id } });
           } else {
             navigate("/");
           }
@@ -92,17 +92,18 @@ const Login = () => {
             type={showPassword ? "text" : "password"}
           />
           {/* Toggle password visibility */}
-          {showPassword ? (
-            <FaEyeSlash
-              onClick={() => setShowPassword(!showPassword)}
-              className="absolute top-1/2 right-3 -translate-y-1/2 cursor-pointer text-2xl"
-            />
-          ) : (
-            <FaEye
-              onClick={() => setShowPassword(!showPassword)}
-              className="absolute top-1/2 right-3 -translate-y-1/2 cursor-pointer text-2xl"
-            />
-          )}
+          {password &&
+            (showPassword ? (
+              <FaEyeSlash
+                onClick={() => setShowPassword(!showPassword)}
+                className="absolute top-1/2 right-3 -translate-y-1/2 cursor-pointer text-2xl"
+              />
+            ) : (
+              <FaEye
+                onClick={() => setShowPassword(!showPassword)}
+                className="absolute top-1/2 right-3 -translate-y-1/2 cursor-pointer text-2xl"
+              />
+            ))}
         </div>
 
         {/* Submit Button */}
