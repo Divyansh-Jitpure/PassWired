@@ -166,7 +166,7 @@ router.post("/login", async (req, res) => {
     res.cookie("refreshToken", refreshToken, {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
-      sameSite: "None", //sameSite: "None" when frontend on Firebase, backend on Render)
+      sameSite: "Lax", //sameSite: "None" when frontend on Firebase, backend on Render)
       maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
       path: "/",
     });
