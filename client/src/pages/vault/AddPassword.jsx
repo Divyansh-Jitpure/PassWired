@@ -7,7 +7,7 @@ const AddPassword = () => {
   const dispatch = useDispatch();
 
   return (
-    <div className="flex w-[65%] items-center justify-around gap-20 rounded border bg-white px-3 py-1 shadow-md">
+    <div className="flex w-[50%] items-center justify-around rounded border bg-white px-3 py-1 shadow-md sm:w-[40%] md:w-[30%] xl:w-[20%] 2xl:w-[15%]">
       <span
         onClick={() => dispatch(setSheetState())}
         className="cursor-pointer text-xl font-semibold text-shadow-sm"

@@ -124,7 +124,7 @@ const Password = ({ pwd }) => {
   }, [runFunction, pendingAction, targetPasswordId, pwd._id, dispatch]);
 
   return (
-    <div className="grid w-full grid-cols-2 rounded border bg-white p-2 shadow-md">
+    <div className="mx-auto grid w-[80%] grid-cols-2 rounded border bg-white p-2 shadow-md sm:w-[70%] md:w-[60%] xl:w-[40%] 2xl:w-[30%]">
       {/* Left section: Service name, username, and password */}
       <section className="flex flex-col">
         <span

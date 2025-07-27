@@ -83,7 +83,7 @@ const PwdSheet = () => {
     >
       {/* Password entry form */}
       <form
-        className="relative flex w-[75%] flex-col items-center gap-4 rounded-xl bg-white p-12 sm:w-[50%] md:w-[40%] xl:w-[30%] 2xl:w-[20%]"
+        className="relative flex w-[85%] flex-col items-center gap-4 rounded-xl bg-white p-12 sm:w-[50%] md:w-[40%] xl:w-[30%] 2xl:w-[20%]"
         onSubmit={handlePwdSubmit}
       >
         <Title text="Add Password" />

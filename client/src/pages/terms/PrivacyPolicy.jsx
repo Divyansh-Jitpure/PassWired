@@ -5,7 +5,7 @@ const PrivacyPolicy = () => {
   return (
     <div className="mx-12 mt-4 mb-22 flex flex-col items-center gap-4">
       <Title text="Privacy Policy" />
-      <p className="font-[ubuntu] text-lg">
+      <p className="text-center font-[ubuntu] text-lg xl:w-[90%] 2xl:w-[60%]">
         At <strong className="text-xl">PassWired</strong>, your privacy is our
         top priority. This Privacy Policy explains how we collect, use, and
         protect your information when you use our password manager app.

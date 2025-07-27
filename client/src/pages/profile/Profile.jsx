@@ -49,7 +49,7 @@ const Profile = () => {
         </span>
       </section>
 
-      <section className="w-[80%] text-center sm:w-[70%] md:w-[50%]">
+      <section className="flex w-[70%] flex-col text-center sm:w-[50%] md:w-[40%] xl:w-[30%] 2xl:w-[20%]">
         <Category
           categoryName="🛠️ Account Settings"
           features={[

@@ -33,10 +33,10 @@ const Tools = () => {
     },
   ];
   return (
-    <div className="flex w-[90%] flex-col items-center gap-4">
+    <div className="flex flex-col items-center justify-center gap-4">
       <Title text="Tools" />
 
-      <section className="grid grid-cols-4 gap-4 sm:grid-cols-8">
+      <section className="flex gap-4">
         {tools.map((tool, index) => (
           <Tool
             key={index}

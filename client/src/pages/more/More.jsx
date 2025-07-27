@@ -32,9 +32,9 @@ const More = () => {
   };
 
   return (
-    <div className="mx-auto mt-5 mb-22 flex w-[90%] flex-col items-center gap-5 select-none">
+    <div className="mx-auto mt-5 mb-22 flex w-full flex-col items-center gap-5 select-none">
       <UserInfo />
-      <section className="flex w-full flex-col gap-3">
+      <section className="flex w-[80%] flex-col items-center gap-3 sm:w-[50%] md:w-[40%] xl:w-[30%] 2xl:w-[20%]">
         <Category
           categoryName="👤 Account"
           features={[
