@@ -19,7 +19,7 @@ app.use(express.json());
 // Enable CORS for specified origin and allow credentials
 app.use(
   cors({
-    origin: ["http://localhost:5173", "https://pass-wired.web.app"],
+    origin: ["https://pass-wired.web.app", "http://localhost:5173"],
     credentials: true, // Allow credentials (cookies, authorization headers, etc.)
   })
 );
