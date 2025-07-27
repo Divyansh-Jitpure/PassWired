@@ -10,7 +10,7 @@ import passwordRoutes from "./routes/passwordRoutes.js";
 import mongoose from "mongoose";
 import cookieParser from "cookie-parser";
 
-const PORT = 5000; // Define server port
+const PORT = process.env.PORT || 5000; // Define server port
 const app = express();
 
 // Middleware to parse JSON bodies
