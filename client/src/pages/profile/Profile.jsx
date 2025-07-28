@@ -37,7 +37,7 @@ const Profile = () => {
   };
 
   return (
-    <div className="mt-4 flex flex-col items-center gap-10 select-none">
+    <div className="mt-4 mb-22 flex flex-col items-center gap-10 select-none sm:mt-22">
       <Title text="Profile" />
 
       <section className="flex flex-col items-center">
