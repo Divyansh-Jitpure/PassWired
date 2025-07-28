@@ -142,8 +142,8 @@ const Password = ({ pwd }) => {
 
             <span
               // Clicking password triggers PIN modal for copying password
-              onClick={() => handleActionWithPin("copy")}
-              className="flex max-w-fit cursor-pointer flex-wrap overflow-auto rounded bg-gray-300/50 px-2 py-[6px]"
+              onClick={() => copyPassword(pwd._id)}
+              className="flex max-w-fit cursor-pointer flex-wrap overflow-auto rounded bg-gray-300/50 px-2 py-[6px] select-text"
             >
               {password.password}
             </span>

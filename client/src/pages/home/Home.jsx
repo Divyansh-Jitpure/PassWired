@@ -23,9 +23,11 @@ const Home = () => {
   }, []);
 
   return (
-    <div className="mb-22 flex flex-col items-center gap-6 select-none">
+    <div className="mb-22 flex flex-col items-center gap-6 select-none sm:mt-18">
       {sheetState && <PwdSheet />}
-      <Search />
+      <div className="mt-6 flex w-full justify-center sm:hidden">
+        <Search />
+      </div>
       <Tools />
       <Button text="All Features" action={() => navigate("/more")} />
       <Title text="Recent Passwords" />

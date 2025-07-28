@@ -32,7 +32,7 @@ const More = () => {
   };
 
   return (
-    <div className="mx-auto mt-5 mb-22 flex w-full flex-col items-center gap-5 select-none">
+    <div className="mx-auto mt-5 mb-22 flex w-full flex-col items-center gap-5 select-none sm:mt-22">
       <UserInfo />
       <section className="flex w-[80%] flex-col items-center gap-3 sm:w-[50%] md:w-[40%] xl:w-[30%] 2xl:w-[20%]">
         <Category

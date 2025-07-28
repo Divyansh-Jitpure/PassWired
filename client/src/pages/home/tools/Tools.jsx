@@ -33,7 +33,7 @@ const Tools = () => {
     },
   ];
   return (
-    <div className="flex flex-col items-center justify-center gap-4">
+    <div className="mt-4 flex flex-col items-center justify-center gap-4">
       <Title text="Tools" />
 
       <section className="flex gap-4">

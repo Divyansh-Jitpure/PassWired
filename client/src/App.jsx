@@ -17,6 +17,7 @@ import PinModal from "./components/PinModal";
 import ToastManager from "./components/ToastManager";
 import TermsConditions from "./pages/terms/TermsConditions";
 import PrivacyPolicy from "./pages/terms/PrivacyPolicy";
+import DesktopNavbar from "./components/Navbar/DesktopNavbar";
 
 const App = () => {
   const dispatch = useDispatch();
@@ -69,6 +70,7 @@ const App = () => {
     <main className="grid min-h-[100dvh] grid-rows-[auto_1fr_auto] bg-[#DDDDDD]">
       <Router>
         <ToastManager />
+        <DesktopNavbar />
         <Header />
         {showPinModal && <PinModal />}
         <Routes>

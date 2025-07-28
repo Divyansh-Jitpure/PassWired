@@ -19,7 +19,7 @@ const Vault = () => {
   }, []);
 
   return (
-    <div className="relative mt-4 flex flex-col items-center gap-4 select-none">
+    <div className="relative mt-4 mb-22 flex flex-col items-center gap-4 select-none sm:mt-22">
       {sheetState && <PwdSheet />}
 
       <Title text="Saved Passwords" />

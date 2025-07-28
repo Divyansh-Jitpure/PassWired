@@ -69,7 +69,7 @@ const PinModal = () => {
     <div
       ref={modalRef}
       onClick={closeModal}
-      className="fixed inset-0 z-1000 flex items-center justify-center bg-black/30 backdrop-blur-sm"
+      className="fixed inset-0 z-1000 flex select-none items-center justify-center bg-black/30 backdrop-blur-sm"
     >
       <form
         onSubmit={handleSubmit}

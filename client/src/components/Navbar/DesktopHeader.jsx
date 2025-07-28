@@ -2,10 +2,11 @@ import React from "react";
 import { FaUserSecret } from "react-icons/fa6";
 import { useNavigate } from "react-router";
 
-const Header = () => {
+const DesktopHeader = () => {
   const navigate = useNavigate();
+
   return (
-    <div className="my-3 flex justify-center transition-all select-none text-shadow-md hover:text-shadow-lg sm:hidden">
+    <div className="transition-all select-none text-shadow-md hover:text-shadow-lg">
       <h1
         onClick={() => navigate("/")}
         className="flex cursor-pointer items-center font-[Ubuntu] text-3xl font-semibold"
@@ -18,4 +19,4 @@ const Header = () => {
   );
 };
 
-export default Header;
+export default DesktopHeader;
