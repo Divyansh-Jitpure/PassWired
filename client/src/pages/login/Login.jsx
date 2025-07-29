@@ -7,9 +7,7 @@ import { login } from "../../features/auth/authThunks";
 import { toast } from "sonner";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 
-// Login component for user authentication
 const Login = () => {
-  // State for email, password, and password visibility
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
@@ -17,14 +15,11 @@ const Login = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  // Handles login form submission
   const handleLogin = async (e) => {
     e.preventDefault();
 
-    // Promise for login process to show toast notifications
     const loginPromise = new Promise(async (resolve, reject) => {
       try {
-        // Dispatch login thunk with email and password
         const result = await dispatch(login({ email, password }));
 
         // Check if login was successful
@@ -37,16 +32,13 @@ const Login = () => {
           }
           resolve();
         } else {
-          // Login failed
           reject(result.payload || "Login failed!");
         }
       } catch (err) {
-        // Handle errors
         reject(err.response?.data?.error || "Login failed!");
       }
     });
 
-    // Show toast notifications for login process
     toast.promise(loginPromise, {
       loading: "Logging in...",
       success: "Login Successful!",
