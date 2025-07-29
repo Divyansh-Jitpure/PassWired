@@ -19,7 +19,7 @@ const Tools = () => {
     {
       toolName: "Password Generator",
       toolIcon: <PiPasswordFill />,
-      action: () => toast.info("Password Generator is Coming Soon!!"),
+      action: () => navigate("/passwordGenerator"),
     },
     {
       toolName: "Password Strength Checker",
