@@ -70,7 +70,7 @@ const More = () => {
             // { name: "Export Vault", action: () => {} },
             {
               name: "Password Generator",
-              action: () => toast.info("Password Generator is Coming Soon!!"),
+              action: () => navigate("/passwordGenerator"),
             },
             {
               name: "Password Strength Checker",
