@@ -59,9 +59,10 @@ const App = () => {
         <div className="mx-auto h-20 w-20 animate-spin rounded-full border-6 border-dashed border-[#F05454]"></div>
         <section className="text-center">
           <h2 className="mt-4 text-3xl font-semibold text-[#30475E]">
-            Hold on
+            Loading...
           </h2>
           <p className="text-2xl text-zinc-500">PassWired is loading...</p>
+          <p className="text-lg text-zinc-400">— Please Wait —</p>
         </section>
       </div>
     );
