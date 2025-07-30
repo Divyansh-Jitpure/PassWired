@@ -42,7 +42,7 @@ const PasswordStrength = () => {
               {strength.label}
             </span>
           </div>
-          <div className="h-4 w-72 rounded border">
+          <div className="h-2 w-72 rounded border">
             <div
               style={{
                 width: `${Math.round(((strength?.score ?? 0) / 5) * 100)}%`,
