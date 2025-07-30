@@ -24,7 +24,7 @@ const Tools = () => {
     {
       toolName: "Password Strength Checker",
       toolIcon: <LuBicepsFlexed />,
-      action: () => toast.info("Password Strength Checker is Coming Soon!!"),
+      action: () => navigate("/passwordStrength"),
     },
     {
       toolName: "Theme",

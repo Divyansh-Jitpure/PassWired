@@ -19,6 +19,7 @@ import TermsConditions from "./pages/terms/TermsConditions";
 import PrivacyPolicy from "./pages/terms/PrivacyPolicy";
 import DesktopNavbar from "./components/Navbar/DesktopNavbar";
 import PasswordGenerator from "./pages/passwordGenerator/PasswordGenerator";
+import PasswordStrength from "./pages/passwordStrength/PasswordStrength";
 
 const App = () => {
   const dispatch = useDispatch();
@@ -87,6 +88,7 @@ const App = () => {
             <Route path="/privacypolicy" element={<PrivacyPolicy />} />
             <Route path="/t&c" element={<TermsConditions />} />
             <Route path="/passwordGenerator" element={<PasswordGenerator />} />
+            <Route path="/passwordStrength" element={<PasswordStrength />} />
           </Route>
         </Routes>
         <Navbar />
