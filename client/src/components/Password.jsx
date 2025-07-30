@@ -134,7 +134,7 @@ const Password = ({ pwd }) => {
         >
           {pwd.service}
         </span>
-        <span>{pwd.username}</span>
+        <span className="break-all">{pwd.username}</span>
         {/* Show password if visible */}
         {showPwd && (
           <span className="flex flex-wrap items-center">

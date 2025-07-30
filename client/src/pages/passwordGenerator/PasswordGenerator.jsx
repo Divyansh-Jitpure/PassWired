@@ -8,7 +8,7 @@ import { toast } from "sonner";
 
 const PasswordGenerator = () => {
   const [pwd, setPwd] = useState("");
-  const [pwdLength, setPwdLength] = useState();
+  const [pwdLength, setPwdLength] = useState("");
   const [isGenerating, setIsGenerating] = useState(false);
   const [symbol, setSymbol] = useState(false);
   const [number, setNumber] = useState(false);
@@ -107,7 +107,7 @@ const PasswordGenerator = () => {
       </div>
       {pwd && (
         <div className="flex max-w-[80%] items-center gap-2 select-text">
-          <span className="relative rounded-lg bg-white px-6 py-3 text-center font-mono text-lg break-all">
+          <span className="relative rounded-lg bg-white px-6 py-3 text-center font-mono text-lg break-all shadow-md">
             {pwd}
             <FaCopy
               onClick={copyPwd}

@@ -12,7 +12,7 @@ const Tools = () => {
 
   const tools = [
     {
-      toolName: "View Profile",
+      toolName: "Profile",
       toolIcon: <FaUser />,
       action: () => navigate("/profile"),
     },
