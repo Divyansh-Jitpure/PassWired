@@ -1,20 +1,8 @@
-import { useRef, useState } from "react";
-import PwdSheetFormInput from "./PwdSheetFormInput";
-import API from "../../utils/api";
-import { useDispatch, useSelector } from "react-redux";
-import {
-  setSheetState,
-  setAppPinState,
-} from "../../features/password/passwordSlice";
-import { fetchAllPasswords } from "../../features/password/passwordThunks";
-import { toast } from "sonner";
-import { IoClose } from "react-icons/io5";
-import { FaEye, FaEyeSlash } from "react-icons/fa";
-import Title from "../../components/Title";
+import React, { useEffect } from "react";
+import { setShowEditModal } from "../../features/auth/authSlice";
+import { useDispatch } from "react-redux";
 
-// Password Sheet component for adding new password entries
-const PwdSheet = () => {
-  // Local state for form data
+const EditPassword = () => {
   const [formData, setFormData] = useState({
     service: "",
     username: "",
@@ -22,57 +10,43 @@ const PwdSheet = () => {
   });
   const [showPassword, setShowPassword] = useState(false);
 
-  const sheetRef = useRef();
+  const editRef = useRef();
 
   const dispatch = useDispatch();
 
-  // Handles form submission for adding a password
-  const handlePwdSubmit = async (e) => {
-    e.preventDefault();
+  useEffect(() => {});
 
-    const savePasswordPromise = new Promise(async (resolve, reject) => {
+  const editPassword = async (id) => {
+    const editPromise = new Promise(async (resolve, reject) => {
       try {
-        // Set app pin state
-        dispatch(setAppPinState());
-
-        await API.post("/passwords/add", formData);
-
-        // Refresh password list after adding
-        dispatch(fetchAllPasswords());
-
-        // Hide sheet and reset form after submission
-        dispatch(setSheetState());
-        setFormData({
-          service: "",
-          username: "",
-          password: "",
-        });
+        const res = await API.patch(`/passwords/edit/${id}`);
         resolve();
       } catch (err) {
-        reject("Error adding password" || err.response?.data?.error || err);
+        reject(
+          "Error editing password:",
+          err.response?.data?.error || err.message,
+        );
       }
     });
 
-    // Show toast notifications for promise states
-    toast.promise(savePasswordPromise, {
-      loading: "Adding Password...",
-      success: "Password Added Successfully!",
+    toast.promise(editPromise, {
+      loading: "Editing Password...",
+      success: "Password edited Successfully!",
       error: (errMsg) => errMsg,
     });
 
-    return savePasswordPromise;
+    return editPromise;
   };
 
   const closeModal = (e) => {
-    if (sheetRef.current === e.target) {
+    if (editRef.current === e.target) {
       dispatch(setSheetState());
     }
   };
 
   return (
-    // Sheet container for password form
     <div
-      ref={sheetRef}
+      ref={editRef}
       onClick={closeModal}
       className={`fixed inset-0 z-1000 flex items-center justify-center bg-black/30 backdrop-blur-sm`}
     >
@@ -84,7 +58,7 @@ const PwdSheet = () => {
         <Title text="Add Password" />
         {/* Close button */}
         <IoClose
-          onClick={() => dispatch(setSheetState())}
+          onClick={() => dispatch(setShowEditModal())}
           className="absolute top-2 right-2 cursor-pointer rounded-full text-4xl hover:bg-gray-400/30 active:bg-gray-400/30"
         />
         {/* Service input field */}
@@ -140,4 +114,4 @@ const PwdSheet = () => {
   );
 };
 
-export default PwdSheet;
+export default EditPassword;

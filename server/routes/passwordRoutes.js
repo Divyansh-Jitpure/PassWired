@@ -93,6 +93,25 @@ router.get("/view/:id", verifyAccessToken, async (req, res) => {
   }
 });
 
+router.patch("/edit/:id", verifyAccessToken, async (req, res) => {
+  const { id } = req.params;
+  const { password, username, service } = req.body;
+
+  try {
+    if (!password || !username || !service) {
+      return res.status(400).json({ error: "All fields are required" });
+    }
+    const pwd = await Password.findOne({ _id: id, user: req.user.id });
+    if (!pwd) {
+      return res.status(404).json({ error: "Password not found" });
+    }
+
+    console.log(pwd);
+  } catch (err) {
+    res.status(500).json({ error: "Internal server error" });
+  }
+});
+
 // Route to delete a password entry by ID
 router.delete("/delete/:id", verifyAccessToken, async (req, res) => {
   const { id } = req.params;

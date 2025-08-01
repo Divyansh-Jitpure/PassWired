@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { FaCopy } from "react-icons/fa6";
-import { FaEye, FaEyeSlash } from "react-icons/fa";
+import { FaEye, FaEyeSlash, FaEdit } from "react-icons/fa";
 import { MdDelete } from "react-icons/md";
 import API from "../utils/api";
 import { useDispatch, useSelector } from "react-redux";
@@ -10,15 +10,20 @@ import {
   setPendingAction,
   clearPendingAction,
   setRunFunction,
+  setShowEditModal,
 } from "../features/auth/authSlice";
 import { useEffect } from "react";
 import { toast } from "sonner";
+import { useNavigate } from "react-router";
 
 // Password component displays a single password entry and handles actions (view, copy, delete)
 const Password = ({ pwd }) => {
   // Local state for password value and visibility
   const [password, setPassword] = useState();
   const [showPwd, setShowPwd] = useState(false);
+  // const [showEditModal, setShowEditModal] = useState(false);
+
+  const navigate = useNavigate();
 
   // Redux state selectors
   const runFunction = useSelector((state) => state.auth.runFunction);
@@ -101,6 +106,10 @@ const Password = ({ pwd }) => {
     return copyPromise;
   };
 
+  const editPassword = () => {
+    dispatch(setShowEditModal(true));
+  };
+
   // Executes pending action after PIN verification
   useEffect(() => {
     // Only run if the PIN modal has been verified and the action is for this password
@@ -112,6 +121,8 @@ const Password = ({ pwd }) => {
           await copyPassword(pwd._id);
         } else if (pendingAction === "delete") {
           await handlleDelete();
+        } else if (pendingAction === "edit") {
+          await editPassword(pwd._id);
         }
 
         // Clear pending action and reset runFunction flag
@@ -124,9 +135,9 @@ const Password = ({ pwd }) => {
   }, [runFunction, pendingAction, targetPasswordId, pwd._id, dispatch]);
 
   return (
-    <div className="mx-auto grid w-full grid-cols-2 rounded border bg-white p-2 shadow-md sm:w-[65%] md:w-[55%] xl:w-[40%] 2xl:w-[30%]">
+    <div className="mx-auto grid w-full grid-cols-4 rounded border bg-white p-2 shadow-md sm:w-[65%] md:w-[55%] xl:w-[40%] 2xl:w-[30%]">
       {/* Left section: Service name, username, and password */}
-      <section className="flex flex-col">
+      <section className="col-span-3 flex flex-col">
         <span
           // Clicking service name triggers PIN modal for viewing password
           onClick={() => handleActionWithPin("view")}
@@ -151,16 +162,19 @@ const Password = ({ pwd }) => {
         )}
       </section>
       {/* Right section: Action buttons */}
-      <section className="flex items-center justify-end gap-4">
+      <section className="col-span-1 ml-auto flex flex-wrap justify-center gap-4">
         {/* Toggle password visibility */}
         {showPwd ? (
-          <button onClick={hidePassword} className="cursor-pointer">
+          <button
+            onClick={hidePassword}
+            className="flex min-w-8 cursor-pointer items-center justify-center"
+          >
             <FaEyeSlash className="text-3xl" />
           </button>
         ) : (
           <button
             onClick={() => handleActionWithPin("view")}
-            className="cursor-pointer"
+            className="flex min-w-8 cursor-pointer items-center justify-center"
           >
             <FaEye className="text-3xl" />
           </button>
@@ -168,15 +182,26 @@ const Password = ({ pwd }) => {
 
         {/* Copy password button */}
         <button
-          onClick={() => handleActionWithPin("copy")}
-          className="cursor-pointer"
+          onClick={() =>
+            showPwd ? copyPassword(pwd._id) : handleActionWithPin("copy")
+          }
+          className="flex min-w-8 cursor-pointer items-center justify-center"
         >
           <FaCopy className="text-2xl" />
         </button>
+
+        {/* Edit password button */}
+        <button
+          onClick={() => handleActionWithPin("edit")}
+          className="flex min-w-8 cursor-pointer items-center justify-center"
+        >
+          <FaEdit className="text-2xl" />
+        </button>
+
         {/* Delete password button */}
         <button
           onClick={() => handleActionWithPin("delete")}
-          className="cursor-pointer"
+          className="flex min-w-8 cursor-pointer items-center justify-center"
         >
           <MdDelete className="text-3xl" />
         </button>

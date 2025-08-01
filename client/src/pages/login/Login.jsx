@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { FcGoogle } from "react-icons/fc";
-import { Link, useNavigate } from "react-router";
+import { Link, Navigate, useNavigate } from "react-router";
 import FormInput from "../../components/FormInput";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { login } from "../../features/auth/authThunks";
 import { toast } from "sonner";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
@@ -11,6 +11,8 @@ const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+
+  const { accessToken } = useSelector((state) => state.auth);
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -52,7 +54,9 @@ const Login = () => {
     toast.info("Coming Soon!!");
   };
 
-  return (
+  return accessToken ? (
+    <Navigate to="/" replace />
+  ) : (
     <div className="flex flex-col items-center justify-center gap-6 select-none sm:h-screen sm:gap-5 xl:scale-80 2xl:scale-100 2xl:gap-6">
       {/* Headers */}
       <div className="text-center">

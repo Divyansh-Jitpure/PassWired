@@ -20,12 +20,13 @@ import PrivacyPolicy from "./pages/terms/PrivacyPolicy";
 import DesktopNavbar from "./components/Navbar/DesktopNavbar";
 import PasswordGenerator from "./pages/passwordGenerator/PasswordGenerator";
 import PasswordStrength from "./pages/passwordStrength/PasswordStrength";
+import EditPassword from "./pages/vault/EditPassword";
 
 const App = () => {
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(true);
 
-  const showPinModal = useSelector((state) => state.auth.showPinModal);
+  const { showPinModal, showEditModal } = useSelector((state) => state.auth);
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -76,6 +77,7 @@ const App = () => {
         <DesktopNavbar />
         <Header />
         {showPinModal && <PinModal />}
+        {showEditModal && <EditPassword />}
         <Routes>
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<SignUp />} />

@@ -3,12 +3,13 @@ import { logout } from "../../features/auth/authThunks";
 
 // Initial state for authentication slice
 const initialState = {
-  accessToken: "",         // JWT or access token for authenticated requests
-  user: null,              // User object after login
-  showPinModal: false,     // Controls visibility of PIN modal
-  runFunction: false,      // Flag to trigger a function after PIN entry
-  pendingAction: null,     // Stores pending action requiring PIN
-  targetPasswordId: null,  // ID of password item for pending action
+  accessToken: "", // JWT or access token for authenticated requests
+  user: null, // User object after login
+  showPinModal: false, // Controls visibility of PIN modal
+  showEditModal: false, // Controls the trigger to open Edit modal
+  runFunction: false, // Flag to trigger a function after PIN entry
+  pendingAction: null, // Stores pending action requiring PIN
+  targetPasswordId: null, // ID of password item for pending action
 };
 
 // Create authentication slice
@@ -24,6 +25,10 @@ const authSlice = createSlice({
     // Show or hide the PIN modal
     setShowPinModal: (state, action) => {
       state.showPinModal = action.payload.pinModalState;
+    },
+    // Show or hide the Edit modal
+    setShowEditModal: (state, action) => {
+      state.showEditModal = action.payload;
     },
     // Store pending action and target password ID
     setPendingAction: (state, action) => {
@@ -62,5 +67,6 @@ export const {
   setPendingAction,
   setRunFunction,
   clearPendingAction,
+  setShowEditModal,
 } = authSlice.actions;
 export default authSlice.reducer;
