@@ -8,6 +8,10 @@ const RecentPasswords = ({ pwdCount }) => {
 
   const dispatch = useDispatch();
 
+  const sheetState = useSelector((state) => state.password.sheetState);
+
+  const showEditModal = useSelector((state) => state.auth.showEditModal);
+
   useEffect(() => {
     dispatch(fetchAllPasswords());
   }, []);

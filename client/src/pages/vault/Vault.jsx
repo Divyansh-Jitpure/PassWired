@@ -5,6 +5,7 @@ import AddPassword from "./AddPassword";
 import PwdSheet from "./PwdSheet";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchAllPasswords } from "../../features/password/passwordThunks";
+import EditPassword from "./EditPassword";
 
 const Vault = () => {
   const allPasswords = useSelector((state) => state.password.allPasswords);
@@ -14,6 +15,8 @@ const Vault = () => {
   // Redux state for sheet visibility
   const sheetState = useSelector((state) => state.password.sheetState);
 
+  const showEditModal = useSelector((state) => state.auth.showEditModal);
+
   useEffect(() => {
     dispatch(fetchAllPasswords());
   }, []);
@@ -21,6 +24,7 @@ const Vault = () => {
   return (
     <div className="relative mt-4 mb-22 flex flex-col items-center gap-4 select-none sm:mt-22">
       {sheetState && <PwdSheet />}
+      {showEditModal && <EditPassword />}
 
       <Title text="Saved Passwords" />
       <AddPassword />

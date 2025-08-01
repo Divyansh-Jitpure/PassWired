@@ -9,12 +9,15 @@ import { useDispatch, useSelector } from "react-redux";
 import AddPassword from "../vault/AddPassword";
 import { fetchAllPasswords } from "../../features/password/passwordThunks";
 import PwdSheet from "../vault/PwdSheet";
+import EditPassword from "../vault/EditPassword";
 
 const Home = () => {
   const navigate = useNavigate();
   const allPasswords = useSelector((state) => state.password.allPasswords);
   // Redux state for sheet visibility
   const sheetState = useSelector((state) => state.password.sheetState);
+
+  const showEditModal = useSelector((state) => state.auth.showEditModal);
 
   const dispatch = useDispatch();
 
@@ -25,6 +28,7 @@ const Home = () => {
   return (
     <div className="mb-22 flex flex-col items-center gap-6 select-none sm:mt-18">
       {sheetState && <PwdSheet />}
+      {showEditModal && <EditPassword />}
       <div className="mt-6 flex w-full justify-center sm:hidden">
         <Search />
       </div>

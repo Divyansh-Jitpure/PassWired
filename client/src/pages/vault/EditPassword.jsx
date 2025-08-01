@@ -1,6 +1,13 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { setShowEditModal } from "../../features/auth/authSlice";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import Title from "../../components/Title";
+import PwdSheetFormInput from "./PwdSheetFormInput";
+import { toast } from "sonner";
+import { IoClose } from "react-icons/io5";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
+import API from "../../utils/api";
+import { fetchAllPasswords } from "../../features/password/passwordThunks";
 
 const EditPassword = () => {
   const [formData, setFormData] = useState({
@@ -10,21 +17,65 @@ const EditPassword = () => {
   });
   const [showPassword, setShowPassword] = useState(false);
 
+  const targetPasswordId = useSelector((state) => state.auth.targetPasswordId);
+  // console.log(targetPasswordId);
+
+  const stableIdRef = useRef(targetPasswordId);
+
   const editRef = useRef();
 
   const dispatch = useDispatch();
 
-  useEffect(() => {});
+  useEffect(() => {
+    const fetchPassword = async () => {
+      try {
+        if (!targetPasswordId) {
+          toast.error("Missing password ID in fetch. Please try again.");
+        }
+        const res = await API.get(`/passwords/getPwd/${targetPasswordId}`);
+        const pass = res.data;
+        // console.log("Fetched password:", pass);
 
-  const editPassword = async (id) => {
+        setFormData({
+          service: pass.service || "",
+          username: pass.username || "",
+          password: pass.password || "",
+        });
+      } catch (err) {
+        console.error(
+          "Fetching password failed:",
+          err.response?.data?.error || err.message,
+        );
+      }
+    };
+
+    fetchPassword();
+  }, []);
+
+  useEffect(() => {
+    console.log("targetPasswordId changed:", targetPasswordId);
+  }, [targetPasswordId]);
+
+  const editPassword = async (e) => {
+    e.preventDefault();
+    console.log(stableIdRef);
+
+    if (!stableIdRef) {
+      toast.error("Missing password ID in edit. Please try again.");
+      return;
+    }
+
     const editPromise = new Promise(async (resolve, reject) => {
       try {
-        const res = await API.patch(`/passwords/edit/${id}`);
+        await API.patch(`/passwords/edit/${stableIdRef.current}`, formData);
+
+        // Refresh password list after adding
+        dispatch(fetchAllPasswords());
+        dispatch(setShowEditModal());
         resolve();
       } catch (err) {
         reject(
-          "Error editing password:",
-          err.response?.data?.error || err.message,
+          err.response?.data?.error || err.message || "Error editing password",
         );
       }
     });
@@ -53,9 +104,9 @@ const EditPassword = () => {
       {/* Password entry form */}
       <form
         className="relative flex w-[85%] flex-col items-center gap-4 rounded-xl bg-white p-12 sm:w-[50%] md:w-[40%] xl:w-[30%] 2xl:w-[20%]"
-        onSubmit={handlePwdSubmit}
+        onSubmit={editPassword}
       >
-        <Title text="Add Password" />
+        <Title text="Edit Password" />
         {/* Close button */}
         <IoClose
           onClick={() => dispatch(setShowEditModal())}

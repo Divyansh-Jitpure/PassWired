@@ -77,7 +77,6 @@ const App = () => {
         <DesktopNavbar />
         <Header />
         {showPinModal && <PinModal />}
-        {showEditModal && <EditPassword />}
         <Routes>
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<SignUp />} />

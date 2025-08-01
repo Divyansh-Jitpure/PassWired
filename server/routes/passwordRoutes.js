@@ -93,20 +93,54 @@ router.get("/view/:id", verifyAccessToken, async (req, res) => {
   }
 });
 
+router.get("/getPwd/:id", verifyAccessToken, async (req, res) => {
+  const { id } = req.params;
+  // console.log("get", id);
+
+  try {
+    const password = await Password.findOne({ _id: id, user: req.user.id });
+
+    if (!password) {
+      return res.status(404).json({ error: "Password not found" });
+    }
+
+    const decryptedPassword = decrypt(password.password);
+    res.status(200).json({
+      ...password.toObject(),
+      password: decryptedPassword,
+    });
+  } catch (err) {
+    res.status(500).json({ error: "Internal server error" });
+  }
+});
+
 router.patch("/edit/:id", verifyAccessToken, async (req, res) => {
   const { id } = req.params;
+  // console.log("edit", req.params);
+
   const { password, username, service } = req.body;
+  // console.log(req.body);
 
   try {
     if (!password || !username || !service) {
       return res.status(400).json({ error: "All fields are required" });
     }
-    const pwd = await Password.findOne({ _id: id, user: req.user.id });
+    const encryptedPassword = encrypt(password);
+    const updatedFields = {
+      password: encryptedPassword,
+      username,
+      service,
+    };
+    const pwd = await Password.findOneAndUpdate(
+      { _id: id, user: req.user.id },
+      updatedFields,
+      { new: true }
+    );
     if (!pwd) {
       return res.status(404).json({ error: "Password not found" });
     }
 
-    console.log(pwd);
+    res.status(201).json({ message: "Password edited successfully!" });
   } catch (err) {
     res.status(500).json({ error: "Internal server error" });
   }

@@ -79,7 +79,7 @@ const Password = ({ pwd }) => {
   // Hides the password
   const hidePassword = () => {
     setPassword(null);
-    setShowPwd(!showPwd);
+    setShowPwd(false);
   };
 
   // Copies the password to clipboard
@@ -106,7 +106,8 @@ const Password = ({ pwd }) => {
     return copyPromise;
   };
 
-  const editPassword = () => {
+  const editPassword = async () => {
+    hidePassword();
     dispatch(setShowEditModal(true));
   };
 
@@ -140,7 +141,9 @@ const Password = ({ pwd }) => {
       <section className="col-span-3 flex flex-col">
         <span
           // Clicking service name triggers PIN modal for viewing password
-          onClick={() => handleActionWithPin("view")}
+          onClick={() =>
+            showPwd ? hidePassword() : handleActionWithPin("view")
+          }
           className="w-fit cursor-pointer text-xl font-semibold text-shadow-sm"
         >
           {pwd.service}
