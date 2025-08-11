@@ -21,7 +21,6 @@ const Password = ({ pwd }) => {
   // Local state for password value and visibility
   const [password, setPassword] = useState();
   const [showPwd, setShowPwd] = useState(false);
-  // const [showEditModal, setShowEditModal] = useState(false);
 
   const navigate = useNavigate();
 
@@ -165,7 +164,7 @@ const Password = ({ pwd }) => {
         )}
       </section>
       {/* Right section: Action buttons */}
-      <section className="col-span-1 ml-auto flex flex-wrap justify-center gap-4">
+      <section className="col-span-1 ml-auto flex flex-wrap justify-center gap-2">
         {/* Toggle password visibility */}
         {showPwd ? (
           <button

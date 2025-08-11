@@ -3,14 +3,45 @@ import UserInfo from "./UserInfo";
 
 import Category from "./Category";
 import { useNavigate } from "react-router";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../../features/auth/authThunks";
 import { toast } from "sonner";
+import {
+  setShowPinModal,
+  setPendingAction,
+  clearPendingAction,
+  setRunFunction,
+  setShowEditModal,
+} from "../../features/auth/authSlice";
+import API from "../../utils/api";
 
 const More = () => {
   const navigate = useNavigate();
 
   const dispatch = useDispatch();
+
+  const deleteAccount = async () => {
+    const deletePromise = new Promise(async (resolve, reject) => {
+      try {
+        await API.delete("/auth/user");
+      } catch (err) {
+        reject(err.response?.data?.error || "Error deleting account");
+      }
+    });
+
+    toast.promise(deletePromise, {
+      loading: "Deleting Account...",
+      success: "Account deleted Successfully!",
+      error: (errMsg) => errMsg,
+    });
+
+    return deletePromise;
+  };
+
+  // Redux state selectors
+  const runFunction = useSelector((state) => state.auth.runFunction);
+  const pendingAction = useSelector((state) => state.auth.pendingAction);
+  const targetPasswordId = useSelector((state) => state.auth.targetPasswordId);
 
   const handleLogout = async () => {
     try {
@@ -41,7 +72,7 @@ const More = () => {
             { name: "View Profile", action: () => navigate("/profile") },
             {
               name: "Delete Account",
-              action: () => toast.info("Delete Account is Coming Soon!!"),
+              action: () => toast.info("Deleting Account is Coming Soon!!"),
             },
           ]}
         />

@@ -51,7 +51,7 @@ const PinModal = () => {
 
     toast.promise(verifyPinPromise, {
       loading: "Verifying Pin...",
-      success: "Pin Verified Successfully!",
+      // success: "Pin Verified Successfully!",
       error: (errMsg) => errMsg,
     });
 

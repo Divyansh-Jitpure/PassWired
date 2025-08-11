@@ -52,13 +52,13 @@ const EditPassword = () => {
     fetchPassword();
   }, []);
 
-  useEffect(() => {
-    console.log("targetPasswordId changed:", targetPasswordId);
-  }, [targetPasswordId]);
+  // useEffect(() => {
+  //   console.log("targetPasswordId changed:", targetPasswordId);
+  // }, [targetPasswordId]);
 
   const editPassword = async (e) => {
     e.preventDefault();
-    console.log(stableIdRef);
+    // console.log(stableIdRef);
 
     if (!stableIdRef) {
       toast.error("Missing password ID in edit. Please try again.");

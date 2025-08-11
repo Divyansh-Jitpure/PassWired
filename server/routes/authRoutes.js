@@ -18,6 +18,14 @@ router.get("/user", verifyAccessToken, async (req, res) => {
   }
 });
 
+router.delete("/user", verifyAccessToken, async () => {
+  try {
+    await User.findOneAndDelete(req.user.id);
+  } catch (err) {
+    res.status(500).json({ error: "Failed to delete user" });
+  }
+});
+
 // User signup route
 router.post("/signup", async (req, res) => {
   try {
