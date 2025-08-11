@@ -11,14 +11,21 @@ import {
   setPendingAction,
   clearPendingAction,
   setRunFunction,
-  setShowEditModal,
+  setShowChangePwdModal,
 } from "../../features/auth/authSlice";
 import API from "../../utils/api";
+import ChangePassword from "../../components/ChangePassword";
 
 const More = () => {
   const navigate = useNavigate();
 
   const dispatch = useDispatch();
+
+  const showPwdChangeModal = useSelector(
+    (state) => state.auth.showPwdChangeModal,
+  );
+
+  console.log(showPwdChangeModal);
 
   const deleteAccount = async () => {
     const deletePromise = new Promise(async (resolve, reject) => {
@@ -36,6 +43,11 @@ const More = () => {
     });
 
     return deletePromise;
+  };
+
+  const changePassword = async () => {
+    dispatch(setShowChangePwdModal(true));
+    console.log("dsf");
   };
 
   // Redux state selectors
@@ -64,6 +76,7 @@ const More = () => {
 
   return (
     <div className="mx-auto mt-5 mb-22 flex w-full flex-col items-center gap-5 select-none sm:mt-22">
+      {showPwdChangeModal && <ChangePassword />}
       <UserInfo />
       <section className="flex w-[80%] flex-col items-center gap-3 sm:w-[50%] md:w-[40%] xl:w-[30%] 2xl:w-[20%]">
         <Category
@@ -81,7 +94,7 @@ const More = () => {
           features={[
             {
               name: "Change Password",
-              action: () => toast.info("Changing Password is Coming Soon!!"),
+              action: () => changePassword(),
             },
             {
               name: "Change App Pin",
@@ -105,8 +118,7 @@ const More = () => {
             },
             {
               name: "Password Strength Checker",
-              action: () =>
-                toast.info("Password Strength Checker is Coming Soon!!"),
+              action: () => navigate("/passwordStrength"),
             },
           ]}
         />

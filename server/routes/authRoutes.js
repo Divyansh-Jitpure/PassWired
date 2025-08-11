@@ -72,6 +72,33 @@ router.post("/signup", async (req, res) => {
   }
 });
 
+router.patch("/changePassword", verifyAccessToken, async (req, res) => {
+  try {
+    const { currPassword, newPassword } = req.body;
+
+    // Find user by ID
+    const user = await User.findById(req.user.id);
+    if (!user) {
+      return res.status(404).json({ error: "User not found" });
+    }
+
+    // Compare input password and stored hashed password
+    const isMatch = await bcrypt.compare(currPassword, user.password);
+    if (!isMatch) return res.status(400).json({ error: "Invalid Password" });
+
+    // Hash the password
+    const salt = await bcrypt.genSalt(10);
+    const newHashedPassword = await bcrypt.hash(newPassword, salt);
+
+    user.password = newHashedPassword;
+    await user.save();
+
+    res.status(201).json({ message: "Password changed successfully" });
+  } catch (err) {
+    res.status(500).json({ error: "Internal server error" });
+  }
+});
+
 // Set user PIN route
 router.post("/setpin", async (req, res) => {
   try {
