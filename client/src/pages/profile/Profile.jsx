@@ -9,6 +9,13 @@ import { toast } from "sonner";
 import { useNavigate } from "react-router";
 import { logout } from "../../features/auth/authThunks";
 
+import {
+  setShowChangePwdModal,
+  setShowChangePinModal,
+} from "../../features/auth/authSlice";
+import ChangePassword from "../../components/ChangePassword";
+import ChangePin from "../../components/ChangePin";
+
 const Profile = () => {
   const user = useSelector((state) => state.auth.user);
   // console.log(user);
@@ -16,6 +23,21 @@ const Profile = () => {
   const navigate = useNavigate();
 
   const dispatch = useDispatch();
+
+  const showPwdChangeModal = useSelector(
+    (state) => state.auth.showPwdChangeModal,
+  );
+  const showPinChangeModal = useSelector(
+    (state) => state.auth.showPinChangeModal,
+  );
+
+  const changePassword = async () => {
+    dispatch(setShowChangePwdModal(true));
+  };
+
+  const changePin = async () => {
+    dispatch(setShowChangePinModal(true));
+  };
 
   const handleLogout = async () => {
     try {
@@ -38,6 +60,8 @@ const Profile = () => {
 
   return (
     <div className="mt-4 mb-22 flex flex-col items-center gap-10 select-none sm:mt-22">
+      {showPwdChangeModal && <ChangePassword />}
+      {showPinChangeModal && <ChangePin />}
       <Title text="Profile" />
 
       <section className="flex flex-col items-center">
@@ -59,11 +83,11 @@ const Profile = () => {
             },
             {
               name: "Change Password",
-              action: () => toast.info("Changing Password is Coming Soon!!"),
+              action: () => changePassword(),
             },
             {
               name: "Change App Pin",
-              action: () => toast.info("Changing App Pin is Coming Soon!!"),
+              action: () => changePin(),
             },
             {
               name: "Enable 2FA",

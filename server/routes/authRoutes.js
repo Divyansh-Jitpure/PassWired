@@ -84,7 +84,8 @@ router.patch("/changePassword", verifyAccessToken, async (req, res) => {
 
     // Compare input password and stored hashed password
     const isMatch = await bcrypt.compare(currPassword, user.password);
-    if (!isMatch) return res.status(400).json({ error: "Invalid Password" });
+    if (!isMatch)
+      return res.status(400).json({ error: "Invalid Current Password" });
 
     // Hash the password
     const salt = await bcrypt.genSalt(10);
@@ -138,6 +139,33 @@ router.post("/setpin", async (req, res) => {
   }
 });
 
+router.patch("/changePin", verifyAccessToken, async (req, res) => {
+  try {
+    const { currPin, newPin } = req.body;
+
+    // Find user by ID
+    const user = await User.findById(req.user.id);
+    if (!user || !user.pin) {
+      return res.status(404).json({ error: "User or Pin not found" });
+    }
+
+    // Compare input password and stored hashed password
+    const isMatch = await bcrypt.compare(currPin, user.pin);
+    if (!isMatch) return res.status(400).json({ error: "Invalid Current Pin" });
+
+    // Hash the password
+    const salt = await bcrypt.genSalt(10);
+    const newHashedPin = await bcrypt.hash(newPin, salt);
+
+    user.pin = newHashedPin;
+    await user.save();
+
+    res.status(201).json({ message: "Pin changed successfully" });
+  } catch (err) {
+    res.status(500).json({ error: "Internal server error" });
+  }
+});
+
 // Verify user PIN route (protected)
 router.get("/verifyPin/:pin", verifyAccessToken, async (req, res) => {
   try {
@@ -172,7 +200,7 @@ router.post("/login", async (req, res) => {
 
     // Check if user exists
     const user = await User.findOne({ email });
-    if (!user) return res.status(400).json({ error: "User not found!!" });
+    if (!user) return res.status(404).json({ error: "User not found!!" });
 
     // Compare input password and stored hashed password
     const isMatch = await bcrypt.compare(password, user.password);

@@ -6,13 +6,7 @@ import { useNavigate } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../../features/auth/authThunks";
 import { toast } from "sonner";
-import {
-  setShowPinModal,
-  setPendingAction,
-  clearPendingAction,
-  setRunFunction,
-  setShowChangePwdModal,
-} from "../../features/auth/authSlice";
+import { setShowChangePwdModal } from "../../features/auth/authSlice";
 import API from "../../utils/api";
 import ChangePassword from "../../components/ChangePassword";
 
@@ -24,8 +18,6 @@ const More = () => {
   const showPwdChangeModal = useSelector(
     (state) => state.auth.showPwdChangeModal,
   );
-
-  console.log(showPwdChangeModal);
 
   const deleteAccount = async () => {
     const deletePromise = new Promise(async (resolve, reject) => {
@@ -47,7 +39,6 @@ const More = () => {
 
   const changePassword = async () => {
     dispatch(setShowChangePwdModal(true));
-    console.log("dsf");
   };
 
   // Redux state selectors

@@ -11,6 +11,7 @@ const initialState = {
   pendingAction: null, // Stores pending action requiring PIN
   targetPasswordId: null, // ID of password item for pending action
   showPwdChangeModal: false,
+  showPinChangeModal: false,
 };
 
 // Create authentication slice
@@ -33,6 +34,9 @@ const authSlice = createSlice({
     },
     setShowChangePwdModal: (state, action) => {
       state.showPwdChangeModal = action.payload;
+    },
+    setShowChangePinModal: (state, action) => {
+      state.showPinChangeModal = action.payload;
     },
     // Store pending action and target password ID
     setPendingAction: (state, action) => {
@@ -73,5 +77,6 @@ export const {
   clearPendingAction,
   setShowEditModal,
   setShowChangePwdModal,
+  setShowChangePinModal,
 } = authSlice.actions;
 export default authSlice.reducer;
