@@ -1,24 +1,21 @@
 import React from "react";
 import Title from "../../components/Title";
-import UserInfo from "../more/UserInfo";
-import { useDispatch, useSelector } from "react-redux";
-import { FaUser } from "react-icons/fa";
-import Feature from "../../components/Feature";
 import Category from "../more/Category";
-import { toast } from "sonner";
 import { useNavigate } from "react-router";
+import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../../features/auth/authThunks";
-
+import { toast } from "sonner";
 import {
   setShowChangePwdModal,
   setShowChangePinModal,
 } from "../../features/auth/authSlice";
+import API from "../../utils/api";
 import ChangePassword from "../../components/ChangePassword";
 import ChangePin from "../../components/ChangePin";
+import { FaUser } from "react-icons/fa";
 
 const Profile = () => {
   const user = useSelector((state) => state.auth.user);
-  // console.log(user);
 
   const navigate = useNavigate();
 
@@ -37,6 +34,32 @@ const Profile = () => {
 
   const changePin = async () => {
     dispatch(setShowChangePinModal(true));
+  };
+
+  const deleteAccount = async () => {
+    const deletePromise = new Promise(async (resolve, reject) => {
+      try {
+        await API.delete("/auth/deleteAccount");
+
+        const result = await dispatch(logout());
+        if (logout.fulfilled.match(result)) {
+          navigate("/login");
+        } else {
+          throw new Error(result.payload || "Logout failed!");
+        }
+        resolve();
+      } catch (err) {
+        reject(err || "Error deleting account");
+      }
+    });
+
+    toast.promise(deletePromise, {
+      loading: "Deleting Account...",
+      success: "Account deleted Successfully!",
+      error: (errMsg) => errMsg,
+    });
+
+    return deletePromise;
   };
 
   const handleLogout = async () => {
@@ -95,7 +118,13 @@ const Profile = () => {
             },
             {
               name: "Delete Account",
-              action: () => toast.info("Delete Account is Coming Soon!!"),
+              action: () => {
+                const confirmDelete = window.confirm(
+                  "Are you sure you want to Delete your Account and associated passwords?",
+                );
+                if (!confirmDelete) return;
+                deleteAccount();
+              },
             },
           ]}
         />

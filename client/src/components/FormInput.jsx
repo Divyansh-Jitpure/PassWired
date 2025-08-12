@@ -1,9 +1,10 @@
 import React from "react";
 
-const FormInput = ({ value, setValue, label, type }) => {
+const FormInput = ({ value, setValue, label, type, len }) => {
   return (
     <div className="relative w-full">
       <input
+        maxLength={len}
         type={type}
         id={label.toLowerCase()}
         required

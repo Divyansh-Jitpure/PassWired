@@ -58,17 +58,17 @@ const PinModal = () => {
     return verifyPinPromise;
   };
 
-  const closeModal = (e) => {
-    if (modalRef.current === e.target) {
-      dispatch(setShowPinModal({ pinModalState: false }));
-    }
-  };
+  // const closeModal = (e) => {
+  //   if (modalRef.current === e.target) {
+  //     dispatch(setShowPinModal({ pinModalState: false }));
+  //   }
+  // };
 
   return (
     // Modal overlay
     <div
       ref={modalRef}
-      onClick={closeModal}
+      // onClick={closeModal}
       className="fixed inset-0 z-1000 flex select-none items-center justify-center bg-black/30 backdrop-blur-sm"
     >
       <form

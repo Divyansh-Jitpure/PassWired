@@ -67,7 +67,7 @@ const AppPin = () => {
   };
 
   return (
-    <div className="mb-22 flex flex-col items-center justify-center gap-6 select-none">
+    <div className="flex flex-col items-center justify-center gap-6 select-none sm:h-screen sm:gap-5 xl:scale-80 2xl:scale-100 2xl:gap-6">
       {/* Headers */}
       <div className="text-center">
         <h2 className="font-[ubuntu] text-4xl font-semibold text-[#30475E] text-shadow-md">
@@ -84,6 +84,7 @@ const AppPin = () => {
           <FormInput
             value={pin}
             setValue={setPin}
+            len={4}
             label="Pin"
             type={showPin ? "text" : "password"}
           />
@@ -107,6 +108,7 @@ const AppPin = () => {
           <FormInput
             value={confirmPin}
             setValue={setConfirmPin}
+            len={4}
             label="Confirm Pin"
             type={showConfirmPin ? "text" : "password"}
           />

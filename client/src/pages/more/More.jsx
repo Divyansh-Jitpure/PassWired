@@ -1,14 +1,17 @@
 import React from "react";
 import UserInfo from "./UserInfo";
-
 import Category from "./Category";
 import { useNavigate } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../../features/auth/authThunks";
 import { toast } from "sonner";
-import { setShowChangePwdModal } from "../../features/auth/authSlice";
+import {
+  setShowChangePwdModal,
+  setShowChangePinModal,
+} from "../../features/auth/authSlice";
 import API from "../../utils/api";
 import ChangePassword from "../../components/ChangePassword";
+import ChangePin from "../../components/ChangePin";
 
 const More = () => {
   const navigate = useNavigate();
@@ -18,13 +21,32 @@ const More = () => {
   const showPwdChangeModal = useSelector(
     (state) => state.auth.showPwdChangeModal,
   );
+  const showPinChangeModal = useSelector(
+    (state) => state.auth.showPinChangeModal,
+  );
+
+  const changePassword = async () => {
+    dispatch(setShowChangePwdModal(true));
+  };
+
+  const changePin = async () => {
+    dispatch(setShowChangePinModal(true));
+  };
 
   const deleteAccount = async () => {
     const deletePromise = new Promise(async (resolve, reject) => {
       try {
-        await API.delete("/auth/user");
+        await API.delete("/auth/deleteAccount");
+
+        const result = await dispatch(logout());
+        if (logout.fulfilled.match(result)) {
+          navigate("/login");
+        } else {
+          throw new Error(result.payload || "Logout failed!");
+        }
+        resolve();
       } catch (err) {
-        reject(err.response?.data?.error || "Error deleting account");
+        reject(err || "Error deleting account");
       }
     });
 
@@ -36,15 +58,6 @@ const More = () => {
 
     return deletePromise;
   };
-
-  const changePassword = async () => {
-    dispatch(setShowChangePwdModal(true));
-  };
-
-  // Redux state selectors
-  const runFunction = useSelector((state) => state.auth.runFunction);
-  const pendingAction = useSelector((state) => state.auth.pendingAction);
-  const targetPasswordId = useSelector((state) => state.auth.targetPasswordId);
 
   const handleLogout = async () => {
     try {
@@ -68,6 +81,8 @@ const More = () => {
   return (
     <div className="mx-auto mt-5 mb-22 flex w-full flex-col items-center gap-5 select-none sm:mt-22">
       {showPwdChangeModal && <ChangePassword />}
+      {showPinChangeModal && <ChangePin />}
+
       <UserInfo />
       <section className="flex w-[80%] flex-col items-center gap-3 sm:w-[50%] md:w-[40%] xl:w-[30%] 2xl:w-[20%]">
         <Category
@@ -76,7 +91,13 @@ const More = () => {
             { name: "View Profile", action: () => navigate("/profile") },
             {
               name: "Delete Account",
-              action: () => toast.info("Deleting Account is Coming Soon!!"),
+              action: () => {
+                const confirmDelete = window.confirm(
+                  "Are you sure you want to Delete your Account and associated passwords?",
+                );
+                if (!confirmDelete) return;
+                deleteAccount();
+              },
             },
           ]}
         />
@@ -89,7 +110,7 @@ const More = () => {
             },
             {
               name: "Change App Pin",
-              action: () => toast.info("Changing App Pin is Coming Soon!!"),
+              action: () => changePin(),
             },
             {
               name: "Enable 2FA",

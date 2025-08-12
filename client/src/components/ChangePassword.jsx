@@ -56,16 +56,16 @@ const ChangePassword = () => {
     return changePwdPromise;
   };
 
-  const closeModal = (e) => {
-    if (sheetRef.current === e.target) {
-      dispatch(setShowChangePwdModal());
-    }
-  };
+  // const closeModal = (e) => {
+  //   if (sheetRef.current === e.target) {
+  //     dispatch(setShowChangePwdModal());
+  //   }
+  // };
 
   return (
     <div
       ref={sheetRef}
-      onClick={closeModal}
+      // onClick={closeModal}
       className={`fixed inset-0 z-1000 flex items-center justify-center bg-black/30 backdrop-blur-sm`}
     >
       {/* Password entry form */}
@@ -129,7 +129,7 @@ const ChangePassword = () => {
             value={confirmPassword}
             setValue={(e) => setConfirmPassword(e.target.value)}
           />
-          {newPassword &&
+          {confirmPassword &&
             (showconfirmPassword ? (
               <FaEyeSlash
                 onClick={() => setShowconfirmPassword(!showconfirmPassword)}
