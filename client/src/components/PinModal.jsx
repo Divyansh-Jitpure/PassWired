@@ -69,21 +69,21 @@ const PinModal = () => {
     <div
       ref={modalRef}
       // onClick={closeModal}
-      className="fixed inset-0 z-1000 flex select-none items-center justify-center bg-black/30 backdrop-blur-sm"
+      className="fixed inset-0 z-1000 flex items-center justify-center bg-black/30 backdrop-blur-sm select-none"
     >
       <form
         onSubmit={handleSubmit}
-        className="relative flex flex-col items-center justify-center gap-6 rounded-xl bg-white p-12"
+        className="dark:bg-primary-dark relative flex w-[85%] flex-col items-center gap-4 rounded-xl bg-white p-12 sm:w-[50%] md:w-[40%] xl:w-[30%] 2xl:w-[20%]"
       >
         {/* Close button */}
         <IoClose
           onClick={() => dispatch(setShowPinModal({ pinModalState: false }))}
-          className="absolute top-2 right-2 cursor-pointer rounded-full text-4xl hover:bg-gray-400/30 active:bg-gray-400/30"
+          className="dark:text-primary absolute top-2 right-2 cursor-pointer rounded-full text-4xl hover:bg-gray-400/30 active:bg-gray-400/30"
         />
         {/* Modal title */}
         <section className="text-center">
           <Title text="Enter Pin" />
-          <p>Enter 4 digit App Pin to Proceed</p>
+          <p className="dark:text-primary">Enter 4 digit App Pin to Proceed</p>
         </section>
         {/* PIN input field */}
         <div className="relative">
@@ -97,12 +97,12 @@ const PinModal = () => {
             (showPin ? (
               <FaEyeSlash
                 onClick={() => setShowPin(!showPin)}
-                className="absolute top-1/2 right-3 -translate-y-1/2 cursor-pointer text-2xl"
+                className="dark:text-primary absolute top-1/2 right-3 -translate-y-1/2 cursor-pointer text-2xl"
               />
             ) : (
               <FaEye
                 onClick={() => setShowPin(!showPin)}
-                className="absolute top-1/2 right-3 -translate-y-1/2 cursor-pointer text-2xl"
+                className="dark:text-primary absolute top-1/2 right-3 -translate-y-1/2 cursor-pointer text-2xl"
               />
             ))}
         </div>

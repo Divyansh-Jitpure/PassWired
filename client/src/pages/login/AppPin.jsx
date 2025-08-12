@@ -70,10 +70,12 @@ const AppPin = () => {
     <div className="flex flex-col items-center justify-center gap-6 select-none sm:h-screen sm:gap-5 xl:scale-80 2xl:scale-100 2xl:gap-6">
       {/* Headers */}
       <div className="text-center">
-        <h2 className="font-[ubuntu] text-4xl font-semibold text-[#30475E] text-shadow-md">
+        <h2 className="dark:text-primary font-[ubuntu] text-4xl font-semibold text-[#30475E] text-shadow-md">
           — App Pin —
         </h2>
-        <p className="text-xl">Set a 4 digit Pin for this App</p>
+        <p className="dark:text-primary text-xl">
+          Set a 4 digit Pin for this App
+        </p>
       </div>
       <form
         onSubmit={handleSetPin}
@@ -93,12 +95,12 @@ const AppPin = () => {
             (showPin ? (
               <FaEyeSlash
                 onClick={() => setShowPin(!showPin)}
-                className="absolute top-1/2 right-3 -translate-y-1/2 cursor-pointer text-2xl"
+                className="dark:text-primary absolute top-1/2 right-3 -translate-y-1/2 cursor-pointer text-2xl"
               />
             ) : (
               <FaEye
                 onClick={() => setShowPin(!showPin)}
-                className="absolute top-1/2 right-3 -translate-y-1/2 cursor-pointer text-2xl"
+                className="dark:text-primary absolute top-1/2 right-3 -translate-y-1/2 cursor-pointer text-2xl"
               />
             ))}
         </div>
@@ -117,12 +119,12 @@ const AppPin = () => {
             (showConfirmPin ? (
               <FaEyeSlash
                 onClick={() => setShowConfirmPin(!showConfirmPin)}
-                className="absolute top-1/2 right-3 -translate-y-1/2 cursor-pointer text-2xl"
+                className="dark:text-primary absolute top-1/2 right-3 -translate-y-1/2 cursor-pointer text-2xl"
               />
             ) : (
               <FaEye
                 onClick={() => setShowConfirmPin(!showConfirmPin)}
-                className="absolute top-1/2 right-3 -translate-y-1/2 cursor-pointer text-2xl"
+                className="dark:text-primary absolute top-1/2 right-3 -translate-y-1/2 cursor-pointer text-2xl"
               />
             ))}
         </div>

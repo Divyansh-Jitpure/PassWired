@@ -1,10 +1,11 @@
 import React, { useState } from "react";
 import { FcGoogle } from "react-icons/fc";
-import { Link, useNavigate } from "react-router";
+import { Link, Navigate, useNavigate } from "react-router";
 import FormInput from "../../components/FormInput";
 import API from "../../utils/api";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { toast } from "sonner";
+import { useSelector } from "react-redux";
 
 // SignUp component for user registration
 const SignUp = () => {
@@ -17,6 +18,8 @@ const SignUp = () => {
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
   const navigate = useNavigate();
+
+  const { accessToken } = useSelector((state) => state.auth);
 
   // Handles form submission for sign up
   const handleSignUp = async (e) => {
@@ -67,14 +70,18 @@ const SignUp = () => {
     toast.info("Coming Soon!!");
   };
 
-  return (
+  return accessToken ? (
+    <Navigate to="/" replace />
+  ) : (
     <div className="flex flex-col items-center justify-center gap-6 select-none sm:h-screen sm:gap-5 xl:scale-80 2xl:scale-100 2xl:gap-6">
       {/* Headers */}
       <div className="text-center">
-        <h2 className="font-[ubuntu] text-4xl font-semibold text-[#30475E] text-shadow-md">
+        <h2 className="dark:text-primary font-[ubuntu] text-4xl font-semibold text-[#30475E] text-shadow-md">
           — Welcome —
         </h2>
-        <p className="text-xl">We are happy to have you here!!</p>
+        <p className="dark:text-primary text-xl">
+          We are happy to have you here!!
+        </p>
       </div>
 
       {/* SignUp Form */}
@@ -110,12 +117,12 @@ const SignUp = () => {
             (showPassword ? (
               <FaEyeSlash
                 onClick={() => setShowPassword(!showPassword)}
-                className="absolute top-1/2 right-3 -translate-y-1/2 cursor-pointer text-2xl"
+                className="dark:text-primary absolute top-1/2 right-3 -translate-y-1/2 cursor-pointer text-2xl"
               />
             ) : (
               <FaEye
                 onClick={() => setShowPassword(!showPassword)}
-                className="absolute top-1/2 right-3 -translate-y-1/2 cursor-pointer text-2xl"
+                className="dark:text-primary absolute top-1/2 right-3 -translate-y-1/2 cursor-pointer text-2xl"
               />
             ))}
         </div>
@@ -132,12 +139,12 @@ const SignUp = () => {
             (showConfirmPassword ? (
               <FaEyeSlash
                 onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                className="absolute top-1/2 right-3 -translate-y-1/2 cursor-pointer text-2xl"
+                className="dark:text-primary absolute top-1/2 right-3 -translate-y-1/2 cursor-pointer text-2xl"
               />
             ) : (
               <FaEye
                 onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                className="absolute top-1/2 right-3 -translate-y-1/2 cursor-pointer text-2xl"
+                className="dark:text-primary absolute top-1/2 right-3 -translate-y-1/2 cursor-pointer text-2xl"
               />
             ))}
         </div>
@@ -155,22 +162,22 @@ const SignUp = () => {
 
       {/* Divider for alternative sign up */}
       <div className="flex w-[75%] items-center justify-center gap-2 sm:w-[50%] md:w-[40%] xl:w-[30%] 2xl:w-[20%]">
-        <hr className="w-[50%] text-gray-400" />
-        <span className="font-[Ubuntu] text-xl"> Or </span>
-        <hr className="w-[50%] text-gray-400" />
+        <hr className="w-[50%] text-gray-400 dark:text-gray-200" />
+        <span className="dark:text-primary font-[Ubuntu] text-xl"> Or </span>
+        <hr className="w-[50%] text-gray-400 dark:text-gray-200" />
       </div>
 
       {/* Google sign up button */}
       <div
         onClick={googleSignUp}
-        className="flex h-12 w-[75%] cursor-pointer items-center justify-center gap-4 rounded-lg border bg-white/40 hover:bg-white/70 active:bg-white/70 sm:w-[50%] md:w-[40%] xl:w-[30%] 2xl:w-[20%]"
+        className="flex h-12 w-[75%] cursor-pointer items-center justify-center gap-4 rounded-lg border bg-white/40 hover:bg-white/70 active:bg-white/70 sm:w-[50%] md:w-[40%] xl:w-[30%] 2xl:w-[20%] dark:bg-white/10 dark:hover:bg-white/20 dark:active:bg-white/20"
       >
         <FcGoogle className="text-3xl" />
-        <span className="text-xl">Sign Up with Google</span>
+        <span className="dark:text-primary text-xl">Sign Up with Google</span>
       </div>
 
       {/* Link to login page */}
-      <div className="">
+      <div className="dark:text-primary">
         Already have an account{" "}
         <Link to={"/login"} className="font-semibold text-[#F05454]">
           Sign In

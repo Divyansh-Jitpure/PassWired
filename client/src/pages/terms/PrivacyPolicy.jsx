@@ -3,14 +3,14 @@ import Title from "../../components/Title";
 
 const PrivacyPolicy = () => {
   return (
-    <div className="mx-12 mt-4 mb-22 flex flex-col items-center gap-4 sm:mt-22">
+    <div className="mx-12 mt-4 mb-22 flex flex-col items-center text-primary gap-4 sm:mt-22">
       <Title text="Privacy Policy" />
       <p className="text-center font-[ubuntu] text-lg xl:w-[90%] 2xl:w-[60%]">
         At <strong className="text-xl">PassWired</strong>, your privacy is our
         top priority. This Privacy Policy explains how we collect, use, and
         protect your information when you use our password manager app.
       </p>
-      <ol className="flex list-decimal flex-col gap-4 [&_.list-disc]:ml-3 [&_.list-heads]:text-lg [&_span]:font-[ubuntu] [&_span]:text-xl [&_span]:font-semibold">
+      <ol className="flex list-decimal flex-col gap-4 [&_.list-disc]:ml-3 [&_.list-heads]:text-lg [&_span]:font-[ubuntu] [&_span]:text-xl [&_span]:font-semibold ">
         <li className="list-heads">
           <span>Information We Collect</span>
           <ul className="list-disc text-base">

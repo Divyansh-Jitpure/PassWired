@@ -21,6 +21,9 @@ router.get("/user", verifyAccessToken, async (req, res) => {
 
 router.delete("/deleteAccount", verifyAccessToken, async (req, res) => {
   try {
+    const { password } = req.body;
+    console.log(password);
+
     const userId = req.user.id;
     // console.log(userId);
     if (!userId) {
@@ -32,6 +35,10 @@ router.delete("/deleteAccount", verifyAccessToken, async (req, res) => {
     if (!user) {
       return res.status(404).json({ error: "User not found" });
     }
+
+    const isMatch = await bcrypt.compare(password, user.password);
+    if (!isMatch)
+      return res.status(400).json({ error: "Invalid Current Password" });
 
     await Password.deleteMany({ user: userId });
 

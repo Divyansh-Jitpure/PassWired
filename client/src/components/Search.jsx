@@ -6,11 +6,11 @@ const Search = () => {
     <div className="relative flex w-[70%] items-center justify-center gap-3">
       <input
         type="text"
-        className="h-10 w-full rounded-lg border p-2 text-xl shadow-md"
+        className="dark:border-primary dark:text-primary dark:placeholder:text-primary h-10 w-full rounded-lg border p-2 text-xl shadow-md"
         placeholder="Search"
       />
       <button className="absolute right-2 cursor-pointer">
-        <FiSearch className="text-3xl text-[#30475E]" />
+        <FiSearch className="dark:text-primary text-3xl text-[#30475E]" />
       </button>
     </div>
   );

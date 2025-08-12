@@ -7,8 +7,16 @@ import { LuBicepsFlexed } from "react-icons/lu";
 import { IoMdMoon } from "react-icons/io";
 import { useNavigate } from "react-router";
 import { toast } from "sonner";
+import { useDispatch, useSelector } from "react-redux";
+import { toggleTheme } from "../../../features/auth/authSlice";
+import { FaSun } from "react-icons/fa";
+
 const Tools = () => {
   const navigate = useNavigate();
+
+  const dispatch = useDispatch();
+
+  const { activeTheme } = useSelector((state) => state.auth);
 
   const tools = [
     {
@@ -28,8 +36,10 @@ const Tools = () => {
     },
     {
       toolName: "Theme",
-      toolIcon: <IoMdMoon />,
-      action: () => toast.info("Dark Theme is Coming Soon!!"),
+      toolIcon: activeTheme ? <IoMdMoon /> : <FaSun />,
+      action: () => {
+        dispatch(toggleTheme(!activeTheme));
+      },
     },
   ];
   return (

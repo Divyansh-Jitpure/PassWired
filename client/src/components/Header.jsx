@@ -11,8 +11,8 @@ const Header = () => {
         className="flex cursor-pointer items-center font-[Ubuntu] text-3xl font-semibold"
       >
         <span className="text-[#F05454]">Pass</span>
-        <span className="mr-1 text-[#30475E]">Wired</span>
-        <FaUserSecret className="text-[#002041]" />
+        <span className="dark:text-primary mr-1 text-[#30475E]">Wired</span>
+        <FaUserSecret className="text-[#002041] dark:text-white" />
       </h1>
     </div>
   );

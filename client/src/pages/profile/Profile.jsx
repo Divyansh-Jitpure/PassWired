@@ -8,10 +8,12 @@ import { toast } from "sonner";
 import {
   setShowChangePwdModal,
   setShowChangePinModal,
+  setShowDeleteAccountModal,
 } from "../../features/auth/authSlice";
 import API from "../../utils/api";
 import ChangePassword from "../../components/ChangePassword";
 import ChangePin from "../../components/ChangePin";
+import DeleteAccount from "../../components/DeleteAccount";
 import { FaUser } from "react-icons/fa";
 
 const Profile = () => {
@@ -21,12 +23,8 @@ const Profile = () => {
 
   const dispatch = useDispatch();
 
-  const showPwdChangeModal = useSelector(
-    (state) => state.auth.showPwdChangeModal,
-  );
-  const showPinChangeModal = useSelector(
-    (state) => state.auth.showPinChangeModal,
-  );
+  const { showPwdChangeModal, showPinChangeModal, showDeleteAccountModal } =
+    useSelector((state) => state.auth);
 
   const changePassword = async () => {
     dispatch(setShowChangePwdModal(true));
@@ -37,29 +35,7 @@ const Profile = () => {
   };
 
   const deleteAccount = async () => {
-    const deletePromise = new Promise(async (resolve, reject) => {
-      try {
-        await API.delete("/auth/deleteAccount");
-
-        const result = await dispatch(logout());
-        if (logout.fulfilled.match(result)) {
-          navigate("/login");
-        } else {
-          throw new Error(result.payload || "Logout failed!");
-        }
-        resolve();
-      } catch (err) {
-        reject(err || "Error deleting account");
-      }
-    });
-
-    toast.promise(deletePromise, {
-      loading: "Deleting Account...",
-      success: "Account deleted Successfully!",
-      error: (errMsg) => errMsg,
-    });
-
-    return deletePromise;
+    dispatch(setShowDeleteAccountModal(true));
   };
 
   const handleLogout = async () => {
@@ -85,13 +61,17 @@ const Profile = () => {
     <div className="mt-4 mb-22 flex flex-col items-center gap-10 select-none sm:mt-22">
       {showPwdChangeModal && <ChangePassword />}
       {showPinChangeModal && <ChangePin />}
+      {showDeleteAccountModal && <DeleteAccount />}
+
       <Title text="Profile" />
 
       <section className="flex flex-col items-center">
-        <FaUser className="mb-1 text-4xl text-[#213242]" />
+        <FaUser className="dark:text-[#F05454] mb-1 text-4xl text-[#213242]" />
         <Title text={user?.username} />
-        <span className="text-[#30475eb7]">{user?.email}</span>
-        <span>
+        <span className="dark:text-primary text-[#30475eb7]">
+          {user?.email}
+        </span>
+        <span className="dark:text-primary">
           Account active since {new Date(user?.createdAt).toDateString()}
         </span>
       </section>
@@ -118,13 +98,7 @@ const Profile = () => {
             },
             {
               name: "Delete Account",
-              action: () => {
-                const confirmDelete = window.confirm(
-                  "Are you sure you want to Delete your Account and associated passwords?",
-                );
-                if (!confirmDelete) return;
-                deleteAccount();
-              },
+              action: () => deleteAccount(),
             },
           ]}
         />

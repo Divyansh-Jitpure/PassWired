@@ -12,6 +12,8 @@ const initialState = {
   targetPasswordId: null, // ID of password item for pending action
   showPwdChangeModal: false,
   showPinChangeModal: false,
+  showDeleteAccountModal: false,
+  activeTheme: localStorage.getItem("theme") === "dark",
 };
 
 // Create authentication slice
@@ -37,6 +39,17 @@ const authSlice = createSlice({
     },
     setShowChangePinModal: (state, action) => {
       state.showPinChangeModal = action.payload;
+    },
+    setShowDeleteAccountModal: (state, action) => {
+      state.showDeleteAccountModal = action.payload;
+    },
+    toggleTheme: (state, action) => {
+      state.activeTheme = action.payload;
+      if (state.activeTheme) {
+        localStorage.setItem("theme", "dark");
+      } else {
+        localStorage.setItem("theme", "light");
+      }
     },
     // Store pending action and target password ID
     setPendingAction: (state, action) => {
@@ -78,5 +91,7 @@ export const {
   setShowEditModal,
   setShowChangePwdModal,
   setShowChangePinModal,
+  setShowDeleteAccountModal,
+  toggleTheme,
 } = authSlice.actions;
 export default authSlice.reducer;

@@ -3,7 +3,7 @@ import Title from "../../components/Title";
 
 const TermsConditions = () => {
   return (
-    <div className="mx-12 mt-4 mb-22 flex flex-col items-center gap-4 sm:mt-22">
+    <div className="mx-12 mt-4 mb-22 flex flex-col items-center gap-4 text-primary sm:mt-22">
       <Title text="Terms & Conditions" />
       <p className="font-[ubuntu] text-lg">
         By using <strong className="text-xl">PassWired</strong>, you agree to

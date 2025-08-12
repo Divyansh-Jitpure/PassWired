@@ -70,14 +70,15 @@ const ChangePassword = () => {
     >
       {/* Password entry form */}
       <form
-        className="relative flex w-[85%] flex-col items-center gap-4 rounded-xl bg-white p-12 sm:w-[50%] md:w-[40%] xl:w-[30%] 2xl:w-[20%]"
+        className="dark:bg-primary-dark relative flex w-[85%] flex-col items-center gap-4 rounded-xl bg-white px-10 py-12 sm:w-[50%] md:w-[40%] xl:w-[30%] 2xl:w-[20%]"
         onSubmit={handleChangePwd}
       >
         <Title text="Change Password" />
+
         {/* Close button */}
         <IoClose
           onClick={() => dispatch(setShowChangePwdModal())}
-          className="absolute top-2 right-2 cursor-pointer rounded-full text-4xl hover:bg-gray-400/30 active:bg-gray-400/30"
+          className="dark:text-primary absolute top-2 right-2 cursor-pointer rounded-full text-4xl hover:bg-gray-400/30 active:bg-gray-400/30"
         />
         {/* Current Password input field */}
         <div className="relative w-full">
@@ -91,12 +92,12 @@ const ChangePassword = () => {
             (showPassword ? (
               <FaEyeSlash
                 onClick={() => setShowPassword(!showPassword)}
-                className="absolute top-1/2 right-3 -translate-y-1/2 cursor-pointer text-2xl"
+                className="dark:text-primary absolute top-1/2 right-3 -translate-y-1/2 cursor-pointer text-2xl"
               />
             ) : (
               <FaEye
                 onClick={() => setShowPassword(!showPassword)}
-                className="absolute top-1/2 right-3 -translate-y-1/2 cursor-pointer text-2xl"
+                className="dark:text-primary absolute top-1/2 right-3 -translate-y-1/2 cursor-pointer text-2xl"
               />
             ))}
         </div>
@@ -112,12 +113,12 @@ const ChangePassword = () => {
             (showNewPassword ? (
               <FaEyeSlash
                 onClick={() => setShowNewPassword(!showNewPassword)}
-                className="absolute top-1/2 right-3 -translate-y-1/2 cursor-pointer text-2xl"
+                className="dark:text-primary absolute top-1/2 right-3 -translate-y-1/2 cursor-pointer text-2xl"
               />
             ) : (
               <FaEye
                 onClick={() => setShowNewPassword(!showNewPassword)}
-                className="absolute top-1/2 right-3 -translate-y-1/2 cursor-pointer text-2xl"
+                className="dark:text-primary absolute top-1/2 right-3 -translate-y-1/2 cursor-pointer text-2xl"
               />
             ))}
         </div>
@@ -133,12 +134,12 @@ const ChangePassword = () => {
             (showconfirmPassword ? (
               <FaEyeSlash
                 onClick={() => setShowconfirmPassword(!showconfirmPassword)}
-                className="absolute top-1/2 right-3 -translate-y-1/2 cursor-pointer text-2xl"
+                className="dark:text-primary absolute top-1/2 right-3 -translate-y-1/2 cursor-pointer text-2xl"
               />
             ) : (
               <FaEye
                 onClick={() => setShowconfirmPassword(!showconfirmPassword)}
-                className="absolute top-1/2 right-3 -translate-y-1/2 cursor-pointer text-2xl"
+                className="dark:text-primary absolute top-1/2 right-3 -translate-y-1/2 cursor-pointer text-2xl"
               />
             ))}
         </div>

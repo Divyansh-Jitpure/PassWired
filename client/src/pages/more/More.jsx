@@ -8,22 +8,20 @@ import { toast } from "sonner";
 import {
   setShowChangePwdModal,
   setShowChangePinModal,
+  setShowDeleteAccountModal,
 } from "../../features/auth/authSlice";
 import API from "../../utils/api";
 import ChangePassword from "../../components/ChangePassword";
 import ChangePin from "../../components/ChangePin";
+import DeleteAccount from "../../components/DeleteAccount";
 
 const More = () => {
   const navigate = useNavigate();
 
   const dispatch = useDispatch();
 
-  const showPwdChangeModal = useSelector(
-    (state) => state.auth.showPwdChangeModal,
-  );
-  const showPinChangeModal = useSelector(
-    (state) => state.auth.showPinChangeModal,
-  );
+  const { showPwdChangeModal, showPinChangeModal, showDeleteAccountModal } =
+    useSelector((state) => state.auth);
 
   const changePassword = async () => {
     dispatch(setShowChangePwdModal(true));
@@ -34,29 +32,7 @@ const More = () => {
   };
 
   const deleteAccount = async () => {
-    const deletePromise = new Promise(async (resolve, reject) => {
-      try {
-        await API.delete("/auth/deleteAccount");
-
-        const result = await dispatch(logout());
-        if (logout.fulfilled.match(result)) {
-          navigate("/login");
-        } else {
-          throw new Error(result.payload || "Logout failed!");
-        }
-        resolve();
-      } catch (err) {
-        reject(err || "Error deleting account");
-      }
-    });
-
-    toast.promise(deletePromise, {
-      loading: "Deleting Account...",
-      success: "Account deleted Successfully!",
-      error: (errMsg) => errMsg,
-    });
-
-    return deletePromise;
+    dispatch(setShowDeleteAccountModal(true));
   };
 
   const handleLogout = async () => {
@@ -82,6 +58,7 @@ const More = () => {
     <div className="mx-auto mt-5 mb-22 flex w-full flex-col items-center gap-5 select-none sm:mt-22">
       {showPwdChangeModal && <ChangePassword />}
       {showPinChangeModal && <ChangePin />}
+      {showDeleteAccountModal && <DeleteAccount />}
 
       <UserInfo />
       <section className="flex w-[80%] flex-col items-center gap-3 sm:w-[50%] md:w-[40%] xl:w-[30%] 2xl:w-[20%]">
@@ -91,13 +68,7 @@ const More = () => {
             { name: "View Profile", action: () => navigate("/profile") },
             {
               name: "Delete Account",
-              action: () => {
-                const confirmDelete = window.confirm(
-                  "Are you sure you want to Delete your Account and associated passwords?",
-                );
-                if (!confirmDelete) return;
-                deleteAccount();
-              },
+              action: () => deleteAccount(),
             },
           ]}
         />

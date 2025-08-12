@@ -30,7 +30,7 @@ const Vault = () => {
       <AddPassword />
 
       {!allPasswords.length ? (
-        <span className="">No passwords saved</span>
+        <span className="dark:text-primary">No passwords saved</span>
       ) : (
         <RecentPasswords pwdCount={Number.MAX_VALUE} />
       )}

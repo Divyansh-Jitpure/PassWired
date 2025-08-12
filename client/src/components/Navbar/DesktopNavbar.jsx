@@ -22,8 +22,8 @@ const DesktopNavbar = () => {
 
   return (
     <div
-      className={`fixed z-10 hidden w-full items-center justify-around bg-[#DDDDDD] py-3 ${
-        !isAtTop ? "shadow-md" : ""
+      className={`bg-primary dark:bg-primary-dark fixed z-10 hidden w-full items-center justify-around py-3 ${
+        !isAtTop ? "shadow-md shadow-[#191e25]" : ""
       } sm:flex 2xl:py-4`}
     >
       <DesktopHeader />
@@ -31,17 +31,17 @@ const DesktopNavbar = () => {
         <div className="relative flex items-center justify-center sm:mr-1 sm:w-[30%] md:ml-5 md:w-[35%] lg:ml-5 lg:w-[30%] xl:ml-4 xl:w-[23%] 2xl:ml-3 2xl:w-[16%]">
           <input
             type="text"
-            className="h-10 w-full rounded-lg border px-3 text-xl shadow-md"
+            className="dark:border-primary dark:text-primary dark:placeholder:text-primary h-10 w-full rounded-lg border px-3 text-xl shadow-md"
             placeholder="Search"
           />
           <button className="absolute right-2 cursor-pointer">
-            <FiSearch className="text-3xl text-[#30475E]" />
+            <FiSearch className="dark:text-primary text-3xl text-[#30475E]" />
           </button>
         </div>
       )}
 
       {accessToken && (
-        <div className="flex text-[#30475E] *:text-xl *:font-semibold *:text-shadow-md *:hover:underline *:hover:text-shadow-lg sm:gap-3 md:gap-5">
+        <div className="dark:text-primary flex text-[#30475E] *:text-xl *:font-semibold *:text-shadow-md *:hover:underline *:hover:text-shadow-lg sm:gap-3 md:gap-5">
           <Link to={"/"}>Home</Link>
           <Link to={"/vault"}>Vault</Link>
           <Link to={"/more"}>More</Link>

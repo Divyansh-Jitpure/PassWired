@@ -70,14 +70,14 @@ const ChangePin = () => {
     >
       {/* Password entry form */}
       <form
-        className="relative flex w-[85%] flex-col items-center gap-4 rounded-xl bg-white p-12 sm:w-[50%] md:w-[40%] xl:w-[30%] 2xl:w-[20%]"
+        className="dark:bg-primary-dark relative flex w-[85%] flex-col items-center gap-4 rounded-xl bg-white p-12 sm:w-[50%] md:w-[40%] xl:w-[30%] 2xl:w-[20%]"
         onSubmit={handleChangePin}
       >
         <Title text="Change Pin" />
         {/* Close button */}
         <IoClose
           onClick={() => dispatch(setShowChangePinModal())}
-          className="absolute top-2 right-2 cursor-pointer rounded-full text-4xl hover:bg-gray-400/30 active:bg-gray-400/30"
+          className="dark:text-primary absolute top-2 right-2 cursor-pointer rounded-full text-4xl hover:bg-gray-400/30 active:bg-gray-400/30"
         />
         {/* Current Password input field */}
         <div className="relative w-full">
@@ -91,12 +91,12 @@ const ChangePin = () => {
             (showPin ? (
               <FaEyeSlash
                 onClick={() => setShowPin(!showPin)}
-                className="absolute top-1/2 right-3 -translate-y-1/2 cursor-pointer text-2xl"
+                className="dark:text-primary absolute top-1/2 right-3 -translate-y-1/2 cursor-pointer text-2xl"
               />
             ) : (
               <FaEye
                 onClick={() => setShowPin(!showPin)}
-                className="absolute top-1/2 right-3 -translate-y-1/2 cursor-pointer text-2xl"
+                className="dark:text-primary absolute top-1/2 right-3 -translate-y-1/2 cursor-pointer text-2xl"
               />
             ))}
         </div>
@@ -112,12 +112,12 @@ const ChangePin = () => {
             (showNewPin ? (
               <FaEyeSlash
                 onClick={() => setShowNewPin(!showNewPin)}
-                className="absolute top-1/2 right-3 -translate-y-1/2 cursor-pointer text-2xl"
+                className="dark:text-primary absolute top-1/2 right-3 -translate-y-1/2 cursor-pointer text-2xl"
               />
             ) : (
               <FaEye
                 onClick={() => setShowNewPin(!showNewPin)}
-                className="absolute top-1/2 right-3 -translate-y-1/2 cursor-pointer text-2xl"
+                className="dark:text-primary absolute top-1/2 right-3 -translate-y-1/2 cursor-pointer text-2xl"
               />
             ))}
         </div>
@@ -133,12 +133,12 @@ const ChangePin = () => {
             (showconfirmPin ? (
               <FaEyeSlash
                 onClick={() => setShowconfirmPin(!showconfirmPin)}
-                className="absolute top-1/2 right-3 -translate-y-1/2 cursor-pointer text-2xl"
+                className="dark:text-primary absolute top-1/2 right-3 -translate-y-1/2 cursor-pointer text-2xl"
               />
             ) : (
               <FaEye
                 onClick={() => setShowconfirmPin(!showconfirmPin)}
-                className="absolute top-1/2 right-3 -translate-y-1/2 cursor-pointer text-2xl"
+                className="dark:text-primary absolute top-1/2 right-3 -translate-y-1/2 cursor-pointer text-2xl"
               />
             ))}
         </div>

@@ -20,7 +20,9 @@ const UserInfo = () => {
         <span onClick={() => navigate("/profile")} className="cursor-pointer">
           <Title text={user?.username} />
         </span>
-        <span className="text-[#30475eb7]">{user?.email}</span>
+        <span className="dark:text-primary text-[#30475eb7]">
+          {user?.email}
+        </span>
       </section>
     </div>
   );

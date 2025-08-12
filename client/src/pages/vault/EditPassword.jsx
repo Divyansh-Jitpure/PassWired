@@ -99,18 +99,18 @@ const EditPassword = () => {
     <div
       ref={editRef}
       onClick={closeModal}
-      className={`fixed inset-0 z-1000 flex items-center justify-center bg-black/30 backdrop-blur-sm`}
+      className={`fixed inset-0 z-1000 flex items-center justify-center bg-black/30 backdrop-blur-sm select-none`}
     >
       {/* Password entry form */}
       <form
-        className="relative flex w-[85%] flex-col items-center gap-4 rounded-xl bg-white p-12 sm:w-[50%] md:w-[40%] xl:w-[30%] 2xl:w-[20%]"
+        className="dark:bg-primary-dark relative flex w-[85%] flex-col items-center gap-4 rounded-xl bg-white p-12 sm:w-[50%] md:w-[40%] xl:w-[30%] 2xl:w-[20%]"
         onSubmit={editPassword}
       >
         <Title text="Edit Password" />
         {/* Close button */}
         <IoClose
           onClick={() => dispatch(setShowEditModal())}
-          className="absolute top-2 right-2 cursor-pointer rounded-full text-4xl hover:bg-gray-400/30 active:bg-gray-400/30"
+          className="dark:text-primary absolute top-2 right-2 cursor-pointer rounded-full text-4xl hover:bg-gray-400/30 active:bg-gray-400/30"
         />
         {/* Service input field */}
         <PwdSheetFormInput
@@ -144,12 +144,12 @@ const EditPassword = () => {
             (showPassword ? (
               <FaEyeSlash
                 onClick={() => setShowPassword(!showPassword)}
-                className="absolute top-1/2 right-3 -translate-y-1/2 cursor-pointer text-2xl"
+                className="dark:text-primary absolute top-1/2 right-3 -translate-y-1/2 cursor-pointer text-2xl"
               />
             ) : (
               <FaEye
                 onClick={() => setShowPassword(!showPassword)}
-                className="absolute top-1/2 right-3 -translate-y-1/2 cursor-pointer text-2xl"
+                className="dark:text-primary absolute top-1/2 right-3 -translate-y-1/2 cursor-pointer text-2xl"
               />
             ))}
         </div>

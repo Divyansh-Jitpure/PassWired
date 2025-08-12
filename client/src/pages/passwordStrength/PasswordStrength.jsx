@@ -59,7 +59,7 @@ const PasswordStrength = () => {
         </>
       )}
 
-      <ul className="list-disc">
+      <ul className="dark:text-primary list-disc">
         <span className="text-lg font-semibold">
           Suggestions for a strong password:
         </span>

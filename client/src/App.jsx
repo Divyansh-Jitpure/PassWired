@@ -20,13 +20,12 @@ import PrivacyPolicy from "./pages/terms/PrivacyPolicy";
 import DesktopNavbar from "./components/Navbar/DesktopNavbar";
 import PasswordGenerator from "./pages/passwordGenerator/PasswordGenerator";
 import PasswordStrength from "./pages/passwordStrength/PasswordStrength";
-import EditPassword from "./pages/vault/EditPassword";
 
 const App = () => {
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(true);
 
-  const { showPinModal, showEditModal } = useSelector((state) => state.auth);
+  const { showPinModal, activeTheme } = useSelector((state) => state.auth);
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -71,30 +70,35 @@ const App = () => {
     );
 
   return (
-    <main className="grid min-h-[100dvh] grid-rows-[auto_1fr_auto] bg-[#DDDDDD]">
-      <Router>
-        <ToastManager />
-        <DesktopNavbar />
-        <Header />
-        {showPinModal && <PinModal />}
-        <Routes>
-          <Route path="/login" element={<Login />} />
-          <Route path="/signup" element={<SignUp />} />
-          <Route element={<ProtectedRoutes />}>
-            <Route path="/appPin" element={<AppPin />} />
-            <Route path="/" element={<Home />} />
-            <Route path="/vault" element={<Vault />} />
-            <Route path="/more" element={<More />} />
-            <Route path="/profile" element={<Profile />} />
-            <Route path="/privacypolicy" element={<PrivacyPolicy />} />
-            <Route path="/t&c" element={<TermsConditions />} />
-            <Route path="/passwordGenerator" element={<PasswordGenerator />} />
-            <Route path="/passwordStrength" element={<PasswordStrength />} />
-          </Route>
-        </Routes>
-        <Navbar />
-      </Router>
-    </main>
+    <div className={activeTheme ? "dark" : ""}>
+      <main className="bg-primary dark:bg-primary-dark grid min-h-[100dvh] grid-rows-[auto_1fr_auto]">
+        <Router>
+          <ToastManager />
+          <DesktopNavbar />
+          <Header />
+          {showPinModal && <PinModal />}
+          <Routes>
+            <Route path="/login" element={<Login />} />
+            <Route path="/signup" element={<SignUp />} />
+            <Route element={<ProtectedRoutes />}>
+              <Route path="/appPin" element={<AppPin />} />
+              <Route path="/" element={<Home />} />
+              <Route path="/vault" element={<Vault />} />
+              <Route path="/more" element={<More />} />
+              <Route path="/profile" element={<Profile />} />
+              <Route path="/privacypolicy" element={<PrivacyPolicy />} />
+              <Route path="/t&c" element={<TermsConditions />} />
+              <Route
+                path="/passwordGenerator"
+                element={<PasswordGenerator />}
+              />
+              <Route path="/passwordStrength" element={<PasswordStrength />} />
+            </Route>
+          </Routes>
+          <Navbar />
+        </Router>
+      </main>
+    </div>
   );
 };
 

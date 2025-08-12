@@ -83,7 +83,7 @@ const PasswordGenerator = () => {
           type="number"
         />
       </div>
-      <div className="flex gap-3 *:flex *:items-center *:gap-2">
+      <div className="dark:text-primary flex gap-3 *:flex *:items-center *:gap-2">
         <section>
           <label htmlFor="number">Numbers</label>
           <input
@@ -111,7 +111,7 @@ const PasswordGenerator = () => {
             {pwd}
             <FaCopy
               onClick={copyPwd}
-              className="absolute top-0 -right-8 cursor-pointer text-2xl"
+              className="absolute top-0 dark:text-primary -right-8 cursor-pointer text-2xl"
             />
           </span>
         </div>

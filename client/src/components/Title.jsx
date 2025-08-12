@@ -2,7 +2,7 @@ import React from "react";
 
 const Title = ({ text }) => {
   return (
-    <h2 className="font-[ubuntu] text-2xl font-semibold text-[#30475E] text-shadow-md">
+    <h2 className="font-[ubuntu] text-2xl font-semibold text-[#30475E] dark:text-primary text-shadow-md">
       — {text} —
     </h2>
   );

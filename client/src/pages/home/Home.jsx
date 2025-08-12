@@ -37,7 +37,7 @@ const Home = () => {
       <Title text="Recent Passwords" />
       <AddPassword />
       {!allPasswords.length ? (
-        <span className="">No passwords saved</span>
+        <span className="dark:text-primary">No passwords saved</span>
       ) : (
         <RecentPasswords pwdCount={3} />
       )}
