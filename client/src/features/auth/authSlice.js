@@ -13,7 +13,10 @@ const initialState = {
   showPwdChangeModal: false,
   showPinChangeModal: false,
   showDeleteAccountModal: false,
-  activeTheme: localStorage.getItem("theme") === "dark",
+  activeTheme:
+    localStorage.theme === "dark" ||
+    (!("theme" in localStorage) &&
+      window.matchMedia("(prefers-color-scheme: dark)").matches),
 };
 
 // Create authentication slice
@@ -46,9 +49,9 @@ const authSlice = createSlice({
     toggleTheme: (state, action) => {
       state.activeTheme = action.payload;
       if (state.activeTheme) {
-        localStorage.setItem("theme", "dark");
+        localStorage.theme = "dark";
       } else {
-        localStorage.setItem("theme", "light");
+        localStorage.theme = "light";
       }
     },
     // Store pending action and target password ID

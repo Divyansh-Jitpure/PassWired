@@ -9,6 +9,7 @@ import {
   setShowChangePwdModal,
   setShowChangePinModal,
   setShowDeleteAccountModal,
+  toggleTheme,
 } from "../../features/auth/authSlice";
 import API from "../../utils/api";
 import ChangePassword from "../../components/ChangePassword";
@@ -23,8 +24,12 @@ const Profile = () => {
 
   const dispatch = useDispatch();
 
-  const { showPwdChangeModal, showPinChangeModal, showDeleteAccountModal } =
-    useSelector((state) => state.auth);
+  const {
+    activeTheme,
+    showPwdChangeModal,
+    showPinChangeModal,
+    showDeleteAccountModal,
+  } = useSelector((state) => state.auth);
 
   const changePassword = async () => {
     dispatch(setShowChangePwdModal(true));
@@ -66,7 +71,7 @@ const Profile = () => {
       <Title text="Profile" />
 
       <section className="flex flex-col items-center">
-        <FaUser className="dark:text-[#F05454] mb-1 text-4xl text-[#213242]" />
+        <FaUser className="dark:text-primary mb-1 text-4xl text-[#213242]" />
         <Title text={user?.username} />
         <span className="dark:text-primary text-[#30475eb7]">
           {user?.email}
@@ -81,8 +86,8 @@ const Profile = () => {
           categoryName="🛠️ Account Settings"
           features={[
             {
-              name: "Theme",
-              action: () => toast.info("Dark Theme is Coming Soon!!"),
+              name: "Theme" + (activeTheme ? "🌙" : "☀️"),
+              action: () => dispatch(toggleTheme(!activeTheme)),
             },
             {
               name: "Change Password",
