@@ -57,15 +57,21 @@ const App = () => {
 
   if (loading)
     return (
-      <div className="flex h-screen flex-col items-center justify-center bg-[#DDDDDD] pb-10">
-        <div className="mx-auto h-20 w-20 animate-spin rounded-full border-6 border-dashed border-[#F05454]"></div>
-        <section className="text-center">
-          <h2 className="mt-4 text-3xl font-semibold text-[#30475E]">
-            Loading...
-          </h2>
-          <p className="text-2xl text-zinc-500">PassWired is loading...</p>
-          <p className="text-lg text-zinc-400">— Please Wait —</p>
-        </section>
+      <div className={activeTheme ? "dark" : ""}>
+        <div className="dark:bg-primary-dark flex h-screen flex-col items-center justify-center bg-[#DDDDDD] pb-10">
+          <div className="mx-auto h-20 w-20 animate-spin rounded-full border-6 border-dashed border-[#F05454]"></div>
+          <section className="text-center">
+            <h2 className="dark:text-primary mt-4 text-3xl font-semibold text-[#30475E]">
+              Loading...
+            </h2>
+            <p className="text-2xl text-zinc-500 dark:text-zinc-400">
+              PassWired is loading...
+            </p>
+            <p className="text-lg text-zinc-400 dark:text-zinc-500">
+              — Please Wait —
+            </p>
+          </section>
+        </div>
       </div>
     );
 

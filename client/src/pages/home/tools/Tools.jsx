@@ -37,9 +37,7 @@ const Tools = () => {
     {
       toolName: "Theme",
       toolIcon: activeTheme ? <IoMdMoon /> : <FaSun />,
-      action: () => {
-        dispatch(toggleTheme(!activeTheme));
-      },
+      action: () => dispatch(toggleTheme(!activeTheme)),
     },
   ];
   return (
